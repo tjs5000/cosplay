@@ -1,0 +1,26 @@
+{
+    "Standard Issue": {
+        "default": true,
+        "colors": {
+            "Helmet": "#050505",
+            "Visor": "#5b2500"
+        }
+    },
+    "Adrenal": {
+        "colors": {
+            "Helmet": "#007828",
+            "Visor": "#070707"
+        }
+    },
+    "No Paint": {
+        "colors": {
+            "colors": {
+                "Helmet": "#030303",
+                "Visor": "#FFFFF9"
+            }
+        },
+        "Custom": {
+            "colors": {}
+        }
+    }
+}

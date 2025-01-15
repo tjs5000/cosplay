@@ -1,0 +1,96 @@
+{
+    "Standard Issue": {
+        "default": true,
+        "colors": {
+            "Chin": "#171717",
+            "Back_Clip": "#171717",
+            "Hinge_Bolts": "#171717",
+            "Bill": "#171717",
+            "Mouth_Vents": "#171717",
+            "Nose": "#171717",
+            "Crown": "#171717",
+            "Top_Decor": "#FF0000",
+            "Jaw": "#171717",
+            "Top_Sensors": "#FF0000",
+            "Side_Vents": "#171717",
+            "Bottom": "#171717",
+            "Visor_Frame": "#171717",
+            "Visor": "#480C00"
+        }
+    },
+    "eUnited": {
+        "colors": {
+            "Chin": "#FFFFF9",
+            "Back_Clip": "#FFFFF9",
+            "Hinge_Bolts": "#FFFFF9",
+            "Bill": "#FFFFF9",
+            "Mouth_Vents": "#FFFFF9",
+            "Nose": "#FFFFF9",
+            "Crown": "#FFFFF9",
+            "Top_Decor": "#FF0000",
+            "Jaw": "#FFFFF9",
+            "Top_Sensors": "#FF0000",
+            "Side_Vents": "#FFFFF9",
+            "Bottom": "#FFFFF9",
+            "Visor_Frame": "#111111",
+            "Visor": "#600000"
+        }
+    },
+    "Infinite": {
+        "colors": {
+            "Chin": "#FF0000",
+            "Back_Clip": "#101010",
+            "Hinge_Bolts": "#333333",
+            "Bill": "#101010",
+            "Mouth_Vents": "#101010",
+            "Nose": "#101010",
+            "Crown": "#FF0000",
+            "Top_Decor": "#FF0000",
+            "Jaw": "#FF0000",
+            "Top_Sensors": "#101010",
+            "Side_Vents": "#101010",
+            "Bottom": "#FF0000",
+            "Visor_Frame": "#101010",
+            "Visor": "#C14B00"
+        }
+    },
+    "Peppermint Laughter": {
+        "colors": {
+            "Chin": "#640000",
+            "Back_Clip": "#640000",
+            "Hinge_Bolts": "#FFFFF9",
+            "Bill": "#640000",
+            "Mouth_Vents": "#640000",
+            "Nose": "#FFFFF9",
+            "Crown": "#d71414",
+            "Top_Decor": "#FFFFF9",
+            "Jaw": "#FFFFF9",
+            "Top_Sensors": "#d71414",
+            "Side_Vents": "#640000",
+            "Bottom": "#d71414",
+            "Visor_Frame": "#FFFFF9",
+            "Visor": "#0f4b37"
+        }
+    },
+    "No Paint": {
+        "colors": {
+            "Chin": "#030303",
+            "Back_Clip": "#030303",
+            "Hinge_Bolts": "#030303",
+            "Bill": "#030303",
+            "Mouth_Vents": "#030303",
+            "Nose": "#030303",
+            "Crown": "#030303",
+            "Top_Decor": "#030303",
+            "Jaw": "#030303",
+            "Top_Sensors": "#030303",
+            "Side_Vents": "#030303",
+            "Bottom": "#030303",
+            "Visor_Frame": "#030303",
+            "Visor": "#303030"
+        }
+    },
+    "Custom": {
+        "colors": {}
+    }
+}

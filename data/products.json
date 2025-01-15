@@ -1,0 +1,27 @@
+{
+  "mk50": {
+    "name": "MK50 Sidekick",
+    "default": true,
+    "type": "Weapon",
+    "heroImage": "/images/products/MK50_Render.png",
+    "data": "/data/products/mk50.json"
+  },
+  "helmet": {
+    "name": "Helmet",
+    "type": "Mark VII Armor",
+    "heroImage": "/images/products/helmet1.png",
+    "data": "/data/products/mark7_helmet.json"
+  },
+  "chest": {
+    "name": "Chest",
+    "type": "Mark VII Armor",
+    "heroImage": "/images/products/mark7_chest.png",
+    "data": "/data/products/mark7_chest.json"
+  },
+  "boots": {
+    "name": "Boots",
+    "type": "Mark VII Armor",
+    "heroImage": "/images/products/mark7_boots.png",
+    "data": "/data/products/mark7_boots.json"
+  }
+}

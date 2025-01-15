@@ -1,0 +1,30 @@
+{
+    "Standard Issue": {
+        "default": true,
+        "colors": {
+            "Chest": "#050505",
+            "Shoulder Vents": "#050505",
+            "Shoulder Clips": "#050505",
+            "Back Vents": "#050505"
+        }
+    },
+    "Adrenal": {
+        "colors": {
+            "Chest": "#007828",
+            "Shoulder Vents": "#050505",
+            "Shoulder Clips": "#607828",
+            "Back Vents": "#050505"
+        }
+    },
+    "No Paint": {
+        "colors": {
+            "Chest": "#030303",
+            "Shoulder Vents": "#030303",
+            "Shoulder Clips": "#030303",
+            "Back Vents": "#030303"
+        }
+    },
+    "Custom": {
+        "colors": {}
+    }
+}
