@@ -1,5 +1,7 @@
 //model-handler.js
 import { fetchColorOptions } from './product-handler.js';
+import { OrbitControls } from './OrbitControls.js'; // Import OrbitControls
+
 
 export let scene, camera, renderer, controls;
 export let materialsData = {};
@@ -78,6 +80,16 @@ export function initRenderer() {
 
 }
 
+
+// Initialize OrbitControls
+controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; // Enable damping (inertia)
+controls.dampingFactor = 0.25;
+controls.screenSpacePanning = false;
+controls.minDistance = 1;
+controls.maxDistance = 1000;
+controls.maxPolarAngle = Math.PI / 2;
+
 // Animation loop
 export function animate() {
   requestAnimationFrame(animate);
@@ -140,7 +152,7 @@ export function initLighting() {
 
 // Controls Initialization
 export function initControls() {
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.1;
   controls.rotateSpeed = 0.5;
@@ -283,7 +295,7 @@ export function updateMaterials() {
     try {
       const selectedStyle = document.getElementById('selectedStyle');
       if (!selectedStyle) {
-        reject('selectedStyle element not found!'); 
+        reject('selectedStyle element not found!');
         return;
       }
       let style = "Standard Issue";
@@ -321,7 +333,7 @@ export function updateMaterials() {
         console.error(`**** Materials for style '${style}' not found.`);
         reject(`Materials for style '${style}' not found.`);  // Reject if materials not found
         return;
-      } 
+      }
       // Apply custom materials or preset materials
       if (style === 'Custom') {
         materialList.style.display = 'flex';
@@ -484,7 +496,7 @@ export function displayMaterialOptions() {
   const materialsArray = []; // Array to store materials for sorting
   const originalColors = {}; // Store original preset colors
   let materialName = null;
-  
+
   if (!model) return;
 
   // Traverse through the model and find all unique materials
@@ -503,8 +515,8 @@ export function displayMaterialOptions() {
 
   // Generate the sorted material list
   materialsArray.forEach((materialName) => {
-      const currentColor = getMaterialColorFromPresetOrCurrent(materialName);
-  const transparentColor = hexToRGBA(currentColor, 0.4); // Adjust alpha as needed
+    const currentColor = getMaterialColorFromPresetOrCurrent(materialName);
+    const transparentColor = hexToRGBA(currentColor, 0.4); // Adjust alpha as needed
     // Create material option elements
     const materialDiv = document.createElement('div');
     materialDiv.classList.add('material-item');
@@ -548,7 +560,7 @@ export function displayMaterialOptions() {
     originalColors[materialName] = currentColor;
 
     // Convert hex color to RGBA with transparency (66 is ~40% transparency in hex)
-   
+
 
     // Set the background of the material-item div to the transparent color
     materialDiv.style.backgroundColor = transparentColor;
@@ -748,7 +760,7 @@ export function applyDamageTexture(texture, bumpmap) {
 // Handle the damage selection dropdown
 export function updateDamageTexture(damageLevel = 'new') {
   const damageSelect = document.getElementById('battle-damage-slider').getAttribute('value');
-  
+
   switch (damageLevel) {
     case 'new':
       applyDamageTexture(noDamageTexture, noDamageBumpmap);
@@ -766,8 +778,8 @@ export function updateDamageTexture(damageLevel = 'new') {
       applyDamageTexture(extremeDamageTexture, extremeDamageBumpmap);
       break;
     default:
-        applyDamageTexture(noDamageTexture, noDamageBumpmap);
-        break;
+      applyDamageTexture(noDamageTexture, noDamageBumpmap);
+      break;
   }
 }
 
