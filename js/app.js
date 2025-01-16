@@ -103,9 +103,10 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (presetOption) {
                 const presetName = presetOption.getAttribute('data-preset-name');
                 fetchPresets(jsonFilePath).then(data => {
+                    materialsData = data;
                     const presetColors = data[presetName]?.colors;
                     if (presetColors) {
-                        applyPresetMaterialColors(presetName, presetColors);
+                        applyPresetMaterialColors(presetName);
                     }
                 });
             }
