@@ -1,6 +1,6 @@
 import { fetchPresets, fetchCustomContent, fetchHTMLContent } from './fetchData.js';
 import { updateCarousel, updateCustomContent } from './updateDOM.js';
-import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateMaterials, applyDamageTexture, updateDamageTexture, updateQuality } from './model-handler.js';
+import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateMaterials, applyDamageTexture, updateDamageTexture, updateQuality, materialsData  } from './model-handler.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
     const navItems = document.querySelectorAll('.nav-item');

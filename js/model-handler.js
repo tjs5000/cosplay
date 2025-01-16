@@ -260,13 +260,7 @@ export function loadModel(modelPath, materialPath, onLoadCallback) {
       fetchColorOptions(materialPath)
         .then(() => {
           materialsData = data; // Assign fetched data to materialsData
-          const styleSelect = document.getElementById('styleSelect');
           console.log('Materials data loaded:', materialsData); // Debugging statement
-
-          if (isModelLoaded && model && styleSelect) {
-            applyPresetMaterialColors(styleSelect.value);
-            updateMaterials(); // Apply the materials
-          }
           resolve();  // Resolve after materials are applied
         })
         .catch(error => {
