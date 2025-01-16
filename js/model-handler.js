@@ -749,22 +749,22 @@ export function applyDamageTexture(texture, bumpmap) {
 
 // Handle the damage selection dropdown
 export function updateDamageTexture(damageLevel = 'new') {
-  const damageSelect = document.getElementById('selectedDamage').getAttribute('data-value');;
+  const damageSelect = document.getElementById('battle-damage-slider').getAttribute('value');
   
   switch (damageSelect) {
-    case 'new':
+    case '0':
       applyDamageTexture(noDamageTexture, noDamageBumpmap);
       break;
-    case 'minimal':
+    case '1':
       applyDamageTexture(minimalDamageTexture, minimalDamageBumpmap);
       break;
-    case 'moderate':
+    case '1':
       applyDamageTexture(moderateDamageTexture, moderateDamageBumpmap);
       break;
-    case 'heavy':
+    case '2':
       applyDamageTexture(heavyDamageTexture, heavyDamageBumpmap);
       break;
-    case 'extreme':
+    case '3':
       applyDamageTexture(extremeDamageTexture, extremeDamageBumpmap);
       break;
     default:

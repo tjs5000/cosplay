@@ -1,7 +1,6 @@
 import { fetchPresets, fetchCustomContent, fetchHTMLContent } from './fetchData.js';
 import { updateCarousel, updateCustomContent } from './updateDOM.js';
-import { initScene, initCamera, initRenderer, initControls, loadModel, applyPresetMaterialColors } from './model-handler.js';
-
+import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateMaterials, applyDamageTexture, updateDamageTexture, updateQuality } from './model-handler.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
     const navItems = document.querySelectorAll('.nav-item');
@@ -16,15 +15,16 @@ document.addEventListener('DOMContentLoaded', async function () {
     const jsonFilePath = '/data/mk50_materials.json';
     const modelPath = '/models/MK50_Sidekick.glb';
 
-    // Initialize scene, camera, renderer, and controls
+    // Initialize scene, camera, renderer, controls, and lighting
     initScene();
     initCamera();
     initRenderer();
     initControls();
+    initLighting();
 
-     // Load the model and apply materials
-     await loadModel(modelPath);
-     fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors('Standard Issue', data));
+    // Load the model and apply materials
+    await loadModel(modelPath);
+    fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors('Standard Issue', data));
 
     const defaultTab = document.querySelector('.nav-tab[data-content="presets"]');
     defaultTab.classList.add('active');
@@ -84,4 +84,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Adjust container height initially
     adjustContainerHeight();
+
+        // Add event listener for Battle Damage slider
+        const battleDamageSlider = document.getElementById('battle-damage-slider');
+        battleDamageSlider.addEventListener('input', function () {
+            const damageLevels = ['new', 'minimal', 'moderate', 'heavy', 'extreme'];
+            const damageLevel = damageLevels[battleDamageSlider.value];
+            updateDamageTexture(damageLevel);
+        });
 });
