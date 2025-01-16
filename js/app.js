@@ -85,11 +85,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Adjust container height initially
     adjustContainerHeight();
 
-        // Add event listener for Battle Damage slider
-        const battleDamageSlider = document.getElementById('battle-damage-slider');
-        battleDamageSlider.addEventListener('input', function () {
-            const damageLevels = ['new', 'minimal', 'moderate', 'heavy', 'extreme'];
-            const damageLevel = damageLevels[battleDamageSlider.value];
-            updateDamageTexture(damageLevel);
-        });
+    // Add event listener for Battle Damage slider
+
+    const battleDamageSlider = document.getElementById('battle-damage-slider');
+    const battleDamageValue = document.getElementById('battle-damage-value');
+    battleDamageSlider.addEventListener('input', function () {
+        const damageLevels = ['new', 'minimal', 'moderate', 'heavy', 'extreme'];
+        const damageLevel = damageLevels[battleDamageSlider.value];
+        battleDamageValue.textContent = damageLevel.charAt(0).toUpperCase() + damageLevel.slice(1);
+        updateDamageTexture(damageLevel);
+
+    });
 });

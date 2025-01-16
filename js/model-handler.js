@@ -751,20 +751,20 @@ export function applyDamageTexture(texture, bumpmap) {
 export function updateDamageTexture(damageLevel = 'new') {
   const damageSelect = document.getElementById('battle-damage-slider').getAttribute('value');
   
-  switch (damageSelect) {
-    case '0':
+  switch (damageLevel) {
+    case 'new':
       applyDamageTexture(noDamageTexture, noDamageBumpmap);
       break;
-    case '1':
+    case 'minimal':
       applyDamageTexture(minimalDamageTexture, minimalDamageBumpmap);
       break;
-    case '1':
+    case 'moderate':
       applyDamageTexture(moderateDamageTexture, moderateDamageBumpmap);
       break;
-    case '2':
+    case 'heavy':
       applyDamageTexture(heavyDamageTexture, heavyDamageBumpmap);
       break;
-    case '3':
+    case 'extreme':
       applyDamageTexture(extremeDamageTexture, extremeDamageBumpmap);
       break;
     default:
