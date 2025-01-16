@@ -20,6 +20,10 @@
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+        
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/bottomSheet.js"></script>
+        <script type="module" src="js/model-handler.js"></script>
 
 </head>
 
@@ -52,7 +56,7 @@
             <img src="images/logo.png" alt="Logo" class="logo">
         </div>
     </div>
-    <div class="model-container">3D Model</div>
+    <div id="three-container" class="model-container"></div>
     <div class="content">
 
         <h1 class="product-title">Mark VII Chest and Back Armor</h1>
@@ -130,8 +134,6 @@
 
     </div>
 
-    <script type="module" src="js/app.js"></script>
-    <script type="module" src="js/bottomSheet.js"></script> <!-- Add this line -->
 </body>
 
 </html>

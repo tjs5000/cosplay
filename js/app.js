@@ -1,7 +1,9 @@
 import { fetchPresets, fetchCustomContent, fetchHTMLContent } from './fetchData.js';
 import { updateCarousel, updateCustomContent } from './updateDOM.js';
+import { initScene, initCamera, initRenderer, initControls, loadModel, applyPresetMaterialColors } from './model-handler.js';
 
-document.addEventListener('DOMContentLoaded', function () {
+
+document.addEventListener('DOMContentLoaded', async function () {
     const navItems = document.querySelectorAll('.nav-item');
     const tabs = document.querySelectorAll('.nav-tab');
     const carousel = document.getElementById('carousel');
@@ -12,6 +14,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const optionsContainer = document.getElementById('optionsContainer');
 
     const jsonFilePath = '/data/mk50_materials.json';
+    const modelPath = '/models/MK50_Sidekick.glb';
+
+    // Initialize scene, camera, renderer, and controls
+    initScene();
+    initCamera();
+    initRenderer();
+    initControls();
+
+     // Load the model and apply materials
+     await loadModel(modelPath);
+     fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors('Standard Issue', data));
 
     const defaultTab = document.querySelector('.nav-tab[data-content="presets"]');
     defaultTab.classList.add('active');
