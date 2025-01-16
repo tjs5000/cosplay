@@ -96,4 +96,18 @@ document.addEventListener('DOMContentLoaded', async function () {
         updateDamageTexture(damageLevel);
 
     });
+
+        // Add event listener for Presets carousel
+        carousel.addEventListener('click', function (event) {
+            const presetOption = event.target.closest('.carousel-item');
+            if (presetOption) {
+                const presetName = presetOption.getAttribute('data-preset-name');
+                fetchPresets(jsonFilePath).then(data => {
+                    const presetColors = data[presetName]?.colors;
+                    if (presetColors) {
+                        applyPresetMaterialColors(presetName, presetColors);
+                    }
+                });
+            }
+        });
 });
