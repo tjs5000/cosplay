@@ -1,7 +1,9 @@
 //model-handler.js
 import { fetchColorOptions } from './product-handler.js';
-import { OrbitControls } from './OrbitControls.js'; // Import OrbitControls
-
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/DRACOLoader.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
 
 export let scene, camera, renderer, controls;
 export let materialsData = {};
@@ -19,275 +21,263 @@ export let isModelLoaded = false; // Track if the model is loaded
 
 // Scene Initialization
 export function initScene() {
-  scene = new THREE.Scene();
-  scene.background = null; // Transparent background
+    scene = new THREE.Scene();
+    scene.background = null; // Transparent background
 }
-
 
 // Camera Initialization
 export function initCamera() {
-  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-  camera.position.set(-20, 0, 550);
+    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+    camera.position.set(-20, 0, 550);
 }
 
 // Renderer Initialization
 export function initRenderer() {
-  renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, precision: 'highp', depth: true });
-  renderer.outputEncoding = THREE.sRGBEncoding;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 2.5;
-  renderer.physicallyCorrectLights = true;
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, precision: 'highp', depth: true });
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 2.5;
+    renderer.physicallyCorrectLights = true;
 
-  // Get the size of the #three-container and set the renderer size accordingly
-  const container = document.getElementById('three-container');
-  renderer.setSize(container.clientWidth, container.clientHeight);  // Set size to match parent
+    // Get the size of the #three-container and set the renderer size accordingly
+    const container = document.getElementById('three-container');
+    renderer.setSize(container.clientWidth, container.clientHeight);  // Set size to match parent
 
-  document.getElementById('three-container').appendChild(renderer.domElement);
+    document.getElementById('three-container').appendChild(renderer.domElement);
 
-  // Ensure the scene continuously updates
-  //renderLoop();
-  animate();
-  resizeRenderer();
-  /*   window.addEventListener('resize', () => {
-      resizeRenderer();
-      if (isModelLoaded && model) {
-        adjustCameraToFitObject(model); // Adjust camera only if the model is loaded
-      } else {
-        console.warn("Model not loaded or unavailable during resize.");
-      }
+    // Ensure the scene continuously updates
+    //renderLoop();
+    animate();
+    resizeRenderer();
+    /*   window.addEventListener('resize', () => {
+        resizeRenderer();
+        if (isModelLoaded && model) {
+            adjustCameraToFitObject(model); // Adjust camera only if the model is loaded
+        } else {
+            console.warn("Model not loaded or unavailable during resize.");
+        }
     }); */
 
+    // Pause rotation on click, tap, or swipe
+    container.addEventListener('click', () => handlePauseRotation());
 
-  // Pause rotation on click, tap, or swipe
-  container.addEventListener('click', () => handlePauseRotation());
+    // Listen for touch events (tapping or swiping)
+    container.addEventListener('touchstart', () => handlePauseRotation());
+    container.addEventListener('touchmove', () => handlePauseRotation());
+    container.addEventListener('touchend', () => handlePauseRotation());
 
-  // Listen for touch events (tapping or swiping)
-  container.addEventListener('touchstart', () => handlePauseRotation());
-  container.addEventListener('touchmove', () => handlePauseRotation());
-  container.addEventListener('touchend', () => handlePauseRotation());
-
-  // Function to pause auto-rotation for 30 seconds
-  function handlePauseRotation() {
-    // console.log(isRotating);
-    if (rotationTimeout) {
-      clearTimeout(rotationTimeout);
+    // Function to pause auto-rotation for 30 seconds
+    function handlePauseRotation() {
+        // console.log(isRotating);
+        if (rotationTimeout) {
+            clearTimeout(rotationTimeout);
+        }
+        isRotating = false;
+        rotationTimeout = setTimeout(() => {
+            isRotating = true;
+        }, 30000);
     }
-    isRotating = false;
-    rotationTimeout = setTimeout(() => {
-      isRotating = true;
-    }, 30000);
-  }
 
+    // Initialize OrbitControls
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true; // Enable damping (inertia)
+    controls.dampingFactor = 0.25;
+    controls.screenSpacePanning = false;
+    controls.minDistance = 1;
+    controls.maxDistance = 1000;
+    controls.maxPolarAngle = Math.PI / 2;
 }
-
-
-// Initialize OrbitControls
-controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true; // Enable damping (inertia)
-controls.dampingFactor = 0.25;
-controls.screenSpacePanning = false;
-controls.minDistance = 1;
-controls.maxDistance = 1000;
-controls.maxPolarAngle = Math.PI / 2;
 
 // Animation loop
 export function animate() {
-  requestAnimationFrame(animate);
-  // Ensure controls are initialized before updating
-  if (controls) {
-    controls.autoRotate = isRotating;
-    controls.update();  // Smoothly update camera controls
+    requestAnimationFrame(animate);
+    // Ensure controls are initialized before updating
+    if (controls) {
+        controls.autoRotate = isRotating;
+        controls.update();  // Smoothly update camera controls
+    }
 
-  }
-
-  renderer.render(scene, camera);  // Render the scene
+    renderer.render(scene, camera);  // Render the scene
 }
-
 
 function waitForModelToLoad(callback) {
-  if (isModelLoaded) {
-    callback();  // If the model is loaded, execute the callback (applyPresetMaterialColors)
-  } else {
-    setTimeout(() => {
-      // console.log("Waiting for model to load...");
-      waitForModelToLoad(callback);  // Retry after 100ms
-    }, 100);  // Wait 100ms and check again
-  }
+    if (isModelLoaded) {
+        callback();  // If the model is loaded, execute the callback (applyPresetMaterialColors)
+    } else {
+        setTimeout(() => {
+            // console.log("Waiting for model to load...");
+            waitForModelToLoad(callback);  // Retry after 100ms
+        }, 100);  // Wait 100ms and check again
+    }
 }
 
-
 export function resizeRenderer() {
-  const container = document.getElementById('three-container');
-  const width = container.clientWidth;
-  const height = container.clientHeight;
+    const container = document.getElementById('three-container');
+    const width = container.clientWidth;
+    const height = container.clientHeight;
 
-  container.style.height = `${height}px`;  // Set the height of the container dynamically
-  renderer.setSize(width, height);
+    container.style.height = `${height}px`;  // Set the height of the container dynamically
+    renderer.setSize(width, height);
 
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
-
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
 }
 
 // Lighting Setup
 export function initLighting() {
-  const lights = [
-    { type: 'DirectionalLight', color: 0xffffff, intensity: 1, position: [10, 20, 30], castShadow: false },
-    { type: 'DirectionalLight', color: 0xffffff, intensity: 0.6, position: [-10, 10, 20], castShadow: false },
-    { type: 'SpotLight', color: 0xeeeeff, intensity: 0.6, position: [100, -400, -180], castShadow: true },
-    { type: 'DirectionalLight', color: 0xffffff, intensity: 1.0, position: [10, 20, -30], castShadow: false },
-    { type: 'DirectionalLight', color: 0xffffff, intensity: 0.6, position: [-10, 10, -20], castShadow: false },
-    { type: 'SpotLight', color: 0xeeeeff, intensity: 0.6, position: [100, 400, 180], castShadow: true }
-  ];
+    const lights = [
+        { type: 'DirectionalLight', color: 0xffffff, intensity: 1, position: [10, 20, 30], castShadow: false },
+        { type: 'DirectionalLight', color: 0xffffff, intensity: 0.6, position: [-10, 10, 20], castShadow: false },
+        { type: 'SpotLight', color: 0xeeeeff, intensity: 0.6, position: [100, -400, -180], castShadow: true },
+        { type: 'DirectionalLight', color: 0xffffff, intensity: 1.0, position: [10, 20, -30], castShadow: false },
+        { type: 'DirectionalLight', color: 0xffffff, intensity: 0.6, position: [-10, 10, -20], castShadow: false },
+        { type: 'SpotLight', color: 0xeeeeff, intensity: 0.6, position: [100, 400, 180], castShadow: true }
+    ];
 
-  lights.forEach((lightData) => {
-    const light = new THREE[lightData.type](lightData.color, lightData.intensity);
-    light.position.set(...lightData.position);
-    light.castShadow = lightData.castShadow;
-    scene.add(light);
-  });
+    lights.forEach((lightData) => {
+        const light = new THREE[lightData.type](lightData.color, lightData.intensity);
+        light.position.set(...lightData.position);
+        light.castShadow = lightData.castShadow;
+        scene.add(light);
+    });
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 }
 
 // Controls Initialization
 export function initControls() {
-  controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.1;
-  controls.rotateSpeed = 0.5;
-  controls.maxPolarAngle = Math.PI / 2;
-  controls.zoomSpeed = 1.2;
-  controls.panSpeed = 0.8;
-  controls.maxDistance = 900;
-  if (isRotating) {
-    controls.autoRotate = true;
-  }
-  // controls.minDistance  = .05;
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.1;
+    controls.rotateSpeed = 0.5;
+    controls.maxPolarAngle = Math.PI / 2;
+    controls.zoomSpeed = 1.2;
+    controls.panSpeed = 0.8;
+    controls.maxDistance = 900;
+    if (isRotating) {
+        controls.autoRotate = true;
+    }
+    // controls.minDistance  = .05;
 }
 
 // Function to adjust the camera to fit the object
 export function adjustCameraToFitObject(object) {
-  if (!object || !(object instanceof THREE.Object3D)) {
-    console.error('Invalid object passed to adjustCameraToFitObject');
-    return;
-  }
+    if (!object || !(object instanceof THREE.Object3D)) {
+        console.error('Invalid object passed to adjustCameraToFitObject');
+        return;
+    }
 
-  const box = new THREE.Box3().setFromObject(object); // Calculate the bounding box
-  const size = box.getSize(new THREE.Vector3()); // Get the size of the object
-  const center = box.getCenter(new THREE.Vector3()); // Get the center of the object
+    const box = new THREE.Box3().setFromObject(object); // Calculate the bounding box
+    const size = box.getSize(new THREE.Vector3()); // Get the size of the object
+    const center = box.getCenter(new THREE.Vector3()); // Get the center of the object
 
-  // Calculate the distance required to fit the object within the camera's view
-  const maxDim = Math.max(size.x, size.y, size.z);
-  const fov = camera.fov * (Math.PI / 180); // Convert vertical FOV to radians
-  const cameraDistance = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
+    // Calculate the distance required to fit the object within the camera's view
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const fov = camera.fov * (Math.PI / 180); // Convert vertical FOV to radians
+    const cameraDistance = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
 
-  // Adjust the camera position based on the object's size and center
-  camera.position.set(center.x, center.y, center.z + cameraDistance * 1.5); // Adjust multiplier as needed
-  camera.lookAt(center);
+    // Adjust the camera position based on the object's size and center
+    camera.position.set(center.x, center.y, center.z + cameraDistance * 1.5); // Adjust multiplier as needed
+    camera.lookAt(center);
 
-  // Update camera's projection matrix after resizing or repositioning
-  camera.updateProjectionMatrix();
+    // Update camera's projection matrix after resizing or repositioning
+    camera.updateProjectionMatrix();
 }
-
 
 // Load 3D Model
 export function loadModel(modelPath, materialPath, onLoadCallback) {
-  return new Promise((resolve, reject) => {
-    const dracoLoader = new THREE.DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+    return new Promise((resolve, reject) => {
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
 
-    // If there's an existing model in the scene, remove it
-    if (model) {
-      console.log('Removing old model...');
-      scene.remove(model);
+        // If there's an existing model in the scene, remove it
+        if (model) {
+            console.log('Removing old model...');
+            scene.remove(model);
 
-      // Dispose of the model's geometry and materials to free up memory
-      model.traverse((child) => {
-        if (child.isMesh) {
-          if (child.geometry) child.geometry.dispose();
-          if (child.material) {
-            if (Array.isArray(child.material)) {
-              child.material.forEach((mat) => {
-                if (mat.map) mat.map.dispose();
-                mat.dispose();
-              });
-            } else {
-              if (child.material.map) child.material.map.dispose();
-              child.material.dispose();
+            // Dispose of the model's geometry and materials to free up memory
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    if (child.geometry) child.geometry.dispose();
+                    if (child.material) {
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach((mat) => {
+                                if (mat.map) mat.map.dispose();
+                                mat.dispose();
+                            });
+                        } else {
+                            if (child.material.map) child.material.map.dispose();
+                            child.material.dispose();
+                        }
+                    }
+                }
+            });
+            model = null; // Clear the old model reference
+            isModelLoaded = false; // Reset the loading state
+        }
+
+        const loader = new GLTFLoader();
+        loader.setDRACOLoader(dracoLoader);
+
+        // Load the new model
+        loader.load(modelPath, function (gltf) {
+            model = gltf.scene;
+            model.scale.set(1, 1, 1);  // Model scale
+            model.position.set(0, 0, 0);  // Model position
+            model.updateWorldMatrix(true, true);  // Force update world matrix
+
+            model.traverse(function (child) {
+                if (child.isMesh && child.material.name) {
+                    originalMaterialColors[child.material.name] = child.material.color.getHexString();
+                }
+            });
+
+            scene.add(model);  // Add the model to the scene
+            isModelLoaded = true;  // Mark model as loaded
+
+            adjustCameraToFitObject(model);  // Adjust the camera after the model is loaded
+
+            // Optional Callback
+            if (onLoadCallback) {
+                onLoadCallback();  // Apply additional processing after model loads
             }
-          }
-        }
-      });
-      model = null; // Clear the old model reference
-      isModelLoaded = false; // Reset the loading state
-    }
 
-    const loader = new THREE.GLTFLoader();
-    loader.setDRACOLoader(dracoLoader);
+            // Apply damage textures (if needed)
+            applyDamageTexture(noDamageTexture);
+            // Add the resize event listener if it hasn't been added already
+            if (!resizeListenerAdded) {
+                window.addEventListener('resize', () => {
+                    if (isModelLoaded) {
+                        adjustCameraToFitObject(model);
+                    }
+                });
+                resizeListenerAdded = true; // Prevent adding the listener multiple times
+            }
 
-    // Load the new model
-    loader.load(modelPath, function (gltf) {
-      model = gltf.scene;
-      model.scale.set(1, 1, 1);  // Model scale
-      model.position.set(0, 0, 0);  // Model position
-      model.updateWorldMatrix(true, true);  // Force update world matrix
-
-      model.traverse(function (child) {
-        if (child.isMesh && child.material.name) {
-          originalMaterialColors[child.material.name] = child.material.color.getHexString();
-        }
-      });
-
-      scene.add(model);  // Add the model to the scene
-      isModelLoaded = true;  // Mark model as loaded
-
-      adjustCameraToFitObject(model);  // Adjust the camera after the model is loaded
-
-      // Optional Callback
-      if (onLoadCallback) {
-        onLoadCallback();  // Apply additional processing after model loads
-      }
-
-      // Apply damage textures (if needed)
-      applyDamageTexture(noDamageTexture);
-      // Add the resize event listener if it hasn't been added already
-      if (!resizeListenerAdded) {
-        window.addEventListener('resize', () => {
-          if (isModelLoaded) {
-            adjustCameraToFitObject(model);
-          }
+            resolve();  // Resolve after the model is loaded
+        }, undefined, function (error) {
+            console.error('Error loading model:', error);
+            reject(error);  // Reject if model loading fails
         });
-        resizeListenerAdded = true; // Prevent adding the listener multiple times
-      }
 
-      resolve();  // Resolve after the model is loaded
-    }, undefined, function (error) {
-      console.error('Error loading model:', error);
-      reject(error);  // Reject if model loading fails
+        // Load material options if materialPath is provided
+        if (materialPath) {
+            fetchColorOptions(materialPath)
+                .then(() => {
+                    materialsData = data; // Assign fetched data to materialsData
+                    console.log('Materials data loaded:', materialsData); // Debugging statement
+                    resolve();  // Resolve after materials are applied
+                })
+                .catch(error => {
+                    console.error('Error loading materials:', error);
+                    reject(error);
+                });
+        } else {
+            // Resolve the promise if no materialPath is provided
+            resolve();
+        }
     });
-
-    // Load material options if materialPath is provided
-    if (materialPath) {
-      fetchColorOptions(materialPath)
-        .then(() => {
-          materialsData = data; // Assign fetched data to materialsData
-          console.log('Materials data loaded:', materialsData); // Debugging statement
-          resolve();  // Resolve after materials are applied
-        })
-        .catch(error => {
-          console.error('Error loading materials:', error);
-          reject(error);
-        });
-    } else {
-      // Resolve the promise if no materialPath is provided
-      resolve();
-    }
-  });
 }
-
-
-
 
 export function updateMaterials() {
 
