@@ -1,9 +1,9 @@
 //model-handler.js
-import { fetchColorOptions } from './product-handler.js';
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js';
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/controls/OrbitControls.js';
 import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
+import { fetchColorOptions } from './product-handler.js'; // Assuming this is a relative path
 
 export let scene, camera, renderer, controls;
 export let materialsData = {};
