@@ -1,8 +1,9 @@
 //model-handler.js
-import * as THREE from '../libraries/three.module.js';
-import { DRACOLoader } from '../libraries/DRACOLoader.js';
-import { GLTFLoader } from '../libraries/GLTFLoader.js';
-import { OrbitControls } from './libraries/OrbitControls.js';
+
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/DRACOLoader.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
 import { fetchColorOptions } from './product-handler.js'; // Assuming this is a relative path
 
 export let scene, camera, renderer, controls;
@@ -78,15 +79,15 @@ export function initRenderer() {
         }, 30000);
     }
 
-    // Initialize OrbitControls
+     // Initialize OrbitControls
     controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true; // Enable damping (inertia)
     controls.dampingFactor = 0.25;
     controls.screenSpacePanning = false;
     controls.minDistance = 1;
     controls.maxDistance = 1000;
-    controls.maxPolarAngle = Math.PI / 2;
-}
+    controls.maxPolarAngle = Math.PI / 2; 
+  }
 
 // Animation loop
 export function animate() {
@@ -145,7 +146,7 @@ export function initLighting() {
 }
 
 // Controls Initialization
-export function initControls() {
+ export function initControls() {
     controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.1;
@@ -158,7 +159,7 @@ export function initControls() {
         controls.autoRotate = true;
     }
     // controls.minDistance  = .05;
-}
+} 
 
 // Function to adjust the camera to fit the object
 export function adjustCameraToFitObject(object) {
