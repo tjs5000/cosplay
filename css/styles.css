@@ -151,7 +151,7 @@ justify-content: space-between;
     text-align: left;
     transition: all 0.3s ease-in-out;
     overflow: hidden; /* Hide overflow to avoid scrollbars during the transition */
-    width: 100%;
+    /* width: 100%; */
 }
 
 .fab {
@@ -336,10 +336,12 @@ justify-content: space-between;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .visuals-content {
     display:none;
+    flex-direction: column;
     padding: 20px;
     background-color: #141419;
     border-radius: 10px;
@@ -351,6 +353,7 @@ display:flex;
 
 .slider-container {
     margin-bottom: 20px;
+    width:100%;
 }
 
 .slider-container label {
@@ -391,6 +394,7 @@ display:flex;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
     margin-top: 20px;
     display:none;
+    flex-direction: column;
 }
 
 .addons-content.active {
@@ -543,3 +547,41 @@ border-radius:50%;
     background: rgba(0, 0, 0, 0.50);
 }
 
+
+
+/* ANIMATIONS */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-out {
+    animation: slideOut 0.5s forwards;
+}
+
+.slide-in {
+    animation: slideIn 0.5s forwards;
+}

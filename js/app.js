@@ -1,20 +1,21 @@
-
 import { fetchPresets, fetchCustomContent, fetchHTMLContent } from './fetchData.js';
 import { updateCarousel, updateCustomContent } from './updateDOM.js';
-import { initScene, initCamera, initRenderer,  initControls, initLighting, loadModel, applyPresetMaterialColors, updateMaterials, applyDamageTexture, updateDamageTexture, updateQuality, materialsData  } from './model-handler.js';
+import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateMaterials, applyDamageTexture, updateDamageTexture, updateQuality, materialsData } from './model-handler.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
     const navItems = document.querySelectorAll('.nav-item');
     const tabs = document.querySelectorAll('.nav-tab');
-    const carousel = document.getElementById('carousel');
+    const carousel = document.getElementById('carouselContent');
     const backButton = document.querySelector('.back-button');
-    const visualsContent = document.getElementById('visuals-content');
-    const addonsContent = document.getElementById('addons-content');
-    const customContent = document.getElementById('custom-content');
+    const visualsContent = document.getElementById('visualsContent');
+    const addonsContent = document.getElementById('addonsContent');
+    const customContent = document.getElementById('customContent');
     const optionsContainer = document.getElementById('optionsContainer');
 
     const jsonFilePath = '/data/mk50_materials.json';
     const modelPath = '/models/MK50_Sidekick.glb';
+
+    let content = 'presets';
 
     // Initialize scene, camera, renderer, controls, and lighting
     initScene();
@@ -40,54 +41,56 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     tabs.forEach(tab => {
         tab.addEventListener('click', function () {
-            const content = tab.getAttribute('data-content');
+            content = tab.getAttribute('data-content');
             tabs.forEach(tab => tab.classList.remove('active'));
             this.classList.add('active');
-            visualsContent.style.display = 'none';
-            addonsContent.style.display = 'none';
-            customContent.style.display = 'none';
-            carousel.style.display = 'none';
-            if (content === 'presets') {
-                fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
-                carousel.style.display = 'flex';
-            } else if (content === 'custom') {
-                fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
-                customContent.style.display = 'flex';
-            } else if (content === 'visuals') {
-                visualsContent.style.display = 'block';
-            } else if (content === 'addons') {
-                addonsContent.style.display = 'block';
-            }
-            adjustContainerHeight();
+            switchContent(content);
         });
     });
+
+    function switchContent(content) {
+        const currentContent = document.querySelector('.content.active');
+        const newContent = document.getElementById(`${content}Content`);
+
+        let contentHeight = 0;
+
+        if (content === 'presets') {
+            contentHeight = carousel.scrollHeight;
+        } else if (content === 'custom') {
+            contentHeight = customContent.scrollHeight;
+        } else if (content === 'visuals') {
+            contentHeight = visualsContent.scrollHeight;
+        } else if (content === 'addons') {
+            contentHeight = addonsContent.scrollHeight;
+        }
+
+        // Animate current content out
+        currentContent.classList.add('slide-out');
+        currentContent.addEventListener('animationend', function () {
+            currentContent.classList.remove('slide-out', 'active');
+            currentContent.style.display = 'none';
+
+            // Show new content and animate it in
+            newContent.style.display = 'flex'; // or 'block' depending on your layout
+            newContent.classList.add('slide-in', 'active');
+            newContent.addEventListener('animationend', function () {
+                newContent.classList.remove('slide-in');
+                optionsContainer.style.height = `${contentHeight}px`; // Update height after animation
+            }, { once: true });
+        }, { once: true });
+
+        if (content === 'presets') {
+            fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
+        } else if (content === 'custom') {
+            fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
+        }
+    }
 
     backButton.addEventListener('click', function () {
         alert('Back button clicked');
     });
 
-    function adjustContainerHeight() {
-        const activeContent = document.querySelector('.nav-tab.active').getAttribute('data-content');
-        let contentHeight = 0;
-
-        if (activeContent === 'presets') {
-            contentHeight = carousel.scrollHeight;
-        } else if (activeContent === 'custom') {
-            contentHeight = customContent.scrollHeight;
-        } else if (activeContent === 'visuals') {
-            contentHeight = visualsContent.scrollHeight;
-        } else if (activeContent === 'addons') {
-            contentHeight = addonsContent.scrollHeight;
-        }
-
-        optionsContainer.style.height = `${contentHeight}px`;
-    }
-
-    // Adjust container height initially
-    adjustContainerHeight();
-
     // Add event listener for Battle Damage slider
-
     const battleDamageSlider = document.getElementById('battle-damage-slider');
     const battleDamageValue = document.getElementById('battle-damage-value');
     battleDamageSlider.addEventListener('input', function () {
@@ -95,21 +98,20 @@ document.addEventListener('DOMContentLoaded', async function () {
         const damageLevel = damageLevels[battleDamageSlider.value];
         battleDamageValue.textContent = damageLevel.charAt(0).toUpperCase() + damageLevel.slice(1);
         updateDamageTexture(damageLevel);
-
     });
 
-        // Add event listener for Presets carousel
-        carousel.addEventListener('click', function (event) {
-            const presetOption = event.target.closest('.carousel-item');
-            if (presetOption) {
-                const presetName = presetOption.getAttribute('data-preset-name');
-                fetchPresets(jsonFilePath).then(data => {
-                    Object.assign(materialsData, data);
-                    const presetColors = data[presetName]?.colors;
-                    if (presetColors) {
-                        applyPresetMaterialColors(presetName);
-                    }
-                });
-            }
-        });
+    // Add event listener for Presets carousel
+    carousel.addEventListener('click', function (event) {
+        const presetOption = event.target.closest('.carousel-item');
+        if (presetOption) {
+            const presetName = presetOption.getAttribute('data-preset-name');
+            fetchPresets(jsonFilePath).then(data => {
+                Object.assign(materialsData, data);
+                const presetColors = data[presetName]?.colors;
+                if (presetColors) {
+                    applyPresetMaterialColors(presetName);
+                }
+            });
+        }
+    });
 });
