@@ -14,8 +14,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const jsonFilePath = '/data/mk50_materials.json';
     const modelPath = '/models/MK50_Sidekick.glb';
+    const defaultTab = document.querySelector('.nav-tab[data-content="presets"]');
 
-    let content = 'presets';
+    let content = defaultTab;
 
     // Initialize scene, camera, renderer, controls, and lighting
     initScene();
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     await loadModel(modelPath);
     fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors('Standard Issue', data));
 
-    const defaultTab = document.querySelector('.nav-tab[data-content="presets"]');
+    
     defaultTab.classList.add('active');
     fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
 
@@ -49,7 +50,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     function switchContent(content) {
-        const currentContent = document.querySelector('.content.active');
+        let currentContent = document.querySelector('.content.active');
+        if (currentContent == null) {
+            currentContent = carousel;
+        }
+
         const newContent = document.getElementById(`${content}Content`);
 
         let contentHeight = 0;
