@@ -28,7 +28,7 @@ export function initScene() {
 
 // Camera Initialization
 export function initCamera() {
-    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
     camera.position.set(-20, 0, 550);
 }
 
@@ -69,7 +69,7 @@ export function initRenderer() {
 
     // Function to pause auto-rotation for 30 seconds
     function handlePauseRotation() {
-        // console.log(isRotating);
+        console.log(isRotating);
         if (rotationTimeout) {
             clearTimeout(rotationTimeout);
         }
@@ -86,7 +86,10 @@ export function initRenderer() {
     controls.screenSpacePanning = false;
     controls.minDistance = 1;
     controls.maxDistance = 1000;
-    controls.maxPolarAngle = Math.PI / 2; 
+    controls.maxPolarAngle = Math.PI / 2;
+    controls.enablePan = true; // Enable panning
+    controls.enableZoom = true; // Enable zooming
+    controls.touchZoomRotate = true; // Enable touch zoom and rotate
   }
 
 // Animation loop
@@ -158,6 +161,9 @@ export function initLighting() {
     if (isRotating) {
         controls.autoRotate = true;
     }
+    controls.enablePan = true; // Enable panning
+    controls.enableZoom = true; // Enable zooming
+    controls.touchZoomRotate = true; // Enable touch zoom and rotate
     // controls.minDistance  = .05;
 } 
 
@@ -178,7 +184,7 @@ export function adjustCameraToFitObject(object) {
     const cameraDistance = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
 
     // Adjust the camera position based on the object's size and center
-    camera.position.set(center.x, center.y, center.z + cameraDistance * 1.5); // Adjust multiplier as needed
+    camera.position.set(center.x, (center.y + 100), (center.z + 100) + cameraDistance * 1.5); // Adjust multiplier as needed
     camera.lookAt(center);
 
     // Update camera's projection matrix after resizing or repositioning
