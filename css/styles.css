@@ -7,6 +7,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 .navbar-bottom {
@@ -14,12 +15,14 @@ body {
     bottom: 0;
     width: 100%;
     display: flex;
+    height:65px;
     justify-content: space-around;
-    background-color: #1c1c1e;
+    background-color: #121212;
     color: #fff;
-    border-top: 1px solid #333;
+    border-top: 1px solid #fff;
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.3);
     padding: 10px 0;
+    z-index:16;
 }
 
 .nav-item {
@@ -148,6 +151,7 @@ justify-content: space-between;
     text-align: left;
     transition: all 0.3s ease-in-out;
     overflow: hidden; /* Hide overflow to avoid scrollbars during the transition */
+    width: 100%;
 }
 
 .fab {
@@ -169,8 +173,67 @@ justify-content: space-between;
 }
 
 .mobile-header, footer, .navbar-bottom, .second-level-nav, #optionsContainer, nav {
-    z-index: 10; /* Ensure these elements are above the container */
+    z-index: 2; /* Ensure these elements are above the container */
 }
+
+.second-level-nav {
+    display: flex;
+    justify-content:space-evenly;
+    padding: 8px;
+    background-color: #142C3A;
+    /* border-top: 1px solid #333; */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 5px;
+    position: relative;
+}
+
+
+.second-level-nav:before, .second-level-nav:after{
+    font-size:11px;
+    padding:2px 14px;
+    display:block;
+    width:auto;
+    height:16px;
+    background-color:#142C3A;
+    position:absolute;
+    top:-14px;
+    z-index:-1;
+    border-radius:16px 16px 0 0;
+    border-top:0px solid #333;
+}
+
+.second-level-nav:before{
+    content:"Coats";
+    left:calc(25% - 26px);
+}
+.second-level-nav:after{
+    content:"Options";
+    right:calc(25% - 26px);
+}
+
+.nav-tab {
+    /* padding: 0; */
+    padding: 12px 10px;
+    border:none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: transparent;
+    transition: background-color 1s, box-shadow 0.3s, color 0.2s;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform:capitalize;
+    letter-spacing: 1px;
+    max-width: 90px;
+    box-shadow: 0 0 20px 2px rgba(55, 207, 255, 0.0);
+}
+
+.nav-tab.active {
+    background-color: #37CFFF;
+    box-shadow: 0px 0px 8px 0px rgba(55, 207, 255, 0.80);
+    color:#1E1E1E;
+}
+
 .carousel {
     display: flex;
     overflow-x: scroll;
@@ -179,42 +242,24 @@ justify-content: space-between;
     padding: 10px;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
-    background: #111;
+    background: #141419;
+    box-sizing: border-box;
+    cursor: grab;
 }
+
+
 
 .carousel::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
+
 }
 
-.second-level-nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
-    background-color: #1c1c1e;
-    border-top: 1px solid #333;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
-    margin-bottom: 5px;
-}
-
-.nav-tab {
-    /* padding: 0; */
-    padding: 10px 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #fff;
-    background-color: #333;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    font-weight: bold;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    max-width: 90px;
-}
-
-.nav-tab.active {
-    background-color: #007bff;
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+.carousel.active, .custom-content.active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    user-select: none; /* Disable text selection in supported browsers */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none;
 }
 
 .carousel-item {
@@ -241,6 +286,52 @@ justify-content: space-between;
     color: #aaa;
 }
 
+/* Custom content */
+.custom-content {
+    display: flex;
+    overflow-x: auto;
+    padding: 12px 20px 24px 20px;
+    background-color: #141419;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    justify-content: center; /* Center the swatches */
+    pointer-events: auto;
+    cursor: grab;
+}
+
+.color-container {
+    padding: 5px;
+    max-width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 15px; /* Add spacing between containers */
+}
+
+.color-swatch {
+    width: 60px; /* Use consistent width for easier centering */
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #fff;
+    background-color: #333;
+    border: 1px solid #fff;
+    box-shadow: 0px 6px 8px 0px rgba(255, 255, 255, 0.25) inset, 0px -16px 8px 0px rgba(0, 0, 0, 0.15) inset;
+
+}
+
+.color-container span {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #aaa;
+    text-align: center;
+}
+
 .slider-container {
     display: flex;
     align-items: center;
@@ -250,7 +341,7 @@ justify-content: space-between;
 .visuals-content {
     display:none;
     padding: 20px;
-    background-color: #1c1c1e;
+    background-color: #141419;
     border-radius: 10px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
 }
@@ -295,7 +386,7 @@ display:flex;
 /* Add-ons content */
 .addons-content {
     padding: 20px;
-    background-color: #1c1c1e;
+    background-color: #141419;
     border-radius: 10px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
     margin-top: 20px;
@@ -372,46 +463,7 @@ input:checked + .track:before {
     color: #fff;
     font-weight: bold;
 }
-/* Custom content */
-.custom-content {
-    display: flex;
-    overflow-x: auto;
-    padding: 20px;
-    background-color: #1c1c1e;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
-    justify-content: center; /* Center the swatches */
-}
 
-.color-container {
-    padding: 5px;
-    max-width: 80px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-right: 15px; /* Add spacing between containers */
-}
-
-.color-swatch {
-    width: 50px; /* Use consistent width for easier centering */
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    color: #fff;
-    background-color: #333;
-    border: 2px solid #555;
-    box-shadow: inset 0 -4px 8px #000, inset 0 6px 6px rgba(255, 255, 255, .3);
-}
-
-.color-container span {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #aaa;
-    text-align: center;
-}
 
 
 .info-icon {
@@ -479,3 +531,15 @@ border-radius:50%;
 .bottom-sheet.show ~ .scrim {
     display: block;
 }
+
+
+.vert-rule {
+    display:block;
+    position:relative;
+    top:-10px;
+    width:4px;
+    margin:0;
+    height:calc(100% + 18px);
+    background: rgba(0, 0, 0, 0.50);
+}
+
