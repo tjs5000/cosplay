@@ -2,7 +2,7 @@
 import * as THREE from '../libraries/three.module.js';
 import { DRACOLoader } from '../libraries/DRACOLoader.js';
 import { GLTFLoader } from '../libraries/GLTFLoader.js';
-import { OrbitControls } from '../libraries/OrbitControls.js';
+import { OrbitControls } from './libraries/OrbitControls.js';
 import { fetchColorOptions } from './product-handler.js'; // Assuming this is a relative path
 
 export let scene, camera, renderer, controls;
@@ -49,14 +49,14 @@ export function initRenderer() {
     //renderLoop();
     animate();
     resizeRenderer();
-    /*   window.addEventListener('resize', () => {
+       window.addEventListener('resize', () => {
         resizeRenderer();
         if (isModelLoaded && model) {
             adjustCameraToFitObject(model); // Adjust camera only if the model is loaded
         } else {
             console.warn("Model not loaded or unavailable during resize.");
         }
-    }); */
+    }); 
 
     // Pause rotation on click, tap, or swipe
     container.addEventListener('click', () => handlePauseRotation());
