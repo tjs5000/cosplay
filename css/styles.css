@@ -122,7 +122,8 @@ justify-content: space-between;
     bottom:100px;
     left:0;
     right:0;
-    z-index:-1;
+    z-index:1;
+    pointer-events: auto;
 }
 
 .model-overlay {
@@ -131,6 +132,7 @@ justify-content: space-between;
     justify-content: center;
     align-items: center;
     background-color: transparent;
+    
 }
 .product-title {
     font-size:1.3rem;
@@ -166,6 +168,9 @@ justify-content: space-between;
     width: 80%;
 }
 
+.mobile-header, footer, .navbar-bottom, .second-level-nav, #optionsContainer, nav {
+    z-index: 10; /* Ensure these elements are above the container */
+}
 .carousel {
     display: flex;
     overflow-x: scroll;
