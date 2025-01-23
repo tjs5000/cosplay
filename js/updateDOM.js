@@ -1,4 +1,3 @@
-import * as Pickr from 'https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js';
 import { changeMaterialColor } from './model-handler.js';
 export function updateCarousel(carousel, data) {
     carousel.innerHTML = '';
@@ -44,8 +43,8 @@ export function updateCustomContent(customContent, colors) {
         // Initialize the Pickr instance for color picking with the current color
         const colorPicker = Pickr.create({
             el: `#color-picker-${label}`,
-            theme: 'nano', // Or 'classic' or 'monolith'
-            default: hex, // Use the current color as the default
+            theme: 'nano',
+            default: hex,
             swatches: [
                 '#FFFFFF', '#030303', '#8C8C8C', '#B3D4DD', '#4E6366', '#E70A0A',
                 '#8D0D00', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4',
@@ -53,29 +52,28 @@ export function updateCustomContent(customContent, colors) {
                 '#FFC107', '#FF9800', '#FF7722'
             ],
             components: {
-                preview: true, // Show preview swatch
-                opacity: false, // No opacity slider
-                hue: true, // Enable hue slider
+                preview: true,
+                opacity: false,
+                hue: true,
                 interaction: {
-                    hex: true,  // Show Hex input
-                    rgba: false,  // Hide RGBA
-                    input: true,  // Allow direct color input
-                    save: false   // Hide save button
+                    hex: true,
+                    rgba: false,
+                    input: true,
+                    save: false
                 }
             }
         });
 
         // Add click event listener to the swatch to open the color picker
         swatchDiv.addEventListener('click', () => {
-            colorPicker.show(); // Show the color picker when the swatch is clicked
+            colorPicker.show();
         });
 
         // Listen for the 'change' event for real-time color updates
         colorPicker.on('change', (color) => {
-            const hexColor = color.toHEXA().toString();  // Convert color to HEX format
+            const hexColor = color.toHEXA().toString();
             swatchDiv.style.backgroundColor = hexColor;  // Update the swatch background color
-            // Apply the color to the model (assuming you have a function for this)
-            changeMaterialColor(label, hexColor);
+            changeMaterialColor(label, hexColor);  // Apply the color to the model
         });
 
         customContent.appendChild(colorCont);

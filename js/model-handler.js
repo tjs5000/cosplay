@@ -412,10 +412,11 @@ export function applyPresetMaterialColors(style) {
 export function changeMaterialColor(materialName, color) {
   if (!model) return;
   model.traverse((child) => {
-    if (child.isMesh && child.material.name === materialName) {
-      child.material.color.set(color);  // Set the new color
-      child.material.needsUpdate = true;  // Ensure the material updates
-    }
+    if (child.isMesh && child.material && child.material.name === materialName) {
+      const color = new THREE.Color(hexColor);
+      child.material.color.set(color);
+      child.material.needsUpdate = true;
+  }
   });
 }
 
@@ -486,120 +487,41 @@ export function clearPrintOnlyTexture() {
   });
 }
 
-
 export function displayMaterialOptions() {
   const materialList = document.getElementById('materialList');
-  materialList.innerHTML = ''; // Clear previous materials
-  const encounteredMaterials = new Set(); // Set to store unique material names
-  const materialsArray = []; // Array to store materials for sorting
-  const originalColors = {}; // Store original preset colors
+  materialList.innerHTML = ''; 
+  const encounteredMaterials = new Set(); 
+  const materialsArray = []; 
   let materialName = null;
 
   if (!model) return;
 
-  // Traverse through the model and find all unique materials
   model.traverse((child) => {
-    if (child.isMesh && child.material) {
-      materialName = child.material.name;
-      if (!materialName || encounteredMaterials.has(materialName)) return; // Skip if material is already added
-      encounteredMaterials.add(materialName); // Add material name to the set
-      materialsArray.push(materialName); // Store material name in array for sorting
-    }
+      if (child.isMesh && child.material) {
+          materialName = child.material.name;
+          if (!materialName || encounteredMaterials.has(materialName)) return;
+          encounteredMaterials.add(materialName);
+          materialsArray.push(materialName);
+      }
   });
 
-
-  // Sort materials alphabetically
   materialsArray.sort((a, b) => a.localeCompare(b));
 
-  // Generate the sorted material list
   materialsArray.forEach((materialName) => {
-    const currentColor = getMaterialColorFromPresetOrCurrent(materialName);
-    const transparentColor = hexToRGBA(currentColor, 0.4); // Adjust alpha as needed
-    // Create material option elements
-    const materialDiv = document.createElement('div');
-    materialDiv.classList.add('material-item');
+      const currentColor = getMaterialColorFromPresetOrCurrent(materialName);
+      const transparentColor = hexToRGBA(currentColor, 0.4);
 
-    const label = document.createElement('label');
-    //label.setAttribute('for', `color-${materialName}`);
-    label.classList.add('material-label');
-    label.innerText = materialName;
+      const materialDiv = document.createElement('div');
+      materialDiv.classList.add('material-item');
 
-    // Create container for the color picker (hidden, the picker will be triggered by clicking the label)
-    const colorPickerContainer = document.createElement('div');
-    colorPickerContainer.id = `color-picker-${materialName}`;
+      const label = document.createElement('label');
+      label.classList.add('material-label');
+      label.innerText = materialName;
 
-    // Set the background of the material-item div to the transparent color
-    materialDiv.style.backgroundColor = transparentColor;
+      materialDiv.style.backgroundColor = transparentColor;
 
-    // Initialize the Pickr instance for color picking with the current color
-    const colorPicker = Pickr.create({
-      el: `#color-picker-${materialName}`,
-      theme: 'nano', // Or 'classic' or 'monolith'
-      default: currentColor, // Use the current color as the default
-      swatches: [
-        /*        // Primary colors
-               '#ffffff', '#111111',  '#F44336', '#E91E63', '#9C27B0', '#673AB7',
-               // Complementary colors
-               '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
-               // Analogous colors
-               '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
-               // Triadic colors
-               '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'
-        */
-        '#FFFFFF',
-        '#030303',
-        // Metallic Tones:
-        '#8C8C8C',
-        '#B3D4DD',
-
-        '#4E6366', '#E70A0A',
-
-        //Complimentary Colors:
-        '#8D0D00', , '#9C27B0', '#673AB7',
-        // Complementary colors
-        '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
-        // Analogous colors
-        '#009688', '#007A02', '#8BC34A', '#CDDC39',
-        // Triadic colors
-        '#FFEB3B', '#FFC107', '#FF9800', '#FF7722'
-      ],
-      components: {
-        preview: true, // Show preview swatch
-        opacity: false, // No opacity slider
-        hue: true, // Enable hue slider
-        interaction: {
-          hex: true,  // Show Hex input
-          rgba: false,  // Hide RGBA
-          input: true,  // Allow direct color input
-          save: false   // Hide save button
-        }
-      }
-    });
-
-    if (currentColor.toLowerCase() === '#ffffff') {
-      colorPicker.setColor('#ffffff');  // Ensure white is applied
-    }
-    // Add click event listener to the label to open the color picker
-    label.addEventListener('click', () => {
-      colorPicker.show(); // Show the color picker when the label is clicked
-    });
-
-    // Listen for the 'change' event for real-time color updates
-    colorPicker.on('change', (color) => {
-      const hexColor = color.toHEXA().toString();  // Convert color to HEX format
-      changeMaterialColor(materialName, hexColor);  // Apply the color to the model
-
-      // Update the Pickr button with the selected color
-      colorPicker.setColor(hexColor);  // Update the button color
-
-      // Update the material-item background with the new color
-      const newTransparentColor = hexToRGBA(hexColor, 0.4);
-      materialDiv.style.backgroundColor = newTransparentColor;
-    });
-
-    materialDiv.appendChild(label);
-    materialDiv.appendChild(colorPickerContainer);
-    materialList.appendChild(materialDiv);
+      materialDiv.appendChild(label);
+      materialList.appendChild(materialDiv);
   });
 }
 
