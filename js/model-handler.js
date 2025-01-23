@@ -5,6 +5,8 @@ import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/exampl
 import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/DRACOLoader.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
 import { fetchColorOptions } from './product-handler.js'; // Assuming this is a relative path
+import * as Pickr from 'https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js';
+
 
 export let scene, camera, renderer, controls;
 export let materialsData = {};
@@ -526,38 +528,6 @@ export function displayMaterialOptions() {
     const colorPickerContainer = document.createElement('div');
     colorPickerContainer.id = `color-picker-${materialName}`;
 
-    // Create the reset button (but prevent it from triggering the color picker)
-    const resetButton = document.createElement('button');
-    resetButton.classList.add('reset-button');
-    resetButton.innerHTML = '<img src="/images/reset.svg">';
-    if (resetButton) {
-      resetButton.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent color picker from opening when the reset button is clicked
-        resetMaterialColor(materialName, colorPicker, originalColors[materialName]);
-      });
-    }
-
-    // Append the label, color picker container, and reset button to the materialDiv
-    materialDiv.appendChild(colorPickerContainer);
-    materialDiv.appendChild(label);
-    materialDiv.appendChild(resetButton);
-    materialList.appendChild(materialDiv); // Append materialDiv to materialList
-
-    handleResize();
-    // Get the current color of the material (either from a preset or user customizations)
-
-    // Store the original preset color for resetting later
-    originalColors[materialName] = currentColor;
-
-    // Set the background of the material-item div to the transparent color
-    materialDiv.style.backgroundColor = transparentColor;
-
-    // Store the original preset color for resetting later
-    originalColors[materialName] = currentColor;
-
-    // Convert hex color to RGBA with transparency (66 is ~40% transparency in hex)
-
-
     // Set the background of the material-item div to the transparent color
     materialDiv.style.backgroundColor = transparentColor;
 
@@ -606,9 +576,6 @@ export function displayMaterialOptions() {
       }
     });
 
-    // Add this after initializing Pickr to forcefully update button for white color
-
-
     if (currentColor.toLowerCase() === '#ffffff') {
       colorPicker.setColor('#ffffff');  // Ensure white is applied
     }
@@ -629,6 +596,10 @@ export function displayMaterialOptions() {
       const newTransparentColor = hexToRGBA(hexColor, 0.4);
       materialDiv.style.backgroundColor = newTransparentColor;
     });
+
+    materialDiv.appendChild(label);
+    materialDiv.appendChild(colorPickerContainer);
+    materialList.appendChild(materialDiv);
   });
 }
 
