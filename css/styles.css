@@ -316,6 +316,7 @@ nav {
 }
 
 .color-container {
+    position:relative;
     padding: 5px;
     max-width: 80px;
     display: flex;
@@ -577,6 +578,88 @@ input:checked+.track:before {
     margin: 0;
     height: calc(100% + 1rem);
     background: rgba(0, 0, 0, 0.50);
+}
+
+
+/* PICKR CUSTOMIZATIONS */
+
+.color-container .pickr{
+    position:absolute;
+    top:0;
+    /* left:0; */
+    right:0;
+    bottom:0;
+    width: 100%;
+}
+
+
+.pcr-app {
+    background-color: #222; /* Dark background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgb(0 0 0 / 30%); /* Subtle shadow */
+    color: #fff; /* White text */
+}
+
+/* Adjusting the color preview ring */
+.pcr-color-preview {
+    border: 2px solid #333; /* Darker border around the color ring */
+    border-radius: 50%; /* Circular preview like in the image */
+}
+
+/* Predefined color swatches */
+.pcr-swatches .pcr-swatches-row .pcr-swatches-item {
+    border-radius: 50%; /* Circular swatches */
+    width: 30px;
+    height: 30px;
+    margin: 5px; /* Space between swatches */
+}
+
+/* Save button customization */
+.color-container .pickr .pcr-button {
+    background-color: transparent !important; /* Bright save button */
+    opacity:0;
+    color: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    height:100%;
+    width:100%;
+}
+
+.pcr-button:hover {
+    background-color: #FF7043; /* Lighter shade on hover */
+}
+
+
+.pcr-app[data-theme="nano"] .pcr-selection .pcr-color-palette .pcr-palette {
+    border-radius: 6px 6px 0 0;
+}
+
+.pcr-app[data-theme="nano"] {
+    width: 14.25em;
+    border-radius: 8px;
+}
+
+.pickr input:focus, .pickr input.pcr-active, .pickr button:focus, .pickr button.pcr-active, .pcr-app input:focus, .pcr-app input.pcr-active, .pcr-app button:focus, .pcr-app button.pcr-active {
+    box-shadow: none !important;
+}
+
+.pcr-app .pcr-swatches>button {
+    box-shadow: 0 1px 3px 0px rgba(0, 0, 0, .25) !important;
+    border-radius: 2px !important;
+}
+
+.pickr .pcr-button::after {
+    border: 1px solid rgb(0 0 0 / 30%);
+    border-radius: 50% !important;
+}
+
+.pickr .pcr-button::before {
+    border-radius: 50% !important;
+    border: 1px solid #333;
+    box-sizing: border-box;
+    box-shadow: 1px 3px 5px rgb(0 0 0 / 20%);
 }
 
 

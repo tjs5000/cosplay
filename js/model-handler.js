@@ -409,7 +409,7 @@ export function applyPresetMaterialColors(style) {
         }
     });
   } */
-export function changeMaterialColor(materialName, color) {
+export function changeMaterialColor(materialName, hexColor) {
   if (!model) return;
   model.traverse((child) => {
     if (child.isMesh && child.material && child.material.name === materialName) {

@@ -1,4 +1,6 @@
 import { changeMaterialColor } from './model-handler.js';
+
+
 export function updateCarousel(carousel, data) {
     carousel.innerHTML = '';
     Object.keys(data).forEach(key => {
@@ -40,6 +42,8 @@ export function updateCustomContent(customContent, colors) {
         colorPickerContainer.id = `color-picker-${label}`;
         colorCont.appendChild(colorPickerContainer);
 
+        customContent.appendChild(colorCont);
+
         // Initialize the Pickr instance for color picking with the current color
         const colorPicker = Pickr.create({
             el: `#color-picker-${label}`,
@@ -75,7 +79,5 @@ export function updateCustomContent(customContent, colors) {
             swatchDiv.style.backgroundColor = hexColor;  // Update the swatch background color
             changeMaterialColor(label, hexColor);  // Apply the color to the model
         });
-
-        customContent.appendChild(colorCont);
     });
 }
