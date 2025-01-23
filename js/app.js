@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const homeButton = document.getElementById('home');
     const armorButton = document.getElementById('armor');
     const weaponsButton = document.getElementById('weapons');
+    const designsButton = document.getElementById('designs');
+    const saveButton = document.getElementById('saveDesigns');
     const cartButton = document.querySelector('.cart-button');
     const moreButton = document.getElementById('more');
     const visualsContent = document.getElementById('visualsContent');
@@ -139,13 +141,23 @@ document.addEventListener('DOMContentLoaded', async function () {
         alert('Weapons Catalog button clicked');
     });
 
-    cartButton.addEventListener('click', function () {
-        alert('Cart button clicked');
+    designsButton.addEventListener('click', function () {
+        alert('My Designs button clicked');
     });
 
     moreButton.addEventListener('click', function () {
         alert('More Menu button clicked');
     });
+
+    cartButton.addEventListener('click', function () {
+        alert('Cart button clicked');
+    });
+
+    
+    saveButton.addEventListener('click', function () {
+        alert('Save Design button clicked');
+    });
+
 
 
 });

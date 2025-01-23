@@ -184,7 +184,7 @@ export function adjustCameraToFitObject(object) {
   const cameraDistance = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
 
   // Adjust the camera position based on the object's size and center
-  camera.position.set(center.x, (center.y + 100), (center.z + 100) + cameraDistance * 1.5); // Adjust multiplier as needed
+  camera.position.set((center.x + 100), (center.y + 150), (center.z + 100) + cameraDistance * 1.5); // Adjust multiplier as needed
   camera.lookAt(center);
 
   // Update camera's projection matrix after resizing or repositioning
@@ -230,7 +230,7 @@ export function loadModel(modelPath, materialPath, onLoadCallback) {
     loader.load(modelPath, function (gltf) {
       model = gltf.scene;
       model.scale.set(1, 1, 1);  // Model scale
-      model.position.set(0, 0, 0);  // Model position
+      model.position.set(0, 30, 0);  // Model position
       model.updateWorldMatrix(true, true);  // Force update world matrix
 
       model.traverse(function (child) {
