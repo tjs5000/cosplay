@@ -17,9 +17,9 @@ export function updateCarousel(carousel, data) {
 
         const label = document.createElement('p');
         label.textContent = key;
-
+itemDiv.appendChild(label);
         itemDiv.appendChild(img);
-        itemDiv.appendChild(label);
+        
         carousel.appendChild(itemDiv);
     });
 }
@@ -32,10 +32,11 @@ export function updateCustomContent(customContent, colors) {
         const swatchDiv = document.createElement('div');
         swatchDiv.className = 'color-swatch';
         swatchDiv.style.backgroundColor = hex;
-        const swatchLabel = document.createElement('span');
-        swatchLabel.textContent = label;
-        colorCont.appendChild(swatchDiv);
+        const swatchLabel = document.createElement('p');
+        swatchLabel.textContent = label.replace(/-/g, ' ');
         colorCont.appendChild(swatchLabel);
+        colorCont.appendChild(swatchDiv);
+        
 
         // Create container for the color picker (hidden, the picker will be triggered by clicking the swatch)
         const colorPickerContainer = document.createElement('div');
@@ -79,6 +80,9 @@ export function updateCustomContent(customContent, colors) {
             const hexColor = color.toHEXA().toString();
             swatchDiv.style.backgroundColor = hexColor;  // Update the swatch background color
             changeMaterialColor(label, hexColor);  // Apply the color to the model
+
+
+            
         });
     });
 }

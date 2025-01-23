@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Lato', 'Roboto', 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     background: #000;
@@ -19,8 +19,8 @@ body {
     justify-content: space-around;
     background-color: #121212;
     color: #fff;
-    border-top: 1px solid #fff;
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.3), inset 0 6px 8px -4px rgba(65, 107, 121,0.25);
     padding: 10px 0;
     z-index: 16;
 }
@@ -267,8 +267,6 @@ border:1px solid #ddd;
 
 
 .mobile-header,
-footer,
-.navbar-bottom,
 .second-level-nav,
 #optionsContainer,
 nav {
@@ -279,30 +277,31 @@ nav {
 .second-level-nav {
     display: flex;
     justify-content: space-evenly;
-    padding: 8px;
+    padding: 16px;
     background-color: #142C3A;
     /* border-top: 1px solid #333; */
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
     margin-bottom: 5px;
     position: relative;
+    height:44px;
 }
 
 
 .second-level-nav:before,
 .second-level-nav:after {
-    font-size: 11px;
-    padding: 4px 14px;
+    font-size: 12px;
+    padding: 4px 20px;
     display: block;
     width: auto;
-    height: 16px;
+    height: 18px;
     background-color: #142C3A;
     position: absolute;
-    top: -13px;
+    top: -16px;
     z-index: -1;
     border-radius: 16px 16px 0 0;
     border-top: 0px solid #333;
-     -webkit-clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%); 
-    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
+    -webkit-clip-path: polygon(15% 0%, 85% 0%, 100% 60%, 100% 100%, 0% 100%, 0% 60%);
+    clip-path: polygon(15% 0%, 85% 0%, 100% 60%, 100% 100%, 0% 100%, 0% 60%);
 }
 
 .second-level-nav:before {
@@ -322,9 +321,9 @@ nav {
     border-radius: 5px;
     cursor: pointer;
     color: #fff;
-     background-color: transparent; 
+    background-color: transparent;
     transition: background-color 1s, box-shadow 0.3s, color 0.2s;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 14px;
     text-transform: capitalize;
     letter-spacing: 1px;
@@ -336,6 +335,16 @@ nav {
     background-color: #37CFFF;
     box-shadow: 0px 0px 8px 0px rgba(55, 207, 255, 0.80);
     color: #1E1E1E;
+}
+
+.vert-rule {
+    display: block;
+    position: relative;
+    top: -16px;
+    width: 4px;
+    margin: 0;
+    height: calc(100% + 2rem);
+    background: rgba(0, 0, 0, 0.50);
 }
 
 .carousel {
@@ -373,27 +382,42 @@ nav {
 }
 
 .carousel-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     min-width: 80px;
-    margin-right: 4px;
+    margin-right: 6px;
     text-align: center;
     padding: 4px;
-    /* background-color: #333; */
+    border:1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
 }
 
 .carousel-item img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     max-width: 60px;
     height: auto;
     border-radius: 5px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 }
 
 .carousel-item p {
-    margin-top: 0px;
-    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 4px 0;
     font-size: 12px;
-    color: #aaa;
+    color: rgba(255, 255, 255, 0.5);
+height:2em;
+width:100%;
+
+    text-align: center;
+    padding: 2px 4px;
+    border-radius:4px;
 }
 
 /* Custom content */
@@ -413,37 +437,67 @@ nav {
 
 .color-container {
     position:relative;
-    padding: 5px;
     max-width: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-right: 15px;
+    margin-right: 8px;
+    width:100%;
+    padding: 4px 8px;
+    border:1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
     /* Add spacing between containers */
+    min-width: 60px;
+    background: radial-gradient(ellipse 90% 40% at 50% 80%, rgba(60, 128, 151, 0.5) , transparent 45%), 
+    radial-gradient(ellipse 90% 40% at 50% 50%, rgb(0, 0, 0) 0% ,rgba(0, 0, 0, 0.5) 10%,  transparent 45%);
+    background-blend-mode: overlay;
 }
 
 .color-swatch {
-    width: 60px;
+    width: 50px;
     /* Use consistent width for easier centering */
-    height: 60px;
-    border-radius: 50%;
+    height: 50px;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 12px;
     color: #fff;
-    background-color: #333;
-    border: 1px solid #fff;
-    box-shadow: 0px 6px 8px 0px rgba(255, 255, 255, 0.25) inset, 0px -16px 8px 0px rgba(0, 0, 0, 0.15) inset;
+    background-color: #fff;
+border-radius: 50%;
+    /* border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0px 6px 8px 0px rgba(255, 255, 255, 0.25) inset, 0px -16px 8px 0px rgba(0, 0, 0, 0.15) inset; */
+    box-shadow:inset 0px 0px 10px 6px rgba(0, 0, 0, 0.25), inset -8px -8px 16px 3px rgba(0, 0, 0, 0.5);
+    -webkit-clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+    clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+/*     background-image: radial-gradient(circle at 25% 35%, rgba(255, 255, 255, .5), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), radial-gradient(circle at 80% 25%, rgba(255, 255, 255, .4) 0%,  rgba(255, 255, 255, 0) 50%);
+ */
+ background: radial-gradient(circle at 30% 30%, rgba(255, 245, 235, 0.8) 0%, rgba(255, 245, 235, 0.3) 15%, transparent 50%),
+ radial-gradient(circle at 60% 25%, rgba(240, 240, 250, 0.6) 0%, rgba(240, 240, 250, 0.3) 10%, transparent 40%),
+ radial-gradient(circle at 50% 50%, transparent, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0) 80%);
+background-blend-mode: hard-light;
 
 }
 
-.color-container span {
-    margin-top: 5px;
+
+.color-swatch , .color-swatch::before{
+-webkit-clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+}
+.color-container p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 4px 0;
     font-size: 12px;
-    color: #aaa;
+    color: rgba(255, 255, 255, 0.5);
+height:2em;
+width:100%;
+
     text-align: center;
+    padding: 2px 4px;
+    border-radius:4px;
 }
 
 
@@ -471,7 +525,7 @@ nav {
     height: 20px;
     border-radius: 50%;
     content: " ";
-    background-image: url(../images/info.svg);
+    background-image: url("/images/info.svg");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -579,7 +633,7 @@ nav {
 
 /* Add-ons content */
 .addons-content, .visuals-content, .presets-content, .custom-content {
-    padding: 20px 24px 30px 24px;
+    padding: 12px 24px 30px 16px;
     background-color: #141419;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3), inset 0 4px 8px -4px rgba(25, 124, 163, 0.5);
     margin-top: 20px;
@@ -755,15 +809,7 @@ input:checked+.track:after {
 }
 
 
-.vert-rule {
-    display: block;
-    position: relative;
-    top: -8px;
-    width: 4px;
-    margin: 0;
-    height: calc(100% + 1rem);
-    background: rgba(0, 0, 0, 0.50);
-}
+
 
 
 /* PICKR CUSTOMIZATIONS */
