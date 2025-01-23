@@ -5,8 +5,13 @@ import { initScene, initCamera, initRenderer, initControls, initLighting, loadMo
 document.addEventListener('DOMContentLoaded', async function () {
     const navItems = document.querySelectorAll('.nav-item');
     const tabs = document.querySelectorAll('.nav-tab');
-    const carousel = document.getElementById('carouselContent');
+    const carousel = document.getElementById('presetsContent');
     const backButton = document.querySelector('.back-button');
+    const homeButton = document.getElementById('home');
+    const armorButton = document.getElementById('armor');
+    const weaponsButton = document.getElementById('weapons');
+    const cartButton = document.querySelector('.cart-button');
+    const moreButton = document.getElementById('more');
     const visualsContent = document.getElementById('visualsContent');
     const addonsContent = document.getElementById('addonsContent');
     const customContent = document.getElementById('customContent');
@@ -29,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     await loadModel(modelPath);
     fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors('Standard Issue', data));
 
-    
+
     defaultTab.classList.add('active');
     fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
 
@@ -50,39 +55,40 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     function switchContent(content) {
-        let currentContent = document.querySelector('.content.active');
-        if (currentContent == null) {
-            currentContent = carousel;
+        let activeContent  = document.querySelector('.content.active');
+        if (activeContent == null) {
+            activeContent = carousel;
         }
+            // Animate current content out
+            activeContent.classList.add('slide-out');
+ 
+            activeContent.addEventListener('animationend', function () { 
+                activeContent.classList.remove('slide-out', 'active');
 
-        const newContent = document.getElementById(`${content}Content`);
+                activeContent.style.display = 'none'; 
 
         let contentHeight = 0;
 
-        if (content === 'presets') {
-            contentHeight = carousel.scrollHeight;
-        } else if (content === 'custom') {
-            contentHeight = customContent.scrollHeight;
-        } else if (content === 'visuals') {
-            contentHeight = visualsContent.scrollHeight;
-        } else if (content === 'addons') {
-            contentHeight = addonsContent.scrollHeight;
-        }
 
-        // Animate current content out
-        currentContent.classList.add('slide-out');
-        currentContent.addEventListener('animationend', function () {
-            currentContent.classList.remove('slide-out', 'active');
-            currentContent.style.display = 'none';
 
-            // Show new content and animate it in
-            newContent.style.display = 'flex'; // or 'block' depending on your layout
-            newContent.classList.add('slide-in', 'active');
-            newContent.addEventListener('animationend', function () {
-                newContent.classList.remove('slide-in');
-                optionsContainer.style.height = `${contentHeight}px`; // Update height after animation
-            }, { once: true });
-        }, { once: true });
+                const newContent = document.getElementById(`${content}Content`);
+                newContent.style.display = 'flex';
+                optionsContainer.style.height = `${newContent.scrollHeight}px`; // Update height after animation
+                newContent.classList.add('slide-in', 'active'); 
+                newContent.addEventListener('animationend', function () { 
+                    newContent.classList.remove('slide-in'); 
+                }, { once: true });
+
+                if (content === 'presets') {
+                    fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
+                } else if (content === 'custom') {
+                    fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
+                } 
+            }, { once: true }); 
+
+
+
+
 
         if (content === 'presets') {
             fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
@@ -90,10 +96,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
         }
     }
-
-    backButton.addEventListener('click', function () {
-        alert('Back button clicked');
-    });
 
     // Add event listener for Battle Damage slider
     const battleDamageSlider = document.getElementById('battle-damage-slider');
@@ -119,4 +121,31 @@ document.addEventListener('DOMContentLoaded', async function () {
             });
         }
     });
+
+
+    backButton.addEventListener('click', function () {
+        alert('Back button clicked');
+    });
+
+    homeButton.addEventListener('click', function () {
+        alert('Home button clicked');
+    });
+
+    armorButton.addEventListener('click', function () {
+        alert('Armor Catalog button clicked');
+    });
+
+    weaponsButton.addEventListener('click', function () {
+        alert('Weapons Catalog button clicked');
+    });
+
+    cartButton.addEventListener('click', function () {
+        alert('Cart button clicked');
+    });
+
+    moreButton.addEventListener('click', function () {
+        alert('More Menu button clicked');
+    });
+
+
 });

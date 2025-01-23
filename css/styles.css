@@ -73,7 +73,7 @@ body {
 
 
 
-.content {
+.content-container {
     padding: 0px;
     display: flex;
     flex-direction: column;
@@ -84,11 +84,16 @@ body {
 
 .logo-container {
     position: relative;
-    margin-right: 20px;
+    margin: 16px auto 0;
 }
 
 .logo {
-    max-width: 60px;
+    max-width: 50px;
+}
+
+.right-top{
+    width:50px;
+    margin-right:16px;
 }
 
 .mobile-header {
@@ -100,20 +105,17 @@ body {
 
 .back-button {
     position: relative;
-    top: 10px;
-    left: 10px;
+    margin:16px 0 0 16px;
     background-color: transparent;
     border: none;
-    padding: 5px 10px;
+    padding: 0px 16px;
     color: #fff;
+    background:rgba(255,255,255,0.1);
+    border-radius:8px;
+    font-size: 16px;
+    height:44px;
 }
 
-.back-button:before {
-    content: "< ";
-    display: inline-block;
-    color: #fff;
-    padding-right: 8px;
-}
 
 .model-container {
     flex: 1;
@@ -151,7 +153,6 @@ body {
 
 
 #optionsContainer {
-    min-height: 135px;
     display: block;
     flex-direction: column;
     text-align: left;
@@ -162,15 +163,16 @@ body {
 }
 
 .fab {
-    background-color: orange;
     border-radius: 6px;
-    padding: 10px;
-    height: 40px;
-    width: 40px;
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 2px 10px 18px 2px rgba(0, 0, 0, .3), inset 0 2px 4px rgba(255, 255, 255, .5);
+    fill: #FF8C37;
+border: 1px solid #B36227;
+box-shadow: 0px -1px 10px 1px rgba(0, 0, 0, 0.30) inset, 0px 5px 56px rgba(0, 0, 0, 0.45);
 
 }
 
@@ -204,16 +206,18 @@ nav {
 .second-level-nav:before,
 .second-level-nav:after {
     font-size: 11px;
-    padding: 2px 14px;
+    padding: 4px 14px;
     display: block;
     width: auto;
     height: 16px;
     background-color: #142C3A;
     position: absolute;
-    top: -14px;
+    top: -13px;
     z-index: -1;
     border-radius: 16px 16px 0 0;
     border-top: 0px solid #333;
+     -webkit-clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%); 
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
 }
 
 .second-level-nav:before {
@@ -311,17 +315,15 @@ nav {
 .custom-content {
     display: flex;
     overflow-x: auto;
-    padding: 12px 20px 24px 20px;
-    background-color: #141419;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
     -ms-overflow-style: none;
     /* Internet Explorer 10+ */
     scrollbar-width: none;
     /* Firefox */
-    justify-content: center;
+    justify-content:flex-start;
     /* Center the swatches */
     pointer-events: auto;
     cursor: grab;
+
 }
 
 .color-container {
@@ -414,14 +416,19 @@ nav {
 }
 
 /* Add-ons content */
-.addons-content {
-    padding: 20px;
+.addons-content, .visuals-content, .presets-content, .custom-content {
+    padding: 20px 24px 30px 24px;
     background-color: #141419;
-    border-radius: 10px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3), inset 0 4px 8px -4px rgba(25, 124, 163, 0.5);
     margin-top: 20px;
     display: none;
-    flex-direction: column;
+}
+.addons-content, .visuals-content{
+flex-direction: column;
+}
+.presets-content {
+    display: flex;
+    flex-direction: row;
 }
 
 .addons-content.active {
@@ -576,10 +583,10 @@ input:checked+.track:before {
 .vert-rule {
     display: block;
     position: relative;
-    top: -10px;
+    top: -8px;
     width: 4px;
     margin: 0;
-    height: calc(100% + 18px);
+    height: calc(100% + 1rem);
     background: rgba(0, 0, 0, 0.50);
 }
 
@@ -601,11 +608,13 @@ input:checked+.track:before {
     0% {
         transform: translateY(0);
         opacity: 1;
+        z-index:1;
     }
 
     100% {
         transform: translateY(100%);
         opacity: 0;
+        z-index:1;
     }
 }
 
@@ -613,18 +622,25 @@ input:checked+.track:before {
     0% {
         transform: translateY(100%);
         opacity: 0;
+        z-index:4;
+    }
+    50% {
+        transform: translateY(100%);
+        opacity: 0;
+        z-index:4;
     }
 
     100% {
         transform: translateY(0);
         opacity: 1;
+        z-index:4;
     }
 }
 
 .slide-out {
-    animation: slideOut 0.5s forwards;
+    animation: slideOut 0.25s forwards;
 }
 
 .slide-in {
-    animation: slideIn 0.5s forwards;
+    animation: slideIn 0.35s forwards;
 }
