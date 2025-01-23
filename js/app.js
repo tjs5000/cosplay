@@ -57,46 +57,40 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     function switchContent(content) {
-        let activeContent  = document.querySelector('.content.active');
-        if (activeContent == null) {
+        let activeContent = document.querySelector('.content.active');
+        if (!activeContent) {
             activeContent = carousel;
         }
-            // Animate current content out
-            activeContent.classList.add('slide-out');
- 
-            activeContent.addEventListener('animationend', function () { 
-                activeContent.classList.remove('slide-out', 'active');
+        // Animate current content out
+        activeContent.classList.add('slide-out');
+        console.log('Added slide-out to active content:', activeContent);
 
-                activeContent.style.display = 'none'; 
+        activeContent.addEventListener('animationend', function handleAnimationEnd() {
+            console.log('Animation ended for:', activeContent);
+            activeContent.classList.remove('slide-out', 'active');
+            activeContent.style.display = 'none';
 
-        let contentHeight = 0;
+            let contentHeight = 0;
 
+            const newContent = document.getElementById(`${content}Content`);
+            newContent.style.display = 'flex';
+            newContent.classList.add('slide-in', 'active');
+            console.log('Added slide-in to new content:', newContent);
+            optionsContainer.style.height = `${newContent.scrollHeight}px`; 
+            
+            newContent.addEventListener('animationend', function () {
+                newContent.classList.remove('slide-in');
+                console.log('Removed slide-in from new content:', newContent);
+            }, { once: true });
 
+            optionsContainer.style.height = `${newContent.scrollHeight}px`;
 
-                const newContent = document.getElementById(`${content}Content`);
-                newContent.style.display = 'flex';
-                optionsContainer.style.height = `${newContent.scrollHeight}px`; // Update height after animation
-                newContent.classList.add('slide-in', 'active'); 
-                newContent.addEventListener('animationend', function () { 
-                    newContent.classList.remove('slide-in'); 
-                }, { once: true });
-
-                if (content === 'presets') {
-                    fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
-                } else if (content === 'custom') {
-                    fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
-                } 
-            }, { once: true }); 
-
-
-
-
-
-        if (content === 'presets') {
-            fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
-        } else if (content === 'custom') {
-            fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
-        }
+            if (content === 'presets') {
+                fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
+            } else if (content === 'custom') {
+                fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
+            }
+        }, { once: true });
     }
 
     // Add event listener for Battle Damage slider
@@ -153,7 +147,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         alert('Cart button clicked');
     });
 
-    
+
     saveButton.addEventListener('click', function () {
         alert('Save Design button clicked');
     });

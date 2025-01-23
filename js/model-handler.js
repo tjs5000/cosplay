@@ -79,8 +79,8 @@ export function initRenderer() {
 
   // Function to pause auto-rotation for 30 seconds
   function handlePauseRotation() {
-    console.log('Event type:', event.type);
-    console.log('Is rotating:', isRotating);
+    //console.log('Event type:', event.type);
+    //console.log('Is rotating:', isRotating);
     if (rotationTimeout) {
       clearTimeout(rotationTimeout);
     }
@@ -365,7 +365,7 @@ export function updateMaterials() {
 
 export function applyPresetMaterialColors(style) {
   if (!model) {
-    console.error('Model not loaded yet. Cannot apply preset material colors.');
+    // console.error('Model not loaded yet. Cannot apply preset material colors.');
     return;
   }
   if (!materialsData[style]) {
