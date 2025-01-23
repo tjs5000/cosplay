@@ -57,6 +57,7 @@ body {
      top:unset !important; 
      bottom:220px !important; 
     max-height:220px;
+    max-width:380px;
     height: 2;
     left:0;
      right:0; 
