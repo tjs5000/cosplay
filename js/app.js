@@ -1,6 +1,8 @@
 import { fetchPresets, fetchCustomContent, fetchHTMLContent } from './fetchData.js';
 import { updateCarousel, updateCustomContent } from './updateDOM.js';
 import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateMaterials, applyDamageTexture, updateDamageTexture, updateQuality, materialsData } from './model-handler.js';
+import { saveCurrentDesign } from './saveDesign.js';
+import { loadDesign } from './loadDesign.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
     const navItems = document.querySelectorAll('.nav-item');
@@ -248,9 +250,9 @@ battleDamageSlider.addEventListener('input', function () {
         alert('Weapons Catalog button clicked');
     });
 
-    designsButton.addEventListener('click', function () {
-        alert('My Designs button clicked');
-    });
+    designsButton.addEventListener('click', () => {
+    window.location.href = 'myDesigns.html';
+  });
 
     moreButton.addEventListener('click', function () {
         alert('More Menu button clicked');
@@ -261,9 +263,7 @@ battleDamageSlider.addEventListener('input', function () {
     });
 
 
-    saveButton.addEventListener('click', function () {
-        alert('Save Design button clicked');
-    });
+    saveButton.addEventListener('click', saveCurrentDesign);
 
 
 
