@@ -16,6 +16,7 @@ let isRotating = true;
 let rotationTimeout; // Store the timeout ID globally
 export let isModelLoaded = false; // Track if the model is loaded
 
+
 // Scene Initialization
 export function initScene() {
   scene = new THREE.Scene();
@@ -27,7 +28,9 @@ export function initScene() {
 export function initCamera() {
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.set(-20, 0, 550);
+
 }
+
 
 // Renderer Initialization
 export function initRenderer() {
@@ -88,7 +91,10 @@ export function animate() {
     controls.update();  // Smoothly update camera controls
 
   }
-
+  if (enableProjection && projectorCamera) {
+    projectorCamera.position.set(0, 100, 100); // Update as needed
+    projectorCamera.lookAt(new THREE.Vector3(0, 0, 0));
+  }
   renderer.render(scene, camera);  // Render the scene
 }
 
@@ -221,12 +227,12 @@ export function loadModel(modelPath, materialPath, onLoadCallback) {
       model.scale.set(1, 1, 1);  // Model scale
       model.position.set(0, 0, 0);  // Model position
       model.updateWorldMatrix(true, true);  // Force update world matrix
-
       model.traverse(function (child) {
         if (child.isMesh && child.material.name) {
           originalMaterialColors[child.material.name] = child.material.color.getHexString();
         }
       });
+    
 
       scene.add(model);  // Add the model to the scene
       isModelLoaded = true;  // Mark model as loaded
@@ -353,6 +359,7 @@ export function updateMaterials() {
       reject(error);  // Reject the promise if an error occurs
     }
   });
+
 }
 
 

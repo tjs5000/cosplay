@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const addonsContent = document.getElementById('addonsContent');
     const customContent = document.getElementById('customContent');
     const optionsContainer = document.getElementById('optionsContainer');
+    
 
     const jsonFilePath = '/data/mk50_materials.json';
     const modelPath = '/models/MK50_Sidekick.glb';
@@ -61,7 +62,50 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (!activeContent) {
             activeContent = carousel;
         }
+    
         // Animate current content out
+        activeContent.classList.add('slide-out');
+    
+        // Use a timeout as a fallback
+        const animationTimeout = setTimeout(() => {
+            handleAnimationEnd(activeContent, content);
+        }, 400); // Adjust timeout duration as needed
+    
+        activeContent.addEventListener('animationend', function handleAnimationEndEvent() {
+            clearTimeout(animationTimeout);
+            handleAnimationEnd(activeContent, content);
+            activeContent.removeEventListener('animationend', handleAnimationEndEvent);
+        });
+    }
+    
+    function handleAnimationEnd(activeContent, content) {
+        activeContent.classList.remove('slide-out', 'active');
+        activeContent.style.display = 'none';
+    
+        // Show the new content
+        const newContent = document.getElementById(`${content}Content`);
+        newContent.style.display = 'flex';
+        newContent.classList.add('slide-in', 'active');
+        newContent.addEventListener('animationend', function () {
+            newContent.classList.remove('slide-in');
+        }, { once: true });
+    
+        // Update container height
+        optionsContainer.style.height = `${newContent.scrollHeight}px`;
+    
+        // Update content based on the selected tab
+        if (content === 'presets') {
+            fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
+        } else if (content === 'custom') {
+            fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
+        } else if (content === 'visuals') {
+            // Handle visuals content update here if needed
+        } else if (content === 'addons') {
+            // Handle add-ons content update here if needed
+        }
+    }
+
+        /* // Animate current content out
         activeContent.classList.add('slide-out');
         console.log('Added slide-out to active content:', activeContent);
 
@@ -91,7 +135,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
             }
         }, { once: true });
-    }
+    } */
 
     // Add event listener for Battle Damage slider
     const battleDamageSlider = document.getElementById('battle-damage-slider');
@@ -101,6 +145,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         const damageLevel = damageLevels[battleDamageSlider.value];
         battleDamageValue.textContent = damageLevel.charAt(0).toUpperCase() + damageLevel.slice(1);
         updateDamageTexture(damageLevel);
+    });
+
+    // Add event listener for Battle Damage slider
+    const qualitySlider = document.getElementById('finishing-quality-slider');
+    const qualityValue = document.getElementById('finishing-quality-value');
+    qualitySlider.addEventListener('input', function () {
+        const qualityLevels = ['Print Only', 'Basic', 'Standard', 'High'];
+        const qualityLevel = qualityLevels[qualitySlider.value];
+        qualityValue.textContent = qualityLevel.charAt(0).toUpperCase() + qualityLevel.slice(1);
+        updateDamageTexture(qualityLevel);
+
     });
 
     // Add event listener for Presets carousel
@@ -117,6 +172,64 @@ document.addEventListener('DOMContentLoaded', async function () {
             });
         }
     });
+
+// Define color variables
+const colors = {
+    filled: "#00bfff", // Filled segments
+    empty: "#515155",    // Unfilled segments
+    ticks: "#202629",   // Boundary lines
+};
+
+function updateSliderBackground(slider) {
+    const max = parseInt(slider.max);
+    const value = parseInt(slider.value);
+    const step = 100 / max; // Width of each segment
+    const filledSegments = value;
+
+    let gradientStops = [];
+
+    // Loop through each segment and set the color based on whether it's filled
+    for (let i = 0; i <= max; i++) {
+        const start = i * step;
+        const end = start + step - 1;
+
+        if (i < filledSegments) {
+            // Filled segment (blue)
+            gradientStops.push(`${colors.filled} ${start}%, ${colors.filled} ${end}%`);
+        } else {
+            // Unfilled segment (gray)
+            gradientStops.push(`${colors.empty} ${start}%, ${colors.empty} ${end}%`);
+        }
+
+        // Add white boundary between segments
+        if (i < max) {
+            const boundaryStart = end + 1;
+            gradientStops.push(`${colors.ticks} ${boundaryStart}%, ${colors.ticks} ${boundaryStart + 1}%`);
+        }
+    }
+
+    // Set the background style dynamically
+    slider.style.background = `linear-gradient(to right, ${gradientStops.join(", ")})`;
+}
+
+// Attach event listeners to all sliders with the class "custom-slider"
+const sliders = document.querySelectorAll(".custom-slider");
+sliders.forEach(slider => {
+    slider.addEventListener("input", () => updateSliderBackground(slider));
+
+    // Set initial background state
+    updateSliderBackground(slider);
+});
+
+// Existing event listeners for sliders
+
+battleDamageSlider.addEventListener('input', function () {
+    const damageLevels = ['new', 'minimal', 'moderate', 'heavy', 'extreme'];
+    const damageLevel = damageLevels[battleDamageSlider.value];
+    battleDamageValue.textContent = damageLevel.charAt(0).toUpperCase() + damageLevel.slice(1);
+    updateDamageTexture(damageLevel);
+});
+
 
 
     backButton.addEventListener('click', function () {

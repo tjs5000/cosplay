@@ -48,12 +48,13 @@ export function updateCustomContent(customContent, colors) {
         const colorPicker = Pickr.create({
             el: `#color-picker-${label}`,
             theme: 'nano',
+            appClass: 'custom-class',
             default: hex,
             swatches: [
-                '#FFFFFF', '#030303', '#8C8C8C', '#B3D4DD', '#4E6366', '#E70A0A',
+                '#FFFFFF', '#030303', '#8C8C8C', '#A9A9A9', '#B3D4DD', '#4E6366', '#E70A0A',
                 '#8D0D00', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4',
                 '#00BCD4', '#009688', '#007A02', '#8BC34A', '#CDDC39', '#FFEB3B',
-                '#FFC107', '#FF9800', '#FF7722'
+                '#FFC107',  '#FF9800','#FF7722', '#4B5320',  '#2F4F4F'
             ],
             components: {
                 preview: true,

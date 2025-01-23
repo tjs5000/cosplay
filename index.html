@@ -11,7 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@100..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css" />
-    <script type="importmap"> { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js" } } </script>
+    <script
+        type="importmap"> { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js" } } </script>
 
 </head>
 
@@ -55,19 +56,29 @@
             <span>Save Design</span>
         </div>
         <div id="optionsContainer">
-            <div class="carousel presets-content" id="presetsContent"> <!-- Carousel items will be dynamically inserted here --> </div>
+            <div class="carousel presets-content" id="presetsContent">
+                <!-- Carousel items will be dynamically inserted here -->
+            </div>
 
             <div class="visuals-content content" id="visualsContent" style="display: none;">
                 <!-- Visuals content goes here -->
                 <div class="slider-container">
-                    <label for="battle-damage-slider">Battle Damage <span class="info-icon" data-info="battle-damage-info">ⓘ</span></label>
-                    <input type="range" id="battle-damage-slider" min="0" max="5" step="1" value="2">
-                    <span id="battle-damage-value">Normal</span>
+                    <label for="battle-damage-slider">Battle Damage </label>
+                    <div class="slider-control">
+                        <input type="range" class="custom-slider" id="battle-damage-slider" min="0" max="4" step="1"
+                            value="2">
+                        <span id="battle-damage-value">Moderate</span><span class="info-icon"
+                            data-info="battle-damage-info"></span>
+
+                    </div>
                 </div>
                 <div class="slider-container">
-                    <label for="finishing-quality-slider">Finishing Quality <span class="info-icon" data-info="finishing-quality-info">ⓘ</span></label>
-                    <input type="range" id="finishing-quality-slider" min="0" max="3" step="1" value="2">
-                    <span id="finishing-quality-value">Standard</span>
+                    <label for="finishing-quality-slider">Finishing Quality </label>
+                    <div class="slider-control">
+                        <input type="range" class="custom-slider" id="finishing-quality-slider" min="0" max="3" step="1" value="2">
+                        <span id="finishing-quality-value">Standard</span><span class="info-icon"
+                            data-info="finishing-quality-info"></span>
+                    </div>
                 </div>
             </div>
 
@@ -75,31 +86,34 @@
                 <!-- Add-ons content goes here -->
                 <div class="addon-item">
                     <label class="switch">
-                        <input type="checkbox" id="movable-components" name="movable-components">
+                        <input type="checkbox" id="movable-components" name="movable-components" checked>
                         <span class="track"></span>
                     </label>
-                    <label for="movable-components">Movable Components</label> <span class="info-icon" data-info="movable-components-info">ⓘ</span>
+                    <label for="movable-components">Movable Components</label> <span class="info-icon"
+                        data-info="movable-components-info"></span>
                 </div>
                 <div class="addon-item">
                     <label class="switch">
-                        <input type="checkbox" id="leds" name="leds">
+                        <input type="checkbox" id="leds" name="leds" checked>
                         <span class="track"></span>
                     </label>
-                    <label for="leds">LEDs</label>  <span class="info-icon" data-info="leds-info">ⓘ</span>
+                    <label for="leds">LEDs</label> <span class="info-icon" data-info="leds-info"></span>
                 </div>
                 <div class="addon-item">
                     <label class="switch">
-                        <input type="checkbox" id="removable-accessories" name="removable-accessories">
+                        <input type="checkbox" id="removable-accessories" name="removable-accessories" checked>
                         <span class="track"></span>
                     </label>
-                    <label for="removable-accessories">Removable Accessories</label>  <span class="info-icon" data-info="removable-accessories-info">ⓘ</span>
+                    <label for="removable-accessories">Removable Accessories</label> <span class="info-icon"
+                        data-info="removable-accessories-info"></span>
                 </div>
                 <div class="addon-item">
                     <label class="switch">
                         <input type="checkbox" id="touch-screen" name="touch-screen">
                         <span class="track"></span>
                     </label>
-                    <label for="touch-screen">Touch Screen Control</label>  <span class="info-icon" data-info="touch-screen-info">ⓘ</span>
+                    <label for="touch-screen">Touch Screen Control</label> <span class="info-icon"
+                        data-info="touch-screen-info"></span>
                 </div>
             </div>
 
@@ -126,55 +140,55 @@
     </div>
 
 </body>
-    <!-- Import three.js and other modules as ES modules -->
-   
-    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+<!-- Import three.js and other modules as ES modules -->
 
-    <!-- Import your app scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
-    <script type="module" src="./js/app.js"></script>
-    <script type="module" src="./js/bottomSheet.js"></script>
-    <script type="module" src="./js/model-handler.js"></script>
-    <script>
-    // JavaScript code for enabling click-and-drag scrolling
-    document.addEventListener('DOMContentLoaded', () => {
-        const carousels = document.querySelectorAll('.carousel, .custom-content');
-        carousels.forEach(carousel => {
-            let isDown = false;
-            let startX;
-            let scrollLeft;
+<!-- Import your app scripts -->
 
-            carousel.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                carousel.scrollLeft += e.deltaY;
-            });
+<script type="module" src="./js/app.js"></script>
+<script type="module" src="./js/bottomSheet.js"></script>
+<script type="module" src="./js/model-handler.js"></script>
+<script>
+           // JavaScript code for enabling click-and-drag scrolling
+           document.addEventListener('DOMContentLoaded', () => {
+            const carousels = document.querySelectorAll('.carousel, .custom-content');
+            carousels.forEach(carousel => {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
 
-            carousel.addEventListener('mousedown', (e) => {
-                isDown = true;
-                carousel.classList.add('active');
-                startX = e.pageX - carousel.offsetLeft;
-                scrollLeft = carousel.scrollLeft;
-            });
+                carousel.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    carousel.scrollLeft += e.deltaY;
+                });
 
-            carousel.addEventListener('mouseleave', () => {
-                isDown = false;
-                carousel.classList.remove('active');
-            });
+                carousel.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    carousel.classList.add('active');
+                    startX = e.pageX - carousel.offsetLeft;
+                    scrollLeft = carousel.scrollLeft;
+                });
 
-            carousel.addEventListener('mouseup', () => {
-                isDown = false;
-                carousel.classList.remove('active');
-            });
+                carousel.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    carousel.classList.remove('active');
+                });
 
-            carousel.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - carousel.offsetLeft;
-                const walk = (x - startX) * 2; // Scroll-fast
-                carousel.scrollLeft = scrollLeft - walk;
+                carousel.addEventListener('mouseup', () => {
+                    isDown = false;
+                    carousel.classList.remove('active');
+                });
+
+                carousel.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - carousel.offsetLeft;
+                    const walk = (x - startX) * 2; // Scroll-fast
+                    carousel.scrollLeft = scrollLeft - walk;
+                });
             });
         });
-    });
 </script>
 
 </html>
