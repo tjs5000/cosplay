@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error loading content:', error));
     }
 
+    // Make loadContent globally accessible
+    window.loadContent = loadContent;
+
     const navButtons = document.querySelectorAll('.nav-item');
     navButtons.forEach(button => {
         button.addEventListener('click', () => {
