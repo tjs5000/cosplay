@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                          button.id === 'weapons' ? 'weaponsCatalog.html' : 
                          button.id === 'designs' ? 'myDesigns.html' : 
                          button.id === 'more' ? 'moreContent.html' : 
+                         button.id === 'cart' ? 'cart.html' : 
                          'homeContent.html';
             loadContent(page);
         });
