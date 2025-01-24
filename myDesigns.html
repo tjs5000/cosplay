@@ -13,6 +13,20 @@
     type="importmap"> { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js" } } </script>
 </head>
 <body>
+    <div class="mobile-header">
+        <button class="back-button">Back</button>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Logo" class="logo">
+        </div>
+        <div class="right-top cart-button"><img src="images/cart.svg" alt="Cart"></div>
+    </div>
+
+    <div id="three-container" class="model-container"></div>
+
+    <div class="designs-container" id="designsContainer">
+        <!-- Design items will be dynamically inserted here -->
+    </div>
+
     <div class="navbar-bottom">
         <div class="nav-item" id="home">
             <img src="images/home-icon.png" alt="Home">
@@ -30,41 +44,12 @@
             <img src="images/home-icon.png" alt="Designs">
             <span>My Designs</span>
         </div>
-
         <div class="nav-item" id="more">
             <img src="images/home-icon.png" alt="More">
             <span>More</span>
         </div>
     </div>
-    <div class="mobile-header">
-        <button class="back-button">Back</button>
-        <div class="logo-container">
-            <img src="images/logo.png" alt="Logo" class="logo">
-        </div>
-        <div class="right-top cart-button"><img src="images/cart.svg" alt="Cart"></div>
-    </div>
-    
-    <div class="designs-container" id="designsContainer">
-        <!-- Design items will be dynamically inserted here -->
-    </div>
 
-    <script type="module" src="./js/app.js"></script>
-    <script type="module" src="./js/loadDesign.js"></script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const designsContainer = document.getElementById('designsContainer');
-            const designs = JSON.parse(localStorage.getItem('designs')) || {};
-
-            Object.keys(designs).forEach(designName => {
-                const designDiv = document.createElement('div');
-                designDiv.className = 'design-item';
-                designDiv.textContent = designName;
-                designDiv.addEventListener('click', () => loadDesign(designName));
-                designsContainer.appendChild(designDiv);
-            });
-        });
-    </script>
+    <script type="module" src="./js/loadDesigns.js"></script>
 </body>
 </html>

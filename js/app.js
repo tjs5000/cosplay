@@ -2,7 +2,7 @@ import { fetchPresets, fetchCustomContent, fetchHTMLContent } from './fetchData.
 import { updateCarousel, updateCustomContent } from './updateDOM.js';
 import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateMaterials, applyDamageTexture, updateDamageTexture, updateQuality, materialsData } from './model-handler.js';
 import { saveCurrentDesign } from './saveDesign.js';
-import { loadDesign } from './loadDesign.js';
+import { loadDesign } from './loadDesigns.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
     const navItems = document.querySelectorAll('.nav-item');
@@ -238,8 +238,8 @@ battleDamageSlider.addEventListener('input', function () {
         alert('Back button clicked');
     });
 
-    homeButton.addEventListener('click', function () {
-        alert('Home button clicked');
+    homeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
     });
 
     armorButton.addEventListener('click', function () {

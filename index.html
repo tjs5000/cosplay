@@ -49,147 +49,34 @@
         <div class="right-top cart-button"><img src="images/cart.svg" alt="Cart"></div>
     </div>
     <div id="three-container" class="model-container"></div>
-    <div class="content-container">
-
-        <h1 class="product-title">Mark VII Chest and Back Armor</h1>
-        <div class="model-overlay"></div>
-        <div class="fab" id="saveDesigns">
-            <span>Save Design</span>
+    <div id="contentContainer"class="content-container"></div>
+    <!-- Bottom sheet container -->
+    <div class="scrim" id="scrim"></div>
+    <div class="bottom-sheet" id="bottomSheet">
+        <button class="close-btn" id="closeBtn">X</button>
+        <div class="bottom-sheet-content" id="bottomSheetContent">
         </div>
-        <div id="optionsContainer">
-            <div class="carousel presets-content" id="presetsContent">
-                <!-- Carousel items will be dynamically inserted here -->
-            </div>
-
-            <div class="visuals-content content" id="visualsContent" style="display: none;">
-                <!-- Visuals content goes here -->
-                <div class="slider-container">
-                    <label for="battle-damage-slider">Battle Damage </label>
-                    <div class="slider-control">
-                        <input type="range" class="custom-slider" id="battle-damage-slider" min="0" max="4" step="1"
-                            value="2">
-                        <span id="battle-damage-value">Moderate</span><span class="info-icon"
-                            data-info="battle-damage-info"></span>
-
-                    </div>
-                </div>
-                <div class="slider-container">
-                    <label for="finishing-quality-slider">Finishing Quality </label>
-                    <div class="slider-control">
-                        <input type="range" class="custom-slider" id="finishing-quality-slider" min="0" max="3" step="1" value="2">
-                        <span id="finishing-quality-value">Standard</span><span class="info-icon"
-                            data-info="finishing-quality-info"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="addons-content content" id="addonsContent" style="display: none;">
-                <!-- Add-ons content goes here -->
-                <div class="addon-item">
-                    <label class="switch">
-                        <input type="checkbox" id="movable-components" name="movable-components" checked>
-                        <span class="track"></span>
-                    </label>
-                    <label for="movable-components">Movable Components</label> <span class="info-icon"
-                        data-info="movable-components-info"></span>
-                </div>
-                <div class="addon-item">
-                    <label class="switch">
-                        <input type="checkbox" id="leds" name="leds" checked>
-                        <span class="track"></span>
-                    </label>
-                    <label for="leds">LEDs</label> <span class="info-icon" data-info="leds-info"></span>
-                </div>
-                <div class="addon-item">
-                    <label class="switch">
-                        <input type="checkbox" id="removable-accessories" name="removable-accessories" checked>
-                        <span class="track"></span>
-                    </label>
-                    <label for="removable-accessories">Removable Accessories</label> <span class="info-icon"
-                        data-info="removable-accessories-info"></span>
-                </div>
-                <div class="addon-item">
-                    <label class="switch">
-                        <input type="checkbox" id="touch-screen" name="touch-screen">
-                        <span class="track"></span>
-                    </label>
-                    <label for="touch-screen">Touch Screen Control</label> <span class="info-icon"
-                        data-info="touch-screen-info"></span>
-                </div>
-            </div>
-
-            <div class="custom-content content" id="customContent" style="display: none;">
-                <!-- Custom content will be dynamically loaded here -->
-            </div>
-        </div>
-        <div class="second-level-nav">
-            <button class="nav-tab active" data-content="presets">Presets</button>
-            <button class="nav-tab" data-content="custom">Custom</button>
-            <div class="vert-rule"></div>
-            <button class="nav-tab" data-content="visuals">Visuals</button>
-            <button class="nav-tab" data-content="addons">Add-ons</button>
-        </div>
-
-        <!-- Bottom sheet container -->
-        <div class="scrim" id="scrim"></div>
-        <div class="bottom-sheet" id="bottomSheet">
-            <button class="close-btn" id="closeBtn">X</button>
-            <div class="bottom-sheet-content" id="bottomSheetContent">
-            </div>
-        </div>
-
     </div>
-
 </body>
 <!-- Import three.js and other modules as ES modules -->
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('modelViewer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('contentContainer').innerHTML = data;
+            });
+    });
+</script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
 <!-- Import your app scripts -->
 
-<script type="module" src="./js/app.js"></script>
 <script type="module" src="./js/bottomSheet.js"></script>
 <script type="module" src="./js/model-handler.js"></script>
-<script>
-           // JavaScript code for enabling click-and-drag scrolling
-           document.addEventListener('DOMContentLoaded', () => {
-            const carousels = document.querySelectorAll('.carousel, .custom-content');
-            carousels.forEach(carousel => {
-                let isDown = false;
-                let startX;
-                let scrollLeft;
-
-                carousel.addEventListener('wheel', (e) => {
-                    e.preventDefault();
-                    carousel.scrollLeft += e.deltaY;
-                });
-
-                carousel.addEventListener('mousedown', (e) => {
-                    isDown = true;
-                    carousel.classList.add('active');
-                    startX = e.pageX - carousel.offsetLeft;
-                    scrollLeft = carousel.scrollLeft;
-                });
-
-                carousel.addEventListener('mouseleave', () => {
-                    isDown = false;
-                    carousel.classList.remove('active');
-                });
-
-                carousel.addEventListener('mouseup', () => {
-                    isDown = false;
-                    carousel.classList.remove('active');
-                });
-
-                carousel.addEventListener('mousemove', (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.pageX - carousel.offsetLeft;
-                    const walk = (x - startX) * 2; // Scroll-fast
-                    carousel.scrollLeft = scrollLeft - walk;
-                });
-            });
-        });
-</script>
 
 </html>

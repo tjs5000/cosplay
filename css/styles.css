@@ -503,7 +503,7 @@ width:100%;
 
 
 .visuals-content {
-    display: none;
+    /* display: none; */
     flex-direction: column;
     padding: 20px;
     background-color: #141419;
@@ -637,7 +637,7 @@ width:100%;
     background-color: #141419;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3), inset 0 4px 8px -4px rgba(25, 124, 163, 0.5);
     margin-top: 20px;
-    display: none;
+    /* display: none; */
 }
 .addons-content, .visuals-content{
 flex-direction: column;
