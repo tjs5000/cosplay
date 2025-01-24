@@ -126,15 +126,11 @@ border:1px solid #ddd;
     flex-direction: column;
     flex: 1;
     padding-bottom: 80px;
-    /* position:fixed; */
     top:80px;
     bottom:0;
     left:0;
     right:0;
     z-index: 2;
-    
-    /* Adjust this value to ensure the content stays above the navbar */
-    /* pointer-events: none; */
 }
 
 .logo-container {

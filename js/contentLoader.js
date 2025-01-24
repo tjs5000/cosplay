@@ -24,6 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
             loadContent(page);
         });
     });
+    document.getElementById('contentContainer').addEventListener('click', function (event) {
+        if (event.target && event.target.id === 'selectedProduct') {
+            loadContent('modelEditor.html');
+        }
+    });
 
     // Load the default page
     loadContent('homeContent.html');
