@@ -126,11 +126,16 @@ border:1px solid #ddd;
     flex-direction: column;
     flex: 1;
     padding-bottom: 80px;
-    top:80px;
-    bottom:0;
-    left:0;
-    right:0;
-    z-index: 2;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.content-container * {
+    pointer-events:all;
+}
+
+.content-container .model-overlay{
+    pointer-events:none;
 }
 
 .logo-container {
@@ -214,7 +219,7 @@ border:1px solid #ddd;
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    pointer-events: n;
+   
 }
 
 .product-title {
@@ -804,8 +809,39 @@ input:checked+.track:after {
     display: block;
 }
 
+.catProductContainer{
+    display:flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    /* background-color:#000; */
+    border:none;
+    padding:0;
+    margin:24px;
+    /* width:80px; */
+    /* height:80px; */
+}
 
+.catProduct{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background-color:#000;
+    border:none;
+    padding:4px;
+    margin:0;
+    width:100px;
+    border-radius:10px;
+    color:#fff;
+}
 
+.catProduct img{
+    width:100%;
+    pointer-events: none;
+    border-radius:10px 10px 0 0;
+    margin:4px;
+}
 
 
 /* PICKR CUSTOMIZATIONS */

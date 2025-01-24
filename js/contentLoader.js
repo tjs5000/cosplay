@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-    function loadContent(page) {
+    function loadContent(page, modelPath, jsonFilePath) {
         fetch(page)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('contentContainer').innerHTML = data;
                 if (page === 'modelEditor.html') {
                     import('./app.js').then(module => {
-                        module.initializeModelEditor();
+                        module.initializeModelEditor(modelPath, jsonFilePath);
                     });
                 }
             })
@@ -30,8 +30,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
     document.getElementById('contentContainer').addEventListener('click', function (event) {
-        if (event.target && event.target.id === 'selectedProduct') {
-            loadContent('modelEditor.html');
+        if (event.target && event.target.classList.contains('catProduct')) {
+            const modelPath = event.target.getAttribute('data-model');
+            const jsonFilePath = event.target.getAttribute('data-json');
+            loadContent('modelEditor.html', modelPath, jsonFilePath);
         }
     });
 
