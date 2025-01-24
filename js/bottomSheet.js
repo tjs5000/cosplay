@@ -3,13 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const bottomSheetContent = document.getElementById('bottomSheetContent');
     const closeBtn = document.getElementById('closeBtn');
     const scrim = document.getElementById('scrim');
-    const infoIcons = document.querySelectorAll('.info-icon');
 
-    infoIcons.forEach(icon => {
-        icon.addEventListener('click', function() {
-            const infoId = this.getAttribute('data-info');
+    document.body.addEventListener('click', function(event) {
+        if (event.target.classList.contains('info-icon')) {
+            const infoId = event.target.getAttribute('data-info');
             showBottomSheet(infoId);
-        });
+        }
     });
 
     bottomSheet.addEventListener('click', function(event) {
