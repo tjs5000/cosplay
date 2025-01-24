@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import cgi
 import cgitb
 import smtplib
+import json
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 
 cgitb.enable()  # Enable error logging for debugging
 
@@ -14,38 +14,36 @@ SMTP_PORT = 587
 EMAIL_ADDRESS = "sscp@burstingattheseams.com"  # Replace with your email
 EMAIL_PASSWORD = "ipaSparkyturned5%"  # Replace with your email password
 
-print("Content-type: text/html\n")  # Required for CGI scripts
+print("Content-type: application/json\n")  # Set correct content type
 
 def send_contact_form(name, email, subject, message):
     try:
         # Create the email
-        msg = MIMEMultipart()
+        body = """
+        This email is from the SSCP Contact Form. Do not reply to this email.
+        
+        Name: %s
+        Email: %s
+        Subject: %s
+        Message:
+        %s
+        """ % (name, email, subject, message)
+        msg = MIMEText(body)
         msg["From"] = EMAIL_ADDRESS
         msg["To"] = EMAIL_ADDRESS
-        msg["Subject"] = f"New Contact Form Submission: {subject}"
-
-        # Email body
-        body = f"""
-        You have received a new contact form submission:
-        
-        Name: {name}
-        Email: {email}
-        Subject: {subject}
-        Message:
-        {message}
-        """
-        msg.attach(MIMEText(body, "plain"))
+        msg["Subject"] = "SSCP Contact Form Submission: %s" % subject
 
         # Connect to the SMTP server
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
-            server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-            server.send_message(msg)
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+        server.starttls()  # Secure the connection
+        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)  # Login to the server
+        server.sendmail(EMAIL_ADDRESS, EMAIL_ADDRESS, msg.as_string())  # Send the email
+        server.quit()  # Disconnect from the server
 
-        return "Email sent successfully!"
+        return True
 
     except Exception as e:
-        return f"An error occurred: {e}"
+        return False
 
 # Get form data
 form = cgi.FieldStorage()
@@ -55,18 +53,10 @@ subject = form.getvalue("subject")
 message = form.getvalue("message")
 
 # Send the email
-response = send_contact_form(name, email, subject, message)
+email_sent = send_contact_form(name, email, subject, message)
 
-# Return response to the browser
-print(f"""
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Contact Form</title>
-</head>
-<body>
-    <h1>{response}</h1>
-    <p><a href="/">Go Back</a></p>
-</body>
-</html>
-""")
+# Redirect the user
+if email_sent:
+    response = {"status": "success", "redirect": "/?c=sent"} if email_sent else {"status": "error", "redirect": "/?c=error"}
+
+print(json.dumps(response))
