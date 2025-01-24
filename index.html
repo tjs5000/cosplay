@@ -61,21 +61,11 @@
 <!-- Import three.js and other modules as ES modules -->
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        fetch('modelEditor.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('contentContainer').innerHTML = data;
-            });
-    });
-</script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
 <!-- Import your app scripts -->
-
+<script type="module" src="./js/contentLoader.js"></script>
 <script type="module" src="./js/bottomSheet.js"></script>
 <script type="module" src="./js/model-handler.js"></script>
 
