@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.text())
             .then(data => {
                 document.getElementById('contentContainer').innerHTML = data;
+                if (page === 'modelEditor.html') {
+                    import('./app.js').then(module => {
+                        module.initializeModelEditor();
+                    });
+                }
             })
             .catch(error => console.error('Error loading content:', error));
     }

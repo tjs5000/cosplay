@@ -214,7 +214,7 @@ border:1px solid #ddd;
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    pointer-events: all;
+    pointer-events: n;
 }
 
 .product-title {
