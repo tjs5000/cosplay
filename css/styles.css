@@ -971,6 +971,15 @@ input:checked+.track:after {
     /* height:80px; */
 }
 
+.catProductContainer h2{
+    color:#fff;
+    font-size:24px;
+    font-weight:500;
+    width:100%;
+    margin:0 0 16px 0;
+    padding:0;
+}
+
 .catProduct{
     display:flex;
     flex-direction:column;

@@ -1,6 +1,10 @@
 <h1 class="title">Weapons Catalog</h1>
 <div class="catProductContainer">   
-<button class="catProduct"  data-model="MK50_Sidekick.glb" data-json="mk50_materials.json"><img
-    src="/images/products/mk50_Render.png" alt="MK50 Sidekick" />
-    MK50 Sidekick</button>
+<!-- Auto Populated -->
 </div>
+
+<script>
+    loadContent('weaponsCatalog.html', null, '/data/weapon_products.json', function() {
+        console.log('Callback after content loaded for weaponsCatalog.html'); 
+    });
+</script>

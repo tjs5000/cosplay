@@ -1,3 +1,5 @@
+import { loadAndGenerateCatalog } from './loadCatalog.js';
+
 document.addEventListener('DOMContentLoaded', function () {
     let originPage = 'homeContent.html'; // Default origin page
     const navPageIds = ['home', 'armor', 'weapons', 'designs', 'contact'];
@@ -8,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 document.getElementById('contentContainer').innerHTML = data;
 
-                // Page conditional checks for attatching event listeners
+                // Page conditional checks for attaching event listeners
                 if (page === 'homeContent.html') {
                     const contactLink = document.getElementById('contact-link');
                     if (contactLink) {
@@ -40,16 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
 
-                // Load the loadCatalog.js script when armorCatalog.html is loaded
-                if (page === 'armorCatalog.html') {
-                    const script = document.createElement('script');
-                    script.src = 'js/loadCatalog.js'; // Adjust the path as needed
-                    script.onload = function() {
-                        if (typeof callback === 'function') {
-                            callback();
-                        }
-                    };
-                    document.body.appendChild(script);
+                // Load the loadCatalog.js script when armorCatalog.html or weaponsCatalog.html is loaded
+                if (jsonFilePath) {
+                    loadAndGenerateCatalog(jsonFilePath, '.catProductContainer');
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
                 } else {
                     if (typeof callback === 'function') {
                         callback();
@@ -72,8 +70,11 @@ document.addEventListener('DOMContentLoaded', function () {
                                 pageId === 'sent' ? 'sentContent.html' :
                                     pageId === 'error' ? 'errorContent.html' :
                                         'homeContent.html';
+        const jsonFilePath = pageId === 'armor' ? '/data/armor_products.json' :
+            pageId === 'weapons' ? '/data/weapon_products.json' : null;
+
         originPage = page;
-        loadContent(page);
+        loadContent(page, null, jsonFilePath);
 
         // Update the URL
         const newUrl = `${window.location.origin}${window.location.pathname}?c=${pageId}`;
