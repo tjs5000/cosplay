@@ -1,6 +1,6 @@
 import { fetchPresets, fetchCustomContent } from './fetchData.js';
 import { updateCarousel, updateCustomContent, applyPresetColors, updateSwatchColors } from './updateDOM.js';
-import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateDamageTexture, materialsData  } from './model-handler.js';
+import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateDamageTexture, materialsData } from './model-handler.js';
 import { saveCurrentDesign } from './saveDesign.js';
 import { loadDesign } from './loadDesigns.js';
 
@@ -38,6 +38,12 @@ export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', json
                 tabs.forEach(tab => tab.classList.remove('active'));
                 this.classList.add('active');
                 switchContent(content);
+                // Show or hide the Save Design button based on the active tab
+                if (content === 'custom') {
+                    saveButton.style.display = 'flex';
+                } else {
+                    saveButton.style.display = 'none';
+                }
             });
         });
 
@@ -116,59 +122,55 @@ export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', json
         });
 
         // Define color variables
-const colors = {
-    filled: "#00bfff", // Filled segments
-    empty: "#515155",    // Unfilled segments
-    ticks: "#202629",   // Boundary lines
-};
+        const colors = {
+            filled: "#00bfff", // Filled segments
+            empty: "#515155",    // Unfilled segments
+            ticks: "#202629",   // Boundary lines
+        };
 
-function updateSliderBackground(slider) {
-    const max = parseInt(slider.max);
-    const value = parseInt(slider.value);
-    const step = 100 / max; // Width of each segment
-    const filledSegments = value;
+        function updateSliderBackground(slider) {
+            const max = parseInt(slider.max);
+            const value = parseInt(slider.value);
+            const step = 100 / max; // Width of each segment
+            const filledSegments = value;
 
-    let gradientStops = [];
+            let gradientStops = [];
 
-    // Loop through each segment and set the color based on whether it's filled
-    for (let i = 0; i <= max; i++) {
-        const start = i * step;
-        const end = start + step - 1;
+            // Loop through each segment and set the color based on whether it's filled
+            for (let i = 0; i <= max; i++) {
+                const start = i * step;
+                const end = start + step - 1;
 
-        if (i < filledSegments) {
-            // Filled segment (blue)
-            gradientStops.push(`${colors.filled} ${start}%, ${colors.filled} ${end}%`);
-        } else {
-            // Unfilled segment (gray)
-            gradientStops.push(`${colors.empty} ${start}%, ${colors.empty} ${end}%`);
+                if (i < filledSegments) {
+                    // Filled segment (blue)
+                    gradientStops.push(`${colors.filled} ${start}%, ${colors.filled} ${end}%`);
+                } else {
+                    // Unfilled segment (gray)
+                    gradientStops.push(`${colors.empty} ${start}%, ${colors.empty} ${end}%`);
+                }
+
+                // Add white boundary between segments
+                if (i < max) {
+                    const boundaryStart = end + 1;
+                    gradientStops.push(`${colors.ticks} ${boundaryStart}%, ${colors.ticks} ${boundaryStart + 1}%`);
+                }
+            }
+
+            // Set the background style dynamically
+            slider.style.background = `linear-gradient(to right, ${gradientStops.join(", ")})`;
         }
 
-        // Add white boundary between segments
-        if (i < max) {
-            const boundaryStart = end + 1;
-            gradientStops.push(`${colors.ticks} ${boundaryStart}%, ${colors.ticks} ${boundaryStart + 1}%`);
-        }
-    }
+        // Attach event listeners to all sliders with the class "custom-slider"
+        const sliders = document.querySelectorAll(".custom-slider");
+        sliders.forEach(slider => {
+            slider.addEventListener("input", () => updateSliderBackground(slider));
 
-    // Set the background style dynamically
-    slider.style.background = `linear-gradient(to right, ${gradientStops.join(", ")})`;
-}
+            // Set initial background state
+            updateSliderBackground(slider);
+        });
 
-// Attach event listeners to all sliders with the class "custom-slider"
-const sliders = document.querySelectorAll(".custom-slider");
-sliders.forEach(slider => {
-    slider.addEventListener("input", () => updateSliderBackground(slider));
-
-    // Set initial background state
-    updateSliderBackground(slider);
-});
-
-// Existing event listeners for sliders
-
-
-
-
-
+ // Call updateCustomContent to generate the swatches
+        fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
         saveButton.addEventListener('click', saveCurrentDesign);
     }
 }

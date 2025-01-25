@@ -289,7 +289,7 @@ border:1px solid #ddd;
     height: 24px;
     width: 90px;
     margin-left:auto;
-    display: flex;
+    display: none;
     white-space: nowrap;
     justify-content: center;
     align-items: center;
