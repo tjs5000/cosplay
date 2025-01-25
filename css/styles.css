@@ -979,7 +979,7 @@ input:checked+.track:after {
     display: block;
 }
 
-.catProductContainer{
+#catProductContainer{
     display:flex;
     flex-direction:row;
     flex-wrap: wrap;
@@ -992,7 +992,7 @@ input:checked+.track:after {
     /* height:80px; */
 }
 
-.catProductContainer h2{
+#catProductContainer h2{
     color:#fff;
     font-size:24px;
     font-weight:500;

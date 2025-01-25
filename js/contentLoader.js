@@ -45,8 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Load the loadCatalog.js script when armorCatalog.html or weaponsCatalog.html is loaded
+                if (page === 'armorCatalog.html' || page === 'weaponsCatalog.html'){
                 if (jsonFilePath) {
-                    loadAndGenerateCatalog(jsonFilePath, '.catProductContainer');
+                    loadAndGenerateCatalog(jsonFilePath, '#catProductContainer');
                     if (typeof callback === 'function') {
                         callback();
                     }
@@ -55,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         callback();
                     }
                 }
+            }
                 reattachEventListeners();
             })
             .catch(error => console.error('Error loading content:', error));

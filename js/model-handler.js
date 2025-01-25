@@ -271,16 +271,7 @@ export function loadModel(modelPath, materialPath, onLoadCallback) {
 
     // Load material options if materialPath is provided
     if (materialPath) {
-      fetchColorOptions(materialPath)
-        .then(() => {
-          materialsData = data; // Assign fetched data to materialsData
-          console.log('Materials data loaded:', materialsData); // Debugging statement
-          resolve();  // Resolve after materials are applied
-        })
-        .catch(error => {
-          console.error('Error loading materials:', error);
-          reject(error);
-        });
+      resolve();
     } else {
       // Resolve the promise if no materialPath is provided
       resolve();
