@@ -1,4 +1,4 @@
-import { changeMaterialColor } from './model-handler.js';
+import { changeMaterialColor, loadModel } from './model-handler.js';
 
 export function loadDesign(designName) {
     console.log(`Loading design: ${designName}`); // Debug log
@@ -9,11 +9,31 @@ export function loadDesign(designName) {
         console.warn(`Design not found: ${designName}`); // Debug log
         return;
     }
+    fetch(design.productPath)
+        .then(response => response.json())
+        .then(productData => {
+            if (productData.model) {
+                const modelPath = `/models/${productData.model}`;
+                loadModel(modelPath).then(() => {
+                    console.log(`Model ${productData.model} loaded successfully.`);
+                    applyColors(design.colors);
 
+                }).catch(error => {
+                    console.error('Error loading model:', error);
+                });
+            } else {
+                console.error('Model path not found in product data');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading product data:', error);
+        });
+
+}
+
+
+function applyColors(design) {
     Object.entries(design).forEach(([colorName, colorValue]) => {
-        console.log(`Applying color: ${colorName} with value: ${colorValue}`); // Debug log
-        const swatch = document.querySelector(`.color-swatch span[textContent="${colorName}"]`).parentNode;
-        swatch.style.backgroundColor = colorValue;
         // Apply color to model
         changeMaterialColor(colorName, colorValue);
     });
