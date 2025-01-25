@@ -25,7 +25,7 @@ itemDiv.appendChild(label);
 }
 
 export function updateCustomContent(customContent, colors) {
-    customContent.innerHTML = '';
+    customContent.innerHTML = ''; // Generate swatches once
     Object.entries(colors).forEach(([label, hex]) => {
         const colorCont = document.createElement('div');
         colorCont.className = 'color-container';
@@ -36,26 +36,22 @@ export function updateCustomContent(customContent, colors) {
         swatchLabel.textContent = label.replace(/-/g, ' ');
         colorCont.appendChild(swatchLabel);
         colorCont.appendChild(swatchDiv);
-        
 
-        // Create container for the color picker (hidden, the picker will be triggered by clicking the swatch)
         const colorPickerContainer = document.createElement('div');
         colorPickerContainer.id = `color-picker-${label}`;
         colorCont.appendChild(colorPickerContainer);
 
         customContent.appendChild(colorCont);
 
-        // Initialize the Pickr instance for color picking with the current color
         const colorPicker = Pickr.create({
             el: `#color-picker-${label}`,
             theme: 'nano',
             appClass: 'custom-class',
             default: hex,
-            swatches: [
-                '#FFFFFF', '#030303', '#8C8C8C', '#A9A9A9', '#B3D4DD', '#4E6366', '#E70A0A',
+            swatches: ['#FFFFFF', '#030303', '#8C8C8C', '#A9A9A9', '#B3D4DD', '#4E6366', '#E70A0A',
                 '#8D0D00', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4',
                 '#00BCD4', '#009688', '#007A02', '#8BC34A', '#CDDC39', '#FFEB3B',
-                '#FFC107',  '#FF9800','#FF7722', '#4B5320',  '#2F4F4F'
+                '#FFC107', '#FF9800','#FF7722', '#4B5320', '#2F4F4F'
             ],
             components: {
                 preview: true,
@@ -70,19 +66,28 @@ export function updateCustomContent(customContent, colors) {
             }
         });
 
-        // Add click event listener to the swatch to open the color picker
         swatchDiv.addEventListener('click', () => {
             colorPicker.show();
         });
 
-        // Listen for the 'change' event for real-time color updates
         colorPicker.on('change', (color) => {
             const hexColor = color.toHEXA().toString();
-            swatchDiv.style.backgroundColor = hexColor;  // Update the swatch background color
-            changeMaterialColor(label, hexColor);  // Apply the color to the model
-
-
-            
+            swatchDiv.style.backgroundColor = hexColor;
+            changeMaterialColor(label, hexColor);
         });
     });
 }
+
+export function updateSwatchColors(customContent, colors) {
+    Object.entries(colors).forEach(([label, hex]) => {
+        const swatchDiv = document.querySelector(`#color-picker-${label}`).previousSibling;
+        swatchDiv.style.backgroundColor = hex;
+    });
+}
+// Add function to apply preset colors
+
+export function applyPresetColors(presetColors) {
+    const customContent = document.getElementById('customContent');
+    updateCustomContent(customContent, presetColors);
+    
+    }

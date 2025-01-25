@@ -1,5 +1,5 @@
 import { fetchPresets, fetchCustomContent } from './fetchData.js';
-import { updateCarousel, updateCustomContent } from './updateDOM.js';
+import { updateCarousel, updateCustomContent, applyPresetColors, updateSwatchColors } from './updateDOM.js';
 import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateDamageTexture, materialsData  } from './model-handler.js';
 import { saveCurrentDesign } from './saveDesign.js';
 import { loadDesign } from './loadDesigns.js';
@@ -82,10 +82,9 @@ export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', json
             if (content === 'presets') {
                 fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
             } else if (content === 'custom') {
-                fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
+                fetchCustomContent(jsonFilePath).then(data => updateSwatchColors(customContent, data["Standard Issue"].colors));
             }
         }
-
         // Add event listener for sliders
         function setupSlider(sliderId, valueId, valuesArray, updateFunction) {
             const slider = document.getElementById(sliderId);
@@ -110,6 +109,7 @@ export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', json
                     const presetColors = data[presetName]?.colors;
                     if (presetColors) {
                         applyPresetMaterialColors(presetName);
+                        applyPresetColors(presetColors);
                     }
                 });
             }

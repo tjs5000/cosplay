@@ -1,4 +1,5 @@
 import { loadAndGenerateCatalog } from './loadCatalog.js';
+import { reattachEventListeners } from './eventHandlers.js'
 
 document.addEventListener('DOMContentLoaded', function () {
     let originPage = 'homeContent.html'; // Default origin page
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         callback();
                     }
                 }
+                reattachEventListeners();
             })
             .catch(error => console.error('Error loading content:', error));
     }
