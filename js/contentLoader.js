@@ -7,6 +7,20 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.text())
             .then(data => {
                 document.getElementById('contentContainer').innerHTML = data;
+
+
+                // Page conditional checks for attatching event listeners
+
+                if (page === 'homeContent.html') {
+                    const contactLink = document.getElementById('contact-link');
+                    if (contactLink) {
+                        contactLink.addEventListener('click', function () {
+                            handleNavigation('contact');
+                        });
+                    }
+                }
+
+
                 if (page === 'modelEditor.html') {
                     document.querySelector('.back-button').style.display = 'block'; // Show Back button
                     import('./app.js').then(module => {
@@ -17,41 +31,41 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Check if the loaded content is `contact.html`
-            if (page === 'contact.html') {
-                console.log("Contact page loaded");
-                const form = document.querySelector('form');
-                if (form) {
-                    console.log("Form found in dynamically loaded content");
-                    form.addEventListener('submit', function (event) {
-                        event.preventDefault();
-                        console.log("Form submitted");
-                        const formData = new FormData(event.target);
-                        fetch(event.target.action, {
-                            method: 'POST',
-                            body: formData,
-                        })
-                            .then((response) => {
-                                if (!response.ok) {
-                                    throw new Error(`HTTP error! Status: ${response.status}`);
-                                }
-                                return response.json();
+                if (page === 'contact.html') {
+                    console.log("Contact page loaded");
+                    const form = document.querySelector('form');
+                    if (form) {
+                        console.log("Form found in dynamically loaded content");
+                        form.addEventListener('submit', function (event) {
+                            event.preventDefault();
+                            console.log("Form submitted");
+                            const formData = new FormData(event.target);
+                            fetch(event.target.action, {
+                                method: 'POST',
+                                body: formData,
                             })
-                            .then((data) => {
-                                if (data.status === 'success') {
-                                    handleNavigation('sent');
-                                } else {
+                                .then((response) => {
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! Status: ${response.status}`);
+                                    }
+                                    return response.json();
+                                })
+                                .then((data) => {
+                                    if (data.status === 'success') {
+                                        handleNavigation('sent');
+                                    } else {
+                                        handleNavigation('error');
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error('Error:', error);
                                     handleNavigation('error');
-                                }
-                            })
-                            .catch((error) => {
-                                console.error('Error:', error);
-                                handleNavigation('error');
-                            });
-                    });
-                } else {
-                    console.error("Form not found in dynamically loaded content");
+                                });
+                        });
+                    } else {
+                        console.error("Form not found in dynamically loaded content");
+                    }
                 }
-            }
             })
             .catch(error => console.error('Error loading content:', error));
     }
@@ -60,15 +74,15 @@ document.addEventListener('DOMContentLoaded', function () {
     window.loadContent = loadContent;
 
     function handleNavigation(pageId) {
-        const page = pageId === 'home' ? 'homeContent.html' : 
-                     pageId === 'armor' ? 'armorCatalog.html' : 
-                     pageId === 'weapons' ? 'weaponsCatalog.html' : 
-                     pageId === 'designs' ? 'myDesigns.html' : 
-                     pageId === 'contact' ? 'contact.html' : 
-                     pageId === 'cart' ? 'cart.html' : 
-                     pageId === 'sent' ? 'sentContent.html' : 
-                     pageId === 'error' ? 'errorContent.html' : 
-                     'homeContent.html';
+        const page = pageId === 'home' ? 'homeContent.html' :
+            pageId === 'armor' ? 'armorCatalog.html' :
+                pageId === 'weapons' ? 'weaponsCatalog.html' :
+                    pageId === 'designs' ? 'myDesigns.html' :
+                        pageId === 'contact' ? 'contact.html' :
+                            pageId === 'cart' ? 'cart.html' :
+                                pageId === 'sent' ? 'sentContent.html' :
+                                    pageId === 'error' ? 'errorContent.html' :
+                                        'homeContent.html';
         originPage = page;
         loadContent(page);
 
@@ -76,8 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const newUrl = `${window.location.origin}${window.location.pathname}?c=${pageId}`;
         window.history.pushState({ page: pageId }, '', newUrl);
         if (navPageIds.includes(pageId)) {
-        navButtons.forEach(nav => nav.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active')
+            navButtons.forEach(nav => nav.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active')
         }
     }
 
@@ -138,4 +152,5 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('home').classList.add('active');
         }
     });
+
 });
