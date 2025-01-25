@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let originPage = 'homeContent.html'; // Default origin page
     const navPageIds = ['home', 'armor', 'weapons', 'designs', 'contact'];
 
-    function loadContent(page, modelPath, jsonFilePath) {
+    function loadContent(page, modelPath, jsonFilePath, callback) {
         fetch(page)
             .then(response => response.text())
             .then(data => {
@@ -65,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         console.error("Form not found in dynamically loaded content");
                     }
+                }
+                if (typeof callback === "function") {
+                    callback();
                 }
             })
             .catch(error => console.error('Error loading content:', error));
