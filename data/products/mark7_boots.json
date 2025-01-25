@@ -1,9 +1,6 @@
 {
     "title": "Mark VII Boots",
     "description": "latest MARK VII iteration refreshes the Mjolnir technical architecture with breakthroughs in neural interfaces, shield emitters, fusion power, and armor formulation. Available in multiple styles and colors.",
-    "thumbnails": [
-      "/images/products/mark7_boots.png"
-    ],
     "model": "/models/Mark7_Boots.glb",
     "colorOptions": "/data/mark7_boots_materials.json",
     "damageOptions": [

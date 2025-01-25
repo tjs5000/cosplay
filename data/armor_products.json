@@ -1,11 +1,4 @@
 {
-  "mk50": {
-    "name": "MK50 Sidekick",
-    "default": true,
-    "type": "Weapon",
-    "heroImage": "/images/products/MK50_Render.png",
-    "data": "/data/products/mk50.json"
-  },
   "helmet": {
     "name": "Helmet",
     "type": "Mark VII Armor",

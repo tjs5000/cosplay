@@ -1,9 +1,6 @@
 {
     "title": "Mark VII Chest and Back",
     "description": "latest MARK VII iteration refreshes the Mjolnir technical architecture with breakthroughs in neural interfaces, shield emitters, fusion power, and armor formulation. Available in multiple styles and colors.",
-    "thumbnails": [
-      "/images/products/mark7_chest.png"
-    ],
     "model": "/models/Mark7_Chest.glb",
     "colorOptions": "/data/mark7_chest_materials.json",
     "damageOptions": [

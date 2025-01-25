@@ -1,10 +1,6 @@
 {
     "title": "MK50 Sidekick",
     "description": "The MK50 Sidekick pistol is a reliable sidearm used in various military operations. Available in multiple styles and colors.",
-    "thumbnails": [
-      "/images/products/MK50_Render.png",
-      "/images/products/MK50_Separated_Render.png"
-    ],
     "model": "/models/MK50_Sidekick.glb",
     "colorOptions": "/data/mk50_materials.json",
     "damageOptions": [
