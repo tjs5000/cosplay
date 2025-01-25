@@ -1,4 +1,4 @@
-import { changeMaterialColor, loadModel, applyPresetMaterialColors } from './model-handler.js';
+import { changeMaterialColor, loadModel, applyPresetMaterialColors, materialsData } from './model-handler.js';
 
 export function loadDesign(designName) {
     console.log(`Loading design: ${designName}`); // Debug log
@@ -30,6 +30,17 @@ function applyColors(colors) {
     });
 }
 
+export function initializeDesigns() {
+    listDesigns();
+
+    // Load designs from local storage and assign to materialsData
+    const designs = JSON.parse(localStorage.getItem('designs')) || {};
+    Object.assign(materialsData, designs);
+    console.log('materialsData updated with local storage designs:', materialsData);
+}
+
+
+
 export function listDesigns() {
     console.log(`Listing designs...`); // Debug log
     const designsContainer = document.getElementById('designsContainer');
@@ -49,9 +60,4 @@ export function listDesigns() {
             designsContainer.appendChild(designDiv);
         });
     }
-}
-
-// Export the listDesigns function to be used as a callback
-export function initializeDesigns() {
-    listDesigns();
 }

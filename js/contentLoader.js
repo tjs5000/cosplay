@@ -51,12 +51,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (typeof callback === 'function') {
                         callback();
                     }
-                } else {
-                    if (typeof callback === 'function') {
-                        callback();
-                    }
+                } 
+            }
+            if (page === 'myDesigns.html') {
+                if (typeof callback === 'function') {
+                    callback();
                 }
             }
+
                 reattachEventListeners();
             })
             .catch(error => console.error('Error loading content:', error));
