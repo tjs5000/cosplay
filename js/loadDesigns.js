@@ -1,4 +1,4 @@
-import { changeMaterialColor, loadModel } from './model-handler.js';
+import { changeMaterialColor, loadModel, applyPresetMaterialColors } from './model-handler.js';
 
 export function loadDesign(designName) {
     console.log(`Loading design: ${designName}`); // Debug log
@@ -16,7 +16,7 @@ export function loadDesign(designName) {
         console.log(`Fetching model from: ${modelPath}`); // Log the productPath URL
         loadModel(modelPath).then(() => {
             console.log(`Model ${modelPath} loaded successfully.`);
-            applyColors(design.colors);
+            applyPresetMaterialColors('Custom', design.colors);
         }).catch(error => {
             console.error('Error loading model:', error);
         });

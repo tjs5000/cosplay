@@ -194,7 +194,7 @@ export function adjustCameraToFitObject(object) {
 }
 
 // Load 3D Model
-export function loadModel(modelPath, materialPath, onLoadCallback) {
+export function loadModel(modelPath, colors, onLoadCallback) {
   return new Promise((resolve, reject) => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
@@ -270,8 +270,8 @@ export function loadModel(modelPath, materialPath, onLoadCallback) {
     });
 
     // Load material options if materialPath is provided
-    if (materialPath) {
-      resolve();
+    if (colors) {
+      applyPresetMaterialColors('Custom', colors);
     } else {
       // Resolve the promise if no materialPath is provided
       resolve();
