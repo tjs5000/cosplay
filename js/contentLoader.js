@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (page === 'modelEditor.html') {
                     document.querySelector('.back-button').style.display = 'block'; // Show Back button
                     import('./app.js').then(module => {
-                        module.initializeModelEditor(modelPath, jsonFilePath);
+                        module.initializeModelEditor(modelPath, jsonFilePath, originPage);
                     });
                 } else {
                     document.querySelector('.back-button').style.display = 'none'; // Hide Back button

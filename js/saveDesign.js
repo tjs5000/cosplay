@@ -1,4 +1,4 @@
-export function saveCurrentDesign() {
+export function saveCurrentDesign(productCat, productPath) {
   const designName = prompt("Enter a name for your design:");
   if (!designName) return;
 
@@ -15,7 +15,11 @@ export function saveCurrentDesign() {
   });
 
   const designs = JSON.parse(localStorage.getItem('designs')) || {};
-  designs[designName] = currentColors;
+  designs[designName] = {
+      productCat: productCat,
+      productPath: productPath,
+      colors: currentColors
+  };
   localStorage.setItem('designs', JSON.stringify(designs));
 }
 

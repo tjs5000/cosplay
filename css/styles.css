@@ -385,6 +385,23 @@ nav {
     text-align: center;
     font-size:14px;
     color:rgba(255, 255, 255, 0.75);
+    z-index:2;
+    position:absolute;
+    max-height:400px;
+    overflow-y:auto;
+    bottom:80px;
+    left:0;
+    right:0;
+    border:1px solid rgba(255, 255, 255, 0.2);
+    background:rgba(0, 0, 0, 0.5);
+}
+
+.design-item {
+    font-size:18px;
+    color:#fff;
+    margin:10px 0;
+    padding:10px 0;
+    border-bottom:1px solid rgba(255, 255, 255, 0.2);
 }
 
 .contact-container {
@@ -895,13 +912,7 @@ input:checked+.track:after {
 }
 
 
-.design-item {
-    font-size:18px;
-    color:#fff;
-    margin:10px 0;
-    padding:10px 0;
-    border-bottom:1px solid rgba(255, 255, 255, 0.2);
-}
+
 
 
 /* Bottom sheet */

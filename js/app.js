@@ -4,7 +4,7 @@ import { initScene, initCamera, initRenderer, initControls, initLighting, loadMo
 import { saveCurrentDesign } from './saveDesign.js';
 import { loadDesign } from './loadDesigns.js';
 
-export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', jsonSrc = 'mk50_materials.json') {
+export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', jsonSrc = 'mk50_materials.json', originPage = 'armor') {
     if (document.querySelector('.product-title')) {
         const tabs = document.querySelectorAll('.nav-tab');
         const carousel = document.getElementById('presetsContent');
@@ -16,6 +16,9 @@ export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', json
 
         const jsonFilePath = '/data/materials/' + jsonSrc;
         const modelPath = '/models/' + modelSrc;
+        const productCat = originPage.includes('armor') ? 'armor' : 'weapon'; // Example logic to determine productCat
+        const productPath = jsonSrc; // Assuming jsonSrc is the product JSON file path
+
         const defaultTab = document.querySelector('.nav-tab[data-content="presets"]');
 
         // Initialize scene, camera, renderer, controls, and lighting
@@ -171,6 +174,6 @@ export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', json
 
  // Call updateCustomContent to generate the swatches
         fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
-        saveButton.addEventListener('click', saveCurrentDesign);
+        saveButton.addEventListener('click', () => saveCurrentDesign(productCat, productPath));
     }
 }
