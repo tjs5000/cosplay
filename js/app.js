@@ -14,7 +14,7 @@ export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', json
         const customContent = document.getElementById('customContent');
         const optionsContainer = document.getElementById('optionsContainer');
 
-        const jsonFilePath = '/data/' + jsonSrc;
+        const jsonFilePath = '/data/materials/' + jsonSrc;
         const modelPath = '/models/' + modelSrc;
         const defaultTab = document.querySelector('.nav-tab[data-content="presets"]');
 
