@@ -80,8 +80,13 @@ export function updateCustomContent(customContent, colors) {
 
 export function updateSwatchColors(customContent, colors) {
     Object.entries(colors).forEach(([label, hex]) => {
-        const swatchDiv = document.querySelector(`#color-picker-${label}`).previousSibling;
-        swatchDiv.style.backgroundColor = hex;
+        const colorPickerElement = document.querySelector(`#color-picker-${label}`);
+        if (colorPickerElement) {
+            const swatchDiv = colorPickerElement.previousSibling;
+            if (swatchDiv) {
+                swatchDiv.style.backgroundColor = hex;
+            }
+        }
     });
 }
 // Add function to apply preset colors

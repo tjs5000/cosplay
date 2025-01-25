@@ -1,6 +1,7 @@
 import { loadAndGenerateCatalog } from './loadCatalog.js';
 import { reattachEventListeners } from './eventHandlers.js'
 
+
 document.addEventListener('DOMContentLoaded', function () {
     let originPage = 'homeContent.html'; // Default origin page
     const navPageIds = ['home', 'armor', 'weapons', 'designs', 'contact'];
@@ -76,7 +77,9 @@ document.addEventListener('DOMContentLoaded', function () {
             pageId === 'weapons' ? '/data/weapon_products.json' : null;
 
         originPage = page;
-        loadContent(page, null, jsonFilePath);
+        // Add the callback for myDesigns.html
+        const callback = pageId === 'designs' ? () => import('./loadDesigns.js').then(module => module.initializeDesigns()) : null;
+        loadContent(page, null, jsonFilePath, callback);
 
         // Update the URL
         const newUrl = `${window.location.origin}${window.location.pathname}?c=${pageId}`;
