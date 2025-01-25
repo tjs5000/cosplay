@@ -1,8 +1,8 @@
 {
   "title": "Mark VII Helmet",
   "description": "Latest MARK VII iteration refreshes the Mjolnir technical architecture with breakthroughs in neural interfaces, shield emitters, fusion power, and armor formulation. Available in multiple styles and colors.",
-  "model": "/models/Mark7_Helmet.glb",
-  "colorOptions": "/data/mark7_helmet_materials.json",
+  "model": "Mark7_Helmet.glb",
+  "colorOptions": "mark7_helmet_materials.json",
   "damageOptions": true,
   "addOns": [
     {
