@@ -174,6 +174,6 @@ export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', json
 
  // Call updateCustomContent to generate the swatches
         fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
-        saveButton.addEventListener('click', () => saveCurrentDesign(productCat, productPath));
+        saveButton.addEventListener('click', () => saveCurrentDesign(productCat, modelPath));
     }
 }

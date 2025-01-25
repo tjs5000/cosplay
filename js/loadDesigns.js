@@ -9,31 +9,22 @@ export function loadDesign(designName) {
         console.warn(`Design not found: ${designName}`); // Debug log
         return;
     }
-    fetch(design.productPath)
-        .then(response => response.json())
-        .then(productData => {
-            if (productData.model) {
-                const modelPath = `/models/${productData.model}`;
-                loadModel(modelPath).then(() => {
-                    console.log(`Model ${productData.model} loaded successfully.`);
-                    applyColors(design.colors);
-
-                }).catch(error => {
-                    console.error('Error loading model:', error);
-                });
-            } else {
-                console.error('Model path not found in product data');
-            }
-        })
-        .catch(error => {
-            console.error('Error loading product data:', error);
+        let modelPath = design.modelPath;
+        if (!modelPath.startsWith('/models/')) {
+            modelPath = '/models/' + modelPath;
+        }
+        console.log(`Fetching model from: ${modelPath}`); // Log the productPath URL
+        loadModel(modelPath).then(() => {
+            console.log(`Model ${modelPath} loaded successfully.`);
+            applyColors(design.colors);
+        }).catch(error => {
+            console.error('Error loading model:', error);
         });
 
 }
 
-
-function applyColors(design) {
-    Object.entries(design).forEach(([colorName, colorValue]) => {
+function applyColors(colors) {
+    Object.entries(colors).forEach(([colorName, colorValue]) => {
         // Apply color to model
         changeMaterialColor(colorName, colorValue);
     });
