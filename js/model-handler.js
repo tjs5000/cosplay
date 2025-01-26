@@ -165,15 +165,19 @@ export function initLighting() {
 
 // Controls Initialization
 export function initControls() {
+    if (controls) {
+        controls.dispose();
+        controls = null;
+    }
     controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.1;
-    controls.rotateSpeed = 0.5;
+    controls.rotateSpeed = 0.125;
     controls.maxPolarAngle = Math.PI / 2;
     controls.zoomSpeed = 1.2;
     controls.panSpeed = 0.8;
     controls.maxDistance = 900;
-    controls.autoRotate = true;
+    controls.autoRotate = false;
     controls.enablePan = true; // Enable panning
     controls.enableZoom = true; // Enable zooming
     controls.touchZoomRotate = true; // Enable touch zoom and rotate

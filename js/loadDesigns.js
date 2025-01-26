@@ -44,7 +44,7 @@ export function loadDesign(designName) {
     initLighting();
 
     // Load new model and apply custom colors
-    loadModel(modelPath).then(() => {
+    loadModel(modelPath, design.colors, () => {
         console.log(`Model ${modelPath} loaded successfully.`);
 
         if (design.colors) {

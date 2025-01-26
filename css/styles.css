@@ -245,7 +245,7 @@ border:1px solid #ddd;
     bottom: 100px;
     left: 0;
     right: 0;
-    z-index: ;
+    z-index:0 ;
     pointer-events: auto;
 }
 
