@@ -196,86 +196,87 @@ export function adjustCameraToFitObject(object) {
 // Load 3D Model
 export function loadModel(modelPath, colors, onLoadCallback) {
   return new Promise((resolve, reject) => {
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+      const dracoLoader = new DRACOLoader();
+      dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
 
-    // If there's an existing model in the scene, remove it
-    if (model) {
-      console.log('Removing old model...');
-      scene.remove(model);
+      const loader = new GLTFLoader();
+      loader.setDRACOLoader(dracoLoader);
+      
+      // Load the new model
+      loader.load(modelPath, function (gltf) {
+          const newModel = gltf.scene; //*** CHANGES START HERE ***
 
-      // Dispose of the model's geometry and materials to free up memory
-      model.traverse((child) => {
-        if (child.isMesh) {
-          if (child.geometry) child.geometry.dispose();
-          if (child.material) {
-            if (Array.isArray(child.material)) {
-              child.material.forEach((mat) => {
-                if (mat.map) mat.map.dispose();
-                mat.dispose();
+          // If there's an existing model in the scene, remove it
+          if (model) {
+              console.log('Removing old model...');
+              scene.remove(model);
+
+              // Dispose of the model's geometry and materials to free up memory
+              model.traverse((child) => {
+                  if (child.isMesh) {
+                      if (child.geometry) child.geometry.dispose();
+                      if (child.material) {
+                          if (Array.isArray(child.material)) {
+                              child.material.forEach((mat) => {
+                                  if (mat.map) mat.map.dispose();
+                                  mat.dispose();
+                              });
+                          } else {
+                              if (child.material.map) child.material.map.dispose();
+                              child.material.dispose();
+                          }
+                      }
+                  }
               });
-            } else {
-              if (child.material.map) child.material.map.dispose();
-              child.material.dispose();
-            }
           }
-        }
-      });
-      model = null; // Clear the old model reference
-      isModelLoaded = false; // Reset the loading state
-    }
 
-    const loader = new GLTFLoader();
-    loader.setDRACOLoader(dracoLoader);
+          // Set the new model
+          model = newModel;
+          model.scale.set(1, 1, 1);  // Model scale
+          model.position.set(0, 30, 0);  // Model position
+          model.updateWorldMatrix(true, true);  // Force update world matrix
 
-    // Load the new model
-    loader.load(modelPath, function (gltf) {
-      model = gltf.scene;
-      model.scale.set(1, 1, 1);  // Model scale
-      model.position.set(0, 30, 0);  // Model position
-      model.updateWorldMatrix(true, true);  // Force update world matrix
+          model.traverse(function (child) {
+              if (child.isMesh && child.material.name) {
+                  originalMaterialColors[child.material.name] = child.material.color.getHexString();
+              }
+          });
 
-      model.traverse(function (child) {
-        if (child.isMesh && child.material.name) {
-          originalMaterialColors[child.material.name] = child.material.color.getHexString();
-        }
-      });
+          scene.add(model);  // Add the model to the scene
+          isModelLoaded = true;  // Mark model as loaded
 
-      scene.add(model);  // Add the model to the scene
-      isModelLoaded = true;  // Mark model as loaded
+          adjustCameraToFitObject(model);  // Adjust the camera after the model is loaded
 
-      adjustCameraToFitObject(model);  // Adjust the camera after the model is loaded
-
-      // Optional Callback
-      if (onLoadCallback) {
-        onLoadCallback();  // Apply additional processing after model loads
-      }
-
-      // Apply damage textures (if needed)
-      applyDamageTexture(noDamageTexture);
-      // Add the resize event listener if it hasn't been added already
-      if (!resizeListenerAdded) {
-        window.addEventListener('resize', () => {
-          if (isModelLoaded) {
-            adjustCameraToFitObject(model);
+          // Optional Callback
+          if (onLoadCallback) {
+              onLoadCallback();  // Apply additional processing after model loads
           }
-        });
-        resizeListenerAdded = true; // Prevent adding the listener multiple times
+
+          // Apply damage textures (if needed)
+          applyDamageTexture(noDamageTexture);
+          // Add the resize event listener if it hasn't been added already
+          if (!resizeListenerAdded) {
+              window.addEventListener('resize', () => {
+                  if (isModelLoaded) {
+                      adjustCameraToFitObject(model);
+                  }
+              });
+              resizeListenerAdded = true; // Prevent adding the listener multiple times
+          }
+
+          resolve();  // Resolve after the model is loaded
+      }, undefined, function (error) {
+          console.error('Error loading model:', error);
+          reject(error);  // Reject if model loading fails
+      }); //*** CHANGES END HERE ***
+
+      // Load material options if materialPath is provided
+      if (colors) {
+          applyPresetMaterialColors('Custom', colors);
+      } else {
+          // Resolve the promise if no materialPath is provided
+          resolve();
       }
-
-      resolve();  // Resolve after the model is loaded
-    }, undefined, function (error) {
-      console.error('Error loading model:', error);
-      reject(error);  // Reject if model loading fails
-    });
-
-    // Load material options if materialPath is provided
-    if (colors) {
-      applyPresetMaterialColors('Custom', colors);
-    } else {
-      // Resolve the promise if no materialPath is provided
-      resolve();
-    }
   });
 }
 

@@ -4,6 +4,7 @@ export function loadDesign(designName) {
     console.log(`Loading design: ${designName}`); // Debug log
     const designs = JSON.parse(localStorage.getItem('designs')) || {};
     console.log(`Designs in localStorage:`, designs); // Debug log
+    Object.assign(materialsData, designs); 
     const design = designs[designName];
     if (!design) {
         console.warn(`Design not found: ${designName}`); // Debug log
@@ -16,7 +17,8 @@ export function loadDesign(designName) {
         console.log(`Fetching model from: ${modelPath}`); // Log the productPath URL
         loadModel(modelPath).then(() => {
             console.log(`Model ${modelPath} loaded successfully.`);
-            applyPresetMaterialColors('Custom', design.colors);
+            console.log(`materialsData is:`, designs);
+            applyPresetMaterialColors(designName, design.colors);
         }).catch(error => {
             console.error('Error loading model:', error);
         });
@@ -32,8 +34,7 @@ function applyColors(colors) {
 
 export function initializeDesigns() {
     listDesigns();
-
-    // Load designs from local storage and assign to materialsData
+        // Load designs from local storage and assign to materialsData
     const designs = JSON.parse(localStorage.getItem('designs')) || {};
     Object.assign(materialsData, designs);
     console.log('materialsData updated with local storage designs:', materialsData);
