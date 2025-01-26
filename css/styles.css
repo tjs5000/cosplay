@@ -413,6 +413,22 @@ nav {
     border-bottom: 1px solid rgba(15, 124, 187, 0.2);
     box-shadow: inset 0px -6px 15px 2px rgba(0, 0, 0, 0.3), inset 0px 0px 10px 0px rgba(39, 198, 226, 0.1);
 }
+.design-item .style-name{
+    display:flex;
+    width:100%;
+}
+.design-item .remove-icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    max-height:16px;
+    max-width:16px;
+    padding:8px 11px;
+    cursor:pointer;
+    border:1px solid rgba(255, 255, 255, 0.25);
+    background:rgba(255, 255, 255, 0.1);
+    border-radius:8px;
+}
 
 .design-item .thumbnail {
     height: 44px;

@@ -90,11 +90,28 @@ export function listDesigns() {
 
             // Create and append design name
             const designNameSpan = document.createElement('span');
+            designNameSpan.className = 'style-name';
             designNameSpan.textContent = designName;
             designDiv.appendChild(designNameSpan);
             designDiv.addEventListener('click', () => loadDesign(designName));
             designsContainer.appendChild(designDiv);
-        });
+
+
+             // Create and append remove icon
+             const removeIcon = document.createElement('span');
+             removeIcon.className = 'remove-icon';
+             removeIcon.textContent = '\u00D7';
+             removeIcon.addEventListener('click', (event) => {
+                 event.stopPropagation();
+                 if (confirm(`Are you sure you want to remove the design "${designName}"?`)) {
+                    removeDesign(designName);
+                }
+             });
+             designDiv.appendChild(removeIcon);
+ 
+             designDiv.addEventListener('click', () => loadDesign(designName));
+             designsContainer.appendChild(designDiv);
+         });
         return true;
     }
 }
@@ -141,4 +158,12 @@ function createPlaceholder(hasDesigns) {
 
     // Append the canvas to the container
     container.appendChild(canvas);
+}
+
+
+function removeDesign(designName) {
+    const designs = JSON.parse(localStorage.getItem('designs')) || {};
+    delete designs[designName];
+    localStorage.setItem('designs', JSON.stringify(designs));
+    listDesigns(); // Refresh the design list
 }
