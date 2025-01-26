@@ -47,7 +47,8 @@ export function initRenderer() {
     }
 
 
-    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, precision: 'highp', depth: true });
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, precision: 'highp', depth: true , preserveDrawingBuffer: true});
+    
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 2.5;

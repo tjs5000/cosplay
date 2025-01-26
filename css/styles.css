@@ -418,8 +418,9 @@ nav {
     height: 44px;
     width: 44px;
     border-radius: 8px;
-    background: rgba(0, 123, 172, 1);
-    border: 1px solid rgba(255, 255, 255, 1);
+    background: linear-gradient(180deg, rgb(84, 143, 165) 0.09%, rgb(5, 60, 73) 70.46%, rgb(1, 21, 26) 100%), #292929;
+    border: 0px solid rgba(255, 255, 255, .25);
+    box-shadow: 0px 1px 10px 1px rgba(0, 0, 0, 0.2);
     flex-shrink: 0; /* Prevent the thumbnail from shrinking */
 }
 
