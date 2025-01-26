@@ -4,7 +4,7 @@ import { initScene, initCamera, initRenderer, initControls, initLighting, loadMo
 import { saveCurrentDesign } from './saveDesign.js';
 import { loadDesign } from './loadDesigns.js';
 
-export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', jsonSrc = 'mk50_materials.json', originPage = 'armor') {
+export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSrc = 'mk50_materials.json', originPage = 'armor') {
     if (document.querySelector('.product-title')) {
         const tabs = document.querySelectorAll('.nav-tab');
         const carousel = document.getElementById('presetsContent');
@@ -30,7 +30,7 @@ export async function initializeModelEditor(modelSrc = 'MK50_Sidekick.glb', json
 
         // Load the model and apply materials
         await loadModel(modelPath);
-        fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors('Standard Issue', data));
+        fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors(style = 'Standard Issue', data));
 
         defaultTab.classList.add('active');
         fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));

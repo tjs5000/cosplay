@@ -281,7 +281,7 @@ border:1px solid #ddd;
     background-color: #36261a;
     border: 1px solid #271103;
     color:#fdc095;
-    font-weight: 300;;
+    font-weight: 300;
     box-shadow: 0px -1px 10px 1px rgba(0, 0, 0, 0.30) inset, 0px 5px 56px rgba(0, 0, 0, 0.45);
     padding: 10px;
     position: relative;
@@ -381,27 +381,46 @@ nav {
     background-color: #023b42;
   }
 .designs-container{
-    padding:16px;
-    text-align: center;
+    padding:0px;
+    text-align: left;
     font-size:14px;
     color:rgba(255, 255, 255, 0.75);
     z-index:2;
     position:absolute;
-    max-height:400px;
+    height:250px;
+    max-height:250px;
     overflow-y:auto;
     bottom:80px;
     left:0;
     right:0;
-    border:1px solid rgba(255, 255, 255, 0.2);
+    border-top:1px solid rgba(0, 0, 0, 0.4);
     background:rgba(0, 0, 0, 0.5);
+    box-shadow: 0px -3px 10px 0px rgba(0, 0, 0, 0.2), inset 0px 0px 10px -5px rgba(39, 198, 226, 0.2);
+}
+
+.designs-container.no-designs{
+    display:none;
 }
 
 .design-item {
-    font-size:18px;
-    color:#fff;
-    margin:10px 0;
-    padding:10px 0;
-    border-bottom:1px solid rgba(255, 255, 255, 0.2);
+    font-size: 18px;
+    color: #fff;
+    display: flex; /* Use Flexbox */
+    align-items: center; /* Align items vertically */
+    gap: 16px; /* Add spacing between thumbnail and text */
+    padding: 12px 32px;
+    background:rgba(9, 126, 134, 0.5);
+    border-bottom: 1px solid rgba(15, 124, 187, 0.2);
+    box-shadow: inset 0px -6px 15px 2px rgba(0, 0, 0, 0.3), inset 0px 0px 10px 0px rgba(39, 198, 226, 0.1);
+}
+
+.design-item .thumbnail {
+    height: 44px;
+    width: 44px;
+    border-radius: 8px;
+    background: rgba(0, 123, 172, 1);
+    border: 1px solid rgba(255, 255, 255, 1);
+    flex-shrink: 0; /* Prevent the thumbnail from shrinking */
 }
 
 .contact-container {

@@ -264,7 +264,7 @@ export function loadModel(modelPath, colors, onLoadCallback) {
             scene.add(model);  // Add the model to the scene
             isModelLoaded = true;  // Mark model as loaded
             console.log('New model added to the scene');
-
+            console.log('isModelLoaded:', isModelLoaded);
             adjustCameraToFitObject(model);  // Adjust the camera after the model is loaded
 
             // Optional Callback
@@ -372,12 +372,13 @@ export function updateMaterials() {
     });
 }
 
-export function applyPresetMaterialColors(style) {
+export function applyPresetMaterialColors(style, colors) {
+    console.log("Starting applyPresetMaterialColors", style, colors);
     if (!model) {
         console.error('Model not loaded yet. Cannot apply preset material colors.');
         return;
     }
-    if (!materialsData[style]) {
+    if (!style) {
         console.error(`**** Materials for style '${style}' not found.`);
         console.log('Current materialsData:', materialsData); // Debugging statement
         return;
@@ -387,13 +388,12 @@ export function applyPresetMaterialColors(style) {
         console.error('Model is not loaded yet. Cannot apply materials.');
         return;
     }
-
+    console.log("applyPresetMaterialColors conditions true. Starting Traverse");
     // Traverse the model and apply the material colors
     model.traverse((child) => {
         if (child.isMesh) {
             const materialName = child.material.name;
-            const color = materialsData[style]?.colors[materialName];
-
+            const color = colors && colors[materialName] ? colors[materialName] : materialsData[style]?.colors[materialName];
             if (color) {
                 child.material.color.set(color);  // Apply the color
                 child.material.needsUpdate = true;  // Ensure the material updates
