@@ -1,4 +1,4 @@
-import { initScene, initCamera, initRenderer, initControls, initLighting, changeMaterialColor, loadModel, applyPresetMaterialColors, materialsData } from './model-handler.js';
+import { initScene, initCamera, initRenderer, initControls, initLighting, changeMaterialColor, loadModel, applyPresetMaterialColors, model, scene, materialsData } from './model-handler.js';
 
 
 export async function loadDesign(designName) {
@@ -16,14 +16,36 @@ export async function loadDesign(designName) {
         modelPath = '/models/' + modelPath;
     }
     console.log(`Fetching model from: ${modelPath}`); // Log the productPath URL
-
+    // Remove the existing model if present
+    if (model) {
+        console.log('Removing old model...');
+        scene.remove(model);
+        // Dispose of the model's geometry and materials to free up memory
+        model.traverse((child) => {
+            if (child.isMesh) {
+                if (child.geometry) child.geometry.dispose();
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach((mat) => {
+                            if (mat.map) mat.map.dispose();
+                            mat.dispose();
+                        });
+                    } else {
+                        if (child.material.map) child.material.map.dispose();
+                        child.material.dispose();
+                    }
+                }
+            }
+        });
+        console.log('Old model removed and resources disposed');
+    }
     initScene();
     initCamera();
     initRenderer();
     initControls();
     initLighting();
 
-     await loadModel(modelPath).then(() => {
+    await loadModel(modelPath).then(() => {
         console.log(`Model ${modelPath} loaded successfully.`);
         console.log(`materialsData is:`, designs);
         applyPresetMaterialColors(designName, design.colors); // Apply colors after model is loaded

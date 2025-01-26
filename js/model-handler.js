@@ -40,6 +40,12 @@ export function initRenderer() {
         console.error('Container element with id "three-container" not found.');
         return;
     }
+    // Remove existing canvas if present
+    const existingCanvas = container.querySelector('canvas');
+    if (existingCanvas) {
+        container.removeChild(existingCanvas);
+    }
+
 
     renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, precision: 'highp', depth: true });
     renderer.outputEncoding = THREE.sRGBEncoding;
