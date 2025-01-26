@@ -45,19 +45,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Load the loadCatalog.js script when armorCatalog.html or weaponsCatalog.html is loaded
-                if (page === 'armorCatalog.html' || page === 'weaponsCatalog.html'){
-                if (jsonFilePath) {
-                    loadAndGenerateCatalog(jsonFilePath, '#catProductContainer');
+                if (page === 'armorCatalog.html' || page === 'weaponsCatalog.html') {
+                    if (jsonFilePath) {
+                        loadAndGenerateCatalog(jsonFilePath, '#catProductContainer');
+                        if (typeof callback === 'function') {
+                            callback();
+                        }
+                    }
+                }
+                if (page === 'myDesigns.html') {
                     if (typeof callback === 'function') {
                         callback();
                     }
-                } 
-            }
-            if (page === 'myDesigns.html') {
-                if (typeof callback === 'function') {
-                    callback();
                 }
-            }
 
                 reattachEventListeners();
             })

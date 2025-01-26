@@ -1,6 +1,7 @@
-import { changeMaterialColor, loadModel, applyPresetMaterialColors, materialsData } from './model-handler.js';
+import { initScene, initCamera, initRenderer, initControls, initLighting, changeMaterialColor, loadModel, applyPresetMaterialColors, materialsData } from './model-handler.js';
 
-export function loadDesign(designName) {
+
+export async function loadDesign(designName) {
     console.log(`Loading design: ${designName}`); // Debug log
     const designs = JSON.parse(localStorage.getItem('designs')) || {};
     console.log(`Designs in localStorage:`, designs); // Debug log
@@ -15,7 +16,14 @@ export function loadDesign(designName) {
         modelPath = '/models/' + modelPath;
     }
     console.log(`Fetching model from: ${modelPath}`); // Log the productPath URL
-    loadModel(modelPath).then(() => {
+
+    initScene();
+    initCamera();
+    initRenderer();
+    initControls();
+    initLighting();
+
+     await loadModel(modelPath).then(() => {
         console.log(`Model ${modelPath} loaded successfully.`);
         console.log(`materialsData is:`, designs);
         applyPresetMaterialColors(designName, design.colors); // Apply colors after model is loaded
