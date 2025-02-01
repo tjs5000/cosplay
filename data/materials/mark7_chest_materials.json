@@ -1,30 +1,80 @@
 {
     "Standard Issue": {
-        "default": true,
         "colors": {
-            "Chest": "#050505",
-            "Shoulder Vents": "#050505",
-            "Shoulder Clips": "#050505",
-            "Back Vents": "#050505"
-        }
+            "Top_Latch": "#607828",
+            "Abdomen": "#050505",
+            "Back_Plate": "#050505",
+            "Back_Straps": "#050505",
+            "Back_Top": "#050505",
+            "Back_Mid-plate": "#050505",
+            "Mid-Chest_Plate": "#050505",
+            "Side-Middle": "#050505",
+            "Side-Back": "#050505",
+            "Side-Front": "#050505",
+            "Chin": "#607828",
+            "Side_Breast_Plates": "#050505",
+            "Upper_Chest": "#050505",
+            "Lower_Connector": "#607828",
+            "Front_Controls": "#050505",
+            "Power_Packs": "#050505",
+            "Under_Padding": "#050505",
+            "Back_Vents": "#050505",
+            "Undervest": "#050505",
+            "Side_Straps": "#050505",
+            "Power_Back_Vents": "#050505",
+            "Power_Top_Plates": "#050505"
+         }
     },
     "Adrenal": {
         "colors": {
-            "Chest": "#007828",
-            "Shoulder Vents": "#050505",
-            "Shoulder Clips": "#607828",
-            "Back Vents": "#050505"
-        }
+            "Top_Latch": "#607828",
+            "Abdomen": "#050505",
+            "Back_Plate": "#050505",
+            "Back_Straps": "#050505",
+            "Back_Top": "#050505",
+            "Back_Mid-plate": "#050505",
+            "Mid-Chest_Plate": "#050505",
+            "Side-Middle": "#050505",
+            "Side-Back": "#050505",
+            "Side-Front": "#050505",
+            "Chin": "#607828",
+            "Side_Breast_Plates": "#050505",
+            "Upper_Chest": "#050505",
+            "Lower_Connector": "#607828",
+            "Front_Controls": "#050505",
+            "Power_Packs": "#050505",
+            "Under_Padding": "#050505",
+            "Back_Vents": "#050505",
+            "Undervest": "#050505",
+            "Side_Straps": "#050505",
+            "Power_Back_Vents": "#050505",
+            "Power_Top_Plates": "#050505"
+         }
     },
     "No Paint": {
         "colors": {
-            "Chest": "#030303",
-            "Shoulder Vents": "#030303",
-            "Shoulder Clips": "#030303",
-            "Back Vents": "#030303"
-        }
-    },
-    "Custom": {
-        "colors": {}
+            "Top_Latch": "#050505",
+            "Abdomen": "#050505",
+            "Back_Plate": "#050505",
+            "Back_Straps": "#050505",
+            "Back_Top": "#050505",
+            "Back_Mid-plate": "#050505",
+            "Mid-Chest_Plate": "#050505",
+            "Side-Middle": "#050505",
+            "Side-Back": "#050505",
+            "Side-Front": "#050505",
+            "Chin": "#050505",
+            "Side_Breast_Plates": "#050505",
+            "Upper_Chest": "#050505",
+            "Lower_Connector": "#050505",
+            "Front_Controls": "#050505",
+            "Power_Packs": "#050505",
+            "Under_Padding": "#050505",
+            "Back_Vents": "#050505",
+            "Undervest": "#050505",
+            "Side_Straps": "#050505",
+            "Power_Back_Vents": "#050505",
+            "Power_Top_Plates": "#050505"
+         }
     }
 }

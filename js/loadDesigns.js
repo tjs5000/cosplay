@@ -96,11 +96,19 @@ export function listDesigns() {
             designDiv.addEventListener('click', () => loadDesign(designName));
             designsContainer.appendChild(designDiv);
 
-
+            // Create Download Button
+            const downloadButton = document.createElement('button');
+            downloadButton.className = 'download-button';
+            downloadButton.textContent = 'Download';
+            designDiv.appendChild(downloadButton);
+            downloadButton.addEventListener('click', (event) => downloadDesign(designName));
+            
+            
              // Create and append remove icon
              const removeIcon = document.createElement('span');
              removeIcon.className = 'remove-icon';
              removeIcon.textContent = '\u00D7';
+
              removeIcon.addEventListener('click', (event) => {
                  event.stopPropagation();
                  if (confirm(`Are you sure you want to remove the design "${designName}"?`)) {
@@ -114,6 +122,23 @@ export function listDesigns() {
          });
         return true;
     }
+}
+
+function downloadDesign(designName) {
+    const designs = JSON.parse(localStorage.getItem('designs'));
+    if (!designs || !designs[designName]) {
+        alert(`Design "${designName}" not found!`);
+        return;
+    }
+
+    const { thumbnail, ...designWithoutThumbnail } = designs[designName];
+    const blob = new Blob([JSON.stringify(designWithoutThumbnail)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${designName}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
 }
 
 function createPlaceholder(hasDesigns) {

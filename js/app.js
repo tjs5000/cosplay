@@ -30,7 +30,7 @@ export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSr
 
         // Load the model and apply materials
         await loadModel(modelPath);
-        fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors(style = 'Standard Issue', data));
+        fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors('Standard Issue', data));
 
         defaultTab.classList.add('active');
         fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));

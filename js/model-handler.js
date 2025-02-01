@@ -173,16 +173,19 @@ export function initControls() {
     controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.1;
-    controls.rotateSpeed = 0.125;
+    controls.rotateSpeed = 0.25;
     controls.maxPolarAngle = Math.PI / 2;
     controls.zoomSpeed = 1.2;
     controls.panSpeed = 0.8;
     controls.maxDistance = 900;
+    controls.enableRotate = true;
     controls.autoRotate = false;
+    controls.autoRotateSpeed = 0.5;
     controls.enablePan = true; // Enable panning
     controls.enableZoom = true; // Enable zooming
     controls.touchZoomRotate = true; // Enable touch zoom and rotate
     controls.minDistance = .05;
+    controls.maxPolarAngle = Math.PI / 1;
     console.log('OrbitControls initialized');
 }
 
