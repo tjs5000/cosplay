@@ -1,4 +1,4 @@
-export async function saveCurrentDesign(productCat, modelPath) {
+export async function saveCurrentDesign(productCat, modelPath, jsonPath) {
   const designName = prompt("Enter a name for your design:");
   if (!designName) return;
 
@@ -21,6 +21,7 @@ export async function saveCurrentDesign(productCat, modelPath) {
   designs[designName] = {
     productCat: productCat,
     modelPath: modelPath,
+    jsonPath: jsonPath,
     colors: currentColors,
     thumbnail: thumbnail
   };

@@ -14,8 +14,8 @@ export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSr
         const customContent = document.getElementById('customContent');
         const optionsContainer = document.getElementById('optionsContainer');
 
-        const jsonFilePath = '/data/materials/' + jsonSrc;
-        const modelPath = '/models/' + modelSrc;
+        const jsonFilePath = jsonSrc ? '/data/materials/' + jsonSrc : null;
+        const modelPath = modelSrc.startsWith('/models/') ? modelSrc : '/models/' + modelSrc;
         const productCat = originPage.includes('armor') ? 'armor' : 'weapon'; // Example logic to determine productCat
         const productPath = jsonSrc; // Assuming jsonSrc is the product JSON file path
 
@@ -174,6 +174,6 @@ export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSr
 
  // Call updateCustomContent to generate the swatches
         fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
-        saveButton.addEventListener('click', () => saveCurrentDesign(productCat, modelPath));
+        saveButton.addEventListener('click', () => saveCurrentDesign(productCat, modelPath, jsonFilePath));
     }
 }

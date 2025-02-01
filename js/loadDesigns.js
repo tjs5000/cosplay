@@ -1,6 +1,9 @@
 import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, model, scene, renderer } from './model-handler.js';
 
+let currentDesignName = null;
+
 export function loadDesign(designName) {
+    currentDesignName = designName; // Set the currently loaded design
     console.log(`Loading design: ${designName}`);
     const designs = JSON.parse(localStorage.getItem('designs')) || {};
     console.log(`Designs in localStorage:`, designs);
@@ -63,6 +66,7 @@ export function initializeDesigns() {
 
     const designs = JSON.parse(localStorage.getItem('designs')) || {};
     console.log('materialsData updated with local storage designs:', designs);
+    editDesign();
 }
 
 export function listDesigns() {
@@ -233,3 +237,31 @@ function removeDesign(designName) {
     localStorage.setItem('designs', JSON.stringify(designs));
     listDesigns(); // Refresh the design list
 }
+
+function editDesign() {
+document.getElementById('editDesignBtn').addEventListener('click', () => {
+    if (!currentDesignName) {
+        alert('No design currently loaded!');
+        return;
+    }
+
+    const designs = JSON.parse(localStorage.getItem('designs')) || {};
+    const design = designs[currentDesignName];
+    if (!design) {
+        alert(`Design "${currentDesignName}" not found!`);
+        return;
+    }
+
+    const modelPath = design.modelPath.startsWith('/models/') ? design.modelPath : `/models/${design.modelPath}`;
+    const jsonFilePath = design.jsonPath || 'default_materials.json'; // Ensure there is a valid JSON path
+
+    window.loadContent('modelEditor.html', modelPath, jsonFilePath, () => {
+        if (design.colors) {
+            import('./app.js').then(module => {
+                module.initializeModelEditor(modelPath, jsonFilePath, 'myDesigns.html');
+                module.applyPresetMaterialColors(currentDesignName, design.colors);
+            });
+        }
+    });
+});
+};
