@@ -402,7 +402,7 @@ nav {
     display:none;
 }
 
-.design-item {
+.design-item, .upload-item {
     font-size: 18px;
     color: #fff;
     display: flex; /* Use Flexbox */
@@ -425,10 +425,40 @@ nav {
     max-width:16px;
     padding:8px 11px;
     cursor:pointer;
-    border:1px solid rgba(255, 255, 255, 0.25);
-    background:rgba(255, 255, 255, 0.1);
+    border:1px solid rgba(255, 0, 0, 0.397);
+    background:rgba(180, 11, 11, 0.404);
     border-radius:8px;
 }
+
+.design-item .download-button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    max-height:40px;
+    max-width:34px;
+    padding:7px 10px;
+    cursor:pointer;
+    border:1px solid rgba(255, 255, 255, 0.575);
+    background:rgba(36, 193, 233, 0.514);
+    border-radius:8px;
+}
+
+.upload-item .upload-button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    max-height:44px;
+    width:100%;
+    color:#fff;
+    padding:12px 16px;
+    cursor:pointer;
+    border:1px solid rgba(255, 255, 255, 0.575);
+    background:rgba(36, 193, 233, 0.514);
+    border-radius:8px;
+    margin-bottom:8px;
+}
+
 
 .design-item .thumbnail {
     height: 44px;

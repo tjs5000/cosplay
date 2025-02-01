@@ -99,7 +99,7 @@ export function listDesigns() {
             // Create Download Button
             const downloadButton = document.createElement('button');
             downloadButton.className = 'download-button';
-            downloadButton.textContent = 'Download';
+            downloadButton.textContent = '⬇️';
             designDiv.appendChild(downloadButton);
             downloadButton.addEventListener('click', (event) => downloadDesign(designName));
             
@@ -120,6 +120,17 @@ export function listDesigns() {
              designDiv.addEventListener('click', () => loadDesign(designName));
              designsContainer.appendChild(designDiv);
          });
+
+          // Add the "Upload Design" button
+        const uploadDiv = document.createElement('div');
+        uploadDiv.className = 'upload-item';
+        const uploadButton = document.createElement('button');
+        uploadButton.className = 'upload-button';
+        uploadButton.textContent = 'Upload a design (JSON format)';
+        uploadButton.addEventListener('click', handleUploadClick);
+        uploadDiv.appendChild(uploadButton);
+        designsContainer.appendChild(uploadDiv);
+
         return true;
     }
 }
@@ -140,6 +151,36 @@ function downloadDesign(designName) {
     a.click();
     URL.revokeObjectURL(url);
 }
+
+function handleUploadClick() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    input.addEventListener('change', handleFileUpload);
+    input.click();
+}
+
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const content = JSON.parse(e.target.result);
+                const designs = JSON.parse(localStorage.getItem('designs')) || {};
+                const designName = file.name.replace('.json', '');
+                designs[designName] = content;
+                localStorage.setItem('designs', JSON.stringify(designs));
+                listDesigns(); // Refresh the design list
+                alert(`Design "${designName}" uploaded successfully!`);
+            } catch (error) {
+                alert('Invalid JSON file.');
+            }
+        };
+        reader.readAsText(file);
+    }
+}
+
 
 function createPlaceholder(hasDesigns) {
     // Select the container element
