@@ -103,7 +103,15 @@ export function listDesigns() {
             // Create Download Button
             const downloadButton = document.createElement('button');
             downloadButton.className = 'download-button';
-            downloadButton.textContent = '⬇️';
+            // Create an image element
+            const downloadImage = document.createElement('img');
+            downloadImage.src = '/images/download.svg';
+            downloadImage.alt = 'Download';
+            downloadImage.onerror = function() {
+                // Fallback to down arrow if image fails to load
+                downloadButton.textContent = '\u2193';
+            };
+            downloadButton.appendChild(downloadImage);
             designDiv.appendChild(downloadButton);
             downloadButton.addEventListener('click', (event) => downloadDesign(designName));
             
@@ -253,7 +261,7 @@ document.getElementById('editDesignBtn').addEventListener('click', () => {
     }
 
     const modelPath = design.modelPath.startsWith('/models/') ? design.modelPath : `/models/${design.modelPath}`;
-    const jsonFilePath = design.jsonPath || 'default_materials.json'; // Ensure there is a valid JSON path
+    const jsonFilePath = design.jsonPath ? `${design.jsonPath}` : 'default_materials.json'; // Ensure there is a valid JSON path
 
     window.loadContent('modelEditor.html', modelPath, jsonFilePath, () => {
         if (design.colors) {

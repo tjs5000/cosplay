@@ -14,6 +14,7 @@ export async function saveCurrentDesign(productCat, modelPath, jsonPath) {
     }
   });
 
+  const modifiedJsonPath = jsonPath.replace("/data/materials/", "");
   // Capture the screenshot from the canvas
   const thumbnail = await captureThumbnail(); 
  
