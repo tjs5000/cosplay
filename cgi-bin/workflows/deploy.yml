@@ -1,0 +1,27 @@
+name: FTP Deploy
+
+on:
+  schedule:
+    - cron: '0 8 * * 2'  # 8 AM UTC is midnight PST on Tuesday
+    - cron: '0 8 * * 5'  # 8 AM UTC is midnight PST on Friday
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./cosplay_v2 # Directory to upload
+        server-dir: /path/to/your/server/directory
