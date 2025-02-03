@@ -6,7 +6,8 @@ export async function saveCurrentDesign(productCat, modelPath, jsonPath) {
   document.querySelectorAll('.color-swatch').forEach(swatch => {
     const colorNameElement = swatch.previousElementSibling;
     if (colorNameElement) {
-      const colorName = colorNameElement.textContent;
+      let colorName = colorNameElement.textContent;
+      colorName = colorName.replace(/ /g, '_'); // Replace spaces with underscores
       const colorValue = rgbToHex(swatch.style.backgroundColor);
       currentColors[colorName] = colorValue;
     } else {

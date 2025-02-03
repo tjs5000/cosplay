@@ -33,7 +33,7 @@ export function updateCustomContent(customContent, colors) {
         swatchDiv.className = 'color-swatch';
         swatchDiv.style.backgroundColor = hex;
         const swatchLabel = document.createElement('p');
-        swatchLabel.textContent = label.replace(/-/g, ' ');
+        swatchLabel.textContent = label.replace(/_/g, ' ');
         colorCont.appendChild(swatchLabel);
         colorCont.appendChild(swatchDiv);
 

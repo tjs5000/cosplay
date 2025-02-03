@@ -436,13 +436,13 @@ nav {
     align-items:center;
     justify-content:center;
     font-weight: bold;
-color:#fff;
+    color:#fff;
     max-height:40px;
     max-width: 40px;
     padding:8px 8px;
     cursor:pointer;
     border:1px solid rgba(255, 255, 255, 0.575);
-    background:rgba(36, 193, 233, 0.514);
+    /* background:rgba(36, 193, 233, 0.514); */
     border-radius:8px;
 }
 
