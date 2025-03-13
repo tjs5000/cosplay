@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@100..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css" />
     <script
         type="importmap"> { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js" } } </script>
@@ -18,26 +20,39 @@
 </head>
 
 <body>
+
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+          <clipPath id="myClip" clipPathUnits="objectBoundingBox">
+            <path d="M0.90 0.90 C0.89 0.96, 0.88 1.00, 0.87 1.00 L0.13 1.00 C0.12 1.00, 0.11 0.96, 0.10 0.90 L0.00 0.00 L1.00 0.00 L0.90 0.90 Z"/>
+          </clipPath>
+        </defs>
+      </svg>
+      
+      
+      
+      
+
     <div class="navbar-bottom">
         <div class="nav-item" id="home">
             <img src="images/home-icon.png" alt="Home">
             <span>Home</span>
         </div>
         <div class="nav-item" id="armor">
-            <img src="images/home-icon.png" alt="Armor">
+            <img src="images/Armor.png" alt="Armor">
             <span>Armor</span>
         </div>
         <div class="nav-item" id="weapons">
-            <img src="images/home-icon.png" alt="Weapons">
+            <img src="images/Weapon.png" alt="Weapons">
             <span>Weapons</span>
         </div>
         <div class="nav-item" id="designs">
-            <img src="images/home-icon.png" alt="Designs">
+            <img src="images/Custom.png" alt="Designs">
             <span>My Designs</span>
         </div>
 
         <div class="nav-item" id="contact">
-            <img src="images/home-icon.png" alt="More">
+            <img src="images/Contact.png" alt="More">
             <span>Contact</span>
         </div>
     </div>
@@ -55,7 +70,7 @@
     <!-- Bottom sheet container -->
     <div class="scrim" id="scrim"></div>
     <div class="bottom-sheet" id="bottomSheet">
-        <button class="close-btn" id="closeBtn">X</button>
+        <button class="close-btn" id="closeBtn"></button>
         <div class="bottom-sheet-content" id="bottomSheetContent">
         </div>
     </div>

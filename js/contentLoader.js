@@ -1,12 +1,14 @@
 import { loadAndGenerateCatalog } from './loadCatalog.js';
 import { reattachEventListeners } from './eventHandlers.js'
+import { editDesign } from './loadDesigns.js'
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
     let originPage = 'homeContent.html'; // Default origin page
     const navPageIds = ['home', 'armor', 'weapons', 'designs', 'contact'];
 
-    function loadContent(page, modelPath, jsonFilePath, callback) {
+    function loadContent(page, modelPath, jsonFilePath, jsonProductPath, callback) {
         fetch(page)
             .then(response => response.text())
             .then(data => {
@@ -23,9 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 if (page === 'modelEditor.html') {
-                    document.querySelector('.back-button').style.display = 'block'; // Show Back button
+                    //document.querySelector('.back-button').style.display = 'block'; // Show Back button
                     import('./app.js').then(module => {
-                        module.initializeModelEditor(modelPath, jsonFilePath, originPage);
+                        module.initializeModelEditor(modelPath, jsonFilePath, originPage, jsonProductPath);
                     });
                 } else {
                     document.querySelector('.back-button').style.display = 'none'; // Hide Back button
@@ -57,6 +59,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (typeof callback === 'function') {
                         callback();
                     }
+                    // Now that myDesigns.html is loaded, attach the event listener for the editDesignButton
+                    const editDesignButton = document.getElementById('editDesignBtn');
+                    if (editDesignButton) {
+                        editDesignButton.addEventListener('click', () => {
+                            // Replace 'designId' with the appropriate identifier or data from your design
+                            editDesign(designId);
+                        });
+                    } else {
+                        console.error('editDesignButton not found on myDesigns.html');
+                    }
                 }
 
                 reattachEventListeners();
@@ -83,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
         originPage = page;
         // Add the callback for myDesigns.html
         const callback = pageId === 'designs' ? () => import('./loadDesigns.js').then(module => module.initializeDesigns()) : null;
-        loadContent(page, null, jsonFilePath, callback);
+        loadContent(page, null, jsonFilePath, null, callback);
 
         // Update the URL
         const newUrl = `${window.location.origin}${window.location.pathname}?c=${pageId}`;
@@ -110,7 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.target && event.target.classList.contains('catProduct')) {
             const modelPath = event.target.getAttribute('data-model');
             const jsonFilePath = event.target.getAttribute('data-json');
-            loadContent('modelEditor.html', modelPath, jsonFilePath);
+            const jsonProductPath = event.target.getAttribute('data-product');
+            loadContent('modelEditor.html', modelPath, jsonFilePath, jsonProductPath);
         }
     });
 
@@ -149,4 +162,40 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('home').classList.add('active');
         }
     });
+
+    const scrim = document.getElementById('scrim');
+
+    function handleScrimEvent(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const threshold = window.innerHeight - 300; // This is equivalent to calc(100vh - 300px)
+        if (e.clientY >= threshold) {
+            closeActivePicker();
+        }
+    }
+
+    scrim.addEventListener('click', handleScrimEvent);
+    scrim.addEventListener('touchstart', handleScrimEvent);
+
+    const editDesignButton = document.getElementById('editDesignButton');
+    if (editDesignButton) {
+        editDesignButton.addEventListener('click', () => {
+            // Retrieve design data and navigate to modelEditor
+            editDesign(designId); // your editDesign function that handles saving to sessionStorage and navigating
+        });
+    }
+
+    // Get references to the containers
+    const visuals = document.querySelector('#visualsContent');
+    const addons = document.querySelector('#addonsContent');
+
+    // Add click event listener to the visuals container
+    visuals.addEventListener('click', function () {
+        // Toggle the hidden class on both elements
+        visuals.classList.toggle('hidden');
+        if (addons) {
+            addons.classList.toggle('hidden');
+        }
+    });
+
 });

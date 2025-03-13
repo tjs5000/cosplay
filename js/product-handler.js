@@ -82,7 +82,7 @@ export function displayMainImage(imageUrl, index) {
 }
 
 export function updateProductDetails(product) {
-    loadThumbnails(product.thumbnails);
+    //loadThumbnails(product.thumbnails);
     document.getElementById('productDescription').querySelector('h1').textContent = product.title;
     document.getElementById('productDescription').querySelector('p').textContent = product.description;
 }

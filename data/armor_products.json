@@ -2,19 +2,19 @@
   "helmet": {
     "name": "Helmet",
     "subCat": "Mark VII Armor",
-    "heroImage": "/images/products/helmet1.png",
+    "heroImage": "/images/products/thumbnails/mark7_helmet.png",
     "data": "/data/products/mark7_helmet.json"
   },
   "chest": {
     "name": "Chest",
     "subCat": "Mark VII Armor",
-    "heroImage": "/images/products/mark7_chest.png",
+    "heroImage": "/images/products/thumbnails/mark7_chest.png",
     "data": "/data/products/mark7_chest.json"
   },
   "boots": {
     "name": "Boots",
     "subCat": "Mark VII Armor",
-    "heroImage": "/images/products/mark7_boots.png",
+    "heroImage": "/images/products/thumbnails/mark7_boots.png",
     "data": "/data/products/mark7_boots.json"
   }
 }

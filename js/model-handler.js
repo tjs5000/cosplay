@@ -50,9 +50,10 @@ export function initRenderer() {
     renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, precision: 'highp', depth: true , preserveDrawingBuffer: true});
     
     renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 2.5;
+    renderer.toneMapping = THREE.CineonToneMapping;
+    renderer.toneMappingExposure = 2;
     renderer.physicallyCorrectLights = true;
+    renderer.CullFaceNone = true;
     renderer.setSize(container.clientWidth, container.clientHeight);  // Set size to match parent
 
     container.appendChild(renderer.domElement);
@@ -149,8 +150,27 @@ export function initLighting() {
         { type: 'SpotLight', color: 0xeeeeff, intensity: 0.6, position: [100, -400, -180], castShadow: true },
         { type: 'DirectionalLight', color: 0xffffff, intensity: 1.0, position: [10, 20, -30], castShadow: false },
         { type: 'DirectionalLight', color: 0xffffff, intensity: 0.6, position: [-10, 10, -20], castShadow: false },
-        { type: 'SpotLight', color: 0x3f6877, intensity: 0.6, position: [100, 400, 180], castShadow: true }
-    ];
+        { type: 'SpotLight', color: 0x3f6877, intensity: 0.6, position: [100, 400, 180], castShadow: true },
+ 
+        // Key Light: Strong directional light from above/side with a cool blue tint.
+        { type: 'DirectionalLight', color: 0xebf5ff, intensity: 1.0, position: [50, 100, 50], castShadow: true },
+        
+        // Fill Light: Softer directional light from the opposite side.
+        { type: 'DirectionalLight', color: 0xebf5ff, intensity: 0.5, position: [-50, 50, 50], castShadow: false },
+        
+        // Rim/Back Light: A spotlight to create separation from the background.
+        { type: 'SpotLight', color: 0xf5fcff, intensity: 0.6, position: [0, 80, -100], castShadow: true },
+        
+        // Additional Accent Light: Helps smooth out shadows on the key side.
+        { type: 'DirectionalLight', color: 0xebf5ff, intensity: 0.4, position: [30, 80, -50], castShadow: false },
+        
+        // Additional Accent Light: Balances the fill on the other side.
+        { type: 'DirectionalLight', color: 0xebf5ff, intensity: 0.4, position: [-30, 60, -50], castShadow: false },
+        
+        // Side Accent: A spotlight for extra detail on the model’s side.
+        { type: 'SpotLight', color: 0xebf5ff, intensity: 0.6, position: [100, 100, 100], castShadow: true }
+      ];
+      
 
     lights.forEach((lightData) => {
         const light = new THREE[lightData.type](lightData.color, lightData.intensity);
@@ -175,16 +195,16 @@ export function initControls() {
     controls.dampingFactor = 0.1;
     controls.rotateSpeed = 0.25;
     controls.maxPolarAngle = Math.PI / 2;
-    controls.zoomSpeed = 1.2;
+    controls.zoomSpeed = .8;
     controls.panSpeed = 0.8;
-    controls.maxDistance = 900;
     controls.enableRotate = true;
     controls.autoRotate = false;
     controls.autoRotateSpeed = 0.5;
     controls.enablePan = true; // Enable panning
     controls.enableZoom = true; // Enable zooming
     controls.touchZoomRotate = true; // Enable touch zoom and rotate
-    controls.minDistance = .05;
+    controls.minDistance = 200;
+    controls.maxDistance = 1000;
     controls.maxPolarAngle = Math.PI / 1;
     console.log('OrbitControls initialized');
 }
@@ -206,7 +226,7 @@ export function adjustCameraToFitObject(object) {
     const cameraDistance = Math.abs(maxDim / (2 * Math.tan(fov / 2)));
 
     // Adjust the camera position based on the object's size and center
-    camera.position.set((center.x + 100), (center.y + 150), (center.z + 100) + cameraDistance * 1.5); // Adjust multiplier as needed
+    camera.position.set((center.x + 0), (center.y + 0), (center.z + 100) + cameraDistance * 1.75); // Adjust multiplier as needed
     camera.lookAt(center);
 
     // Update camera's projection matrix after resizing or repositioning
@@ -260,7 +280,7 @@ export function loadModel(modelPath, colors, onLoadCallback) {
             // Set the new model
             model = newModel;
             model.scale.set(1, 1, 1);  // Model scale
-            model.position.set(0, 30, 0);  // Model position
+            model.position.set(0, 0, 0);  // Model position
             model.updateWorldMatrix(true, true);  // Force update world matrix
 
             model.traverse(function (child) {

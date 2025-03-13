@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const bottomSheet = document.getElementById('bottomSheet');
     const bottomSheetContent = document.getElementById('bottomSheetContent');
     const closeBtn = document.getElementById('closeBtn');
-    const scrim = document.getElementById('scrim');
+
 
     document.body.addEventListener('click', function(event) {
         if (event.target.classList.contains('info-icon')) {
@@ -17,9 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    scrim.addEventListener('click', function() {
-        hideBottomSheet();
-    });
+
 
     closeBtn.addEventListener('click', function() {
         hideBottomSheet();
@@ -65,18 +63,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 bottomSheetContent.innerHTML = htmlContent;
                 bottomSheetContent.appendChild(closeBtn); // Append the close button again after loading content
                 bottomSheet.classList.add('show');
-                scrim.style.display = 'block'; // Show the scrim
             });
         } else {
             bottomSheetContent.innerHTML = '<h2>Information</h2><p>No additional details available.</p>';
             bottomSheetContent.appendChild(closeBtn); // Append the close button again after loading content
             bottomSheet.classList.add('show');
-            scrim.style.display = 'block'; // Show the scrim
         }
     }
 
     function hideBottomSheet() {
         bottomSheet.classList.remove('show');
-        scrim.style.display = 'none'; // Hide the scrim
     }
 });

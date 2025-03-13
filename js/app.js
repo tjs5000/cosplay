@@ -1,10 +1,10 @@
-import { fetchPresets, fetchCustomContent } from './fetchData.js';
+import { fetchPresets, fetchCustomContent, fetchProductContent } from './fetchData.js';
 import { updateCarousel, updateCustomContent, applyPresetColors, updateSwatchColors } from './updateDOM.js';
 import { initScene, initCamera, initRenderer, initControls, initLighting, loadModel, applyPresetMaterialColors, updateDamageTexture, materialsData } from './model-handler.js';
 import { saveCurrentDesign } from './saveDesign.js';
 import { loadDesign } from './loadDesigns.js';
 
-export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSrc = 'mk50_materials.json', originPage = 'armor') {
+export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSrc = 'mk50_materials.json', originPage = 'armor', productSrc = 'mk50.json') {
     if (document.querySelector('.product-title')) {
         const tabs = document.querySelectorAll('.nav-tab');
         const carousel = document.getElementById('presetsContent');
@@ -13,11 +13,12 @@ export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSr
         const addonsContent = document.getElementById('addonsContent');
         const customContent = document.getElementById('customContent');
         const optionsContainer = document.getElementById('optionsContainer');
+        const productTitleEl = document.getElementById('productTitle');
 
         const jsonFilePath = jsonSrc ? '/data/materials/' + jsonSrc : null;
         const modelPath = modelSrc.startsWith('/models/') ? modelSrc : '/models/' + modelSrc;
         const productCat = originPage.includes('armor') ? 'armor' : 'weapon'; // Example logic to determine productCat
-        const productPath = jsonSrc; // Assuming jsonSrc is the product JSON file path
+        const productPath = productSrc;
 
         const defaultTab = document.querySelector('.nav-tab[data-content="presets"]');
 
@@ -31,6 +32,42 @@ export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSr
         // Load the model and apply materials
         await loadModel(modelPath);
         fetchPresets(jsonFilePath).then(data => applyPresetMaterialColors('Standard Issue', data));
+
+
+        // Check if we have an "editDesign" saved in sessionStorage
+        const savedDesignJSON = sessionStorage.getItem('editDesign');
+        if (savedDesignJSON) {
+            const savedDesign = JSON.parse(savedDesignJSON);
+
+            // Switch to the Custom tab programmatically
+            const customTab = document.querySelector('.nav-tab[data-content="custom"]');
+            if (customTab) {
+                customTab.click();
+            }
+
+            // Now update the custom content container with the saved colors
+            const customContent = document.getElementById('customContent');
+            if (customContent && savedDesign.colors) {
+                updateCustomContent(customContent, savedDesign.colors);
+            }
+
+            // Wait for the model to be fully loaded before applying colors
+            // You can wrap this in a small timeout or use a callback from loadModel if available.
+            setTimeout(() => {
+                // Apply the custom colors to the model
+                applyPresetMaterialColors('Custom', savedDesign.colors);
+            }, 1000); // Adjust delay as needed, or use a proper "model loaded" callback
+
+            // Optionally, clear the saved design if you no longer need it:
+            // sessionStorage.removeItem('editDesign');
+        }
+
+        fetchProductContent(productPath).then(data => {
+            if (productTitleEl && data.title) {
+                productTitleEl.textContent = data.title;
+            }
+        })
+            .catch(error => console.error('Error loading product JSON:', error));
 
         defaultTab.classList.add('active');
         fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
@@ -50,26 +87,57 @@ export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSr
             });
         });
 
+        /*         function switchContent(content) {
+                    let activeContent = document.querySelector('.content.active');
+                    if (!activeContent) {
+                        activeContent = carousel;
+                    }
+        
+                    // Animate current content out
+                    activeContent.classList.add('slide-out');
+        
+                    // Use a timeout as a fallback
+                    const animationTimeout = setTimeout(() => {
+                        handleAnimationEnd(activeContent, content);
+                    }, 400); // Adjust timeout duration as needed
+        
+                    activeContent.addEventListener('animationend', function handleAnimationEndEvent() {
+                        clearTimeout(animationTimeout);
+                        handleAnimationEnd(activeContent, content);
+                        activeContent.removeEventListener('animationend', handleAnimationEndEvent);
+                    });
+                } */
+
         function switchContent(content) {
-            let activeContent = document.querySelector('.content.active');
-            if (!activeContent) {
-                activeContent = carousel;
-            }
-
-            // Animate current content out
-            activeContent.classList.add('slide-out');
-
-            // Use a timeout as a fallback
-            const animationTimeout = setTimeout(() => {
-                handleAnimationEnd(activeContent, content);
-            }, 400); // Adjust timeout duration as needed
-
-            activeContent.addEventListener('animationend', function handleAnimationEndEvent() {
-                clearTimeout(animationTimeout);
-                handleAnimationEnd(activeContent, content);
-                activeContent.removeEventListener('animationend', handleAnimationEndEvent);
+            // Hide all content sections
+            const allContent = document.querySelectorAll('.content');
+            allContent.forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('active', 'slide-in', 'slide-out');
             });
+
+            // Select the new content section
+            const newContent = document.getElementById(`${content}Content`);
+            newContent.style.display = 'flex';
+            newContent.classList.add('active', 'slide-in');
+
+            // Optionally, adjust container overflow/height as needed
+            optionsContainer.style.overflow = 'hidden';
+            newContent.addEventListener('animationend', function () {
+                newContent.classList.remove('slide-in');
+                optionsContainer.style.overflow = 'auto';
+                // Let the container auto-adjust its height after animation
+                optionsContainer.style.height = 'auto';
+            }, { once: true });
+
+            // Update the content based on the selected tab
+            if (content === 'presets') {
+                fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
+            } else if (content === 'custom') {
+                fetchCustomContent(jsonFilePath).then(data => updateSwatchColors(customContent, data["Standard Issue"].colors));
+            }
         }
+
 
         function handleAnimationEnd(activeContent, content) {
             activeContent.classList.remove('slide-out', 'active');
@@ -80,13 +148,19 @@ export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSr
             newContent.style.display = 'flex';
             newContent.classList.add('slide-in');
             newContent.classList.add('active');
+            optionsContainer.style.overflow = 'hidden';
+
             newContent.addEventListener('animationend', function () {
                 newContent.classList.remove('slide-in');
+                optionsContainer.style.overflow = 'auto';
             }, { once: true });
 
             // Update container height
             optionsContainer.style.height = `${newContent.scrollHeight}px`;
-
+            newContent.addEventListener('animationend', () => {
+                // After the animation, let the container adjust automatically
+                optionsContainer.style.height = 'auto';
+            }, { once: true });
             // Update content based on the selected tab
             if (content === 'presets') {
                 fetchPresets(jsonFilePath).then(data => updateCarousel(carousel, data));
@@ -123,6 +197,21 @@ export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSr
                 });
             }
         });
+
+        // After initializing the model editor and once the DOM is updated:
+        const hideBtn = document.getElementById('hideOptions');
+        const visuals = document.getElementById('visualsContent');
+        const addons = document.getElementById('addonsContent');
+        if (hideBtn) {
+            hideBtn.addEventListener('click', () => {
+                hideBtn.classList.toggle('active');
+                visuals.classList.toggle('hidden');
+                if (addons) {
+                    addons.classList.toggle('hidden');
+                }
+            });
+        }
+
 
         // Define color variables
         const colors = {
@@ -171,8 +260,10 @@ export async function initializeModelEditor(modelSrc = 'placeholder.glb', jsonSr
             // Set initial background state
             updateSliderBackground(slider);
         });
+        fetchProductContent(jsonFilePath)
 
- // Call updateCustomContent to generate the swatches
+
+        // Call updateCustomContent to generate the swatches
         fetchCustomContent(jsonFilePath).then(data => updateCustomContent(customContent, data["Standard Issue"].colors));
         saveButton.addEventListener('click', () => saveCurrentDesign(productCat, modelPath, jsonFilePath));
     }

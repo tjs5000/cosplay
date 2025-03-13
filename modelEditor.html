@@ -1,24 +1,25 @@
 <div id="three-container" class="model-container"></div>
-    <h1 class="product-title" id="productTitle">Product Name</h1>
+    <h1 class="product-title" id="productTitle"></h1>
     <div class="model-overlay"></div>
     <div class="fab" id="saveDesigns">
         <span>Save Design</span>
     </div>
     <div id="optionsContainer">
-        <div class="carousel presets-content" id="presetsContent">
+        <div class="carousel presets-content content" id="presetsContent">
             <!-- Carousel items will be dynamically inserted here -->
         </div>
         <div class="custom-content content" id="customContent" style="display: none;"></div>
             <!-- Custom content will be dynamically loaded here -->
         </div>
+        <button id="hideOptions"></button>
         <div class="visuals-content content" id="visualsContent" style="display: none;">
             <!-- Visuals content goes here -->
             <div class="slider-container">
                 <label for="battle-damage-slider">Battle Damage </label>
                 <div class="slider-control">
                     <input type="range" class="custom-slider" id="battle-damage-slider" min="0" max="4" step="1"
-                        value="2">
-                    <span id="battle-damage-value">Moderate</span><span class="info-icon"
+                        value="0">
+                    <span id="battle-damage-value">New</span><span class="info-icon"
                         data-info="battle-damage-info"></span>
 
                 </div>
@@ -36,34 +37,35 @@
         <div class="addons-content content" id="addonsContent" style="display: none;">
             <!-- Add-ons content goes here -->
             <div class="addon-item">
+                <label for="movable-components" class="switch-label">Movable Components</label> 
                 <label class="switch">
                     <input type="checkbox" id="movable-components" name="movable-components" checked>
                     <span class="track"></span>
                 </label>
-                <label for="movable-components">Movable Components</label> <span class="info-icon"
+                <span class="info-icon"
                     data-info="movable-components-info"></span>
             </div>
-            <div class="addon-item">
+            <div class="addon-item"><label for="leds" class="switch-label">LEDs</label>
                 <label class="switch">
                     <input type="checkbox" id="leds" name="leds" checked>
                     <span class="track"></span>
                 </label>
-                <label for="leds">LEDs</label> <span class="info-icon" data-info="leds-info"></span>
+                 <span class="info-icon" data-info="leds-info"></span>
             </div>
-            <div class="addon-item">
+            <div class="addon-item"><label for="removable-accessories" class="switch-label">Removable Accessories</label>
                 <label class="switch">
                     <input type="checkbox" id="removable-accessories" name="removable-accessories" checked>
                     <span class="track"></span>
                 </label>
-                <label for="removable-accessories">Removable Accessories</label> <span class="info-icon"
+                 <span class="info-icon"
                     data-info="removable-accessories-info"></span>
             </div>
-            <div class="addon-item">
+            <div class="addon-item"><label for="touch-screen" class="switch-label">Touch Screen Control</label>
                 <label class="switch">
                     <input type="checkbox" id="touch-screen" name="touch-screen">
                     <span class="track"></span>
                 </label>
-                <label for="touch-screen">Touch Screen Control</label> <span class="info-icon"
+                 <span class="info-icon"
                     data-info="touch-screen-info"></span>
             </div>
         </div>

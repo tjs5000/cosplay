@@ -4,7 +4,7 @@ export async function saveCurrentDesign(productCat, modelPath, jsonPath) {
 
   const currentColors = {}; // Fetch current colors from the model
   document.querySelectorAll('.color-swatch').forEach(swatch => {
-    const colorNameElement = swatch.previousElementSibling;
+    const colorNameElement = swatch.nextElementSibling;
     if (colorNameElement) {
       let colorName = colorNameElement.textContent;
       colorName = colorName.replace(/ /g, '_'); // Replace spaces with underscores

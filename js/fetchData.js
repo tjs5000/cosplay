@@ -16,6 +16,15 @@ export function fetchCustomContent(url) {
         });
 }
 
+export function fetchProductContent(url) {
+    return fetch(url)
+        .then(response => response.json())
+        .catch(error => {
+            console.error('Error fetching the JSON:', error);
+            throw error;
+        });
+}
+
 export function fetchHTMLContent(url) {
     return fetch(url)
         .then(response => response.text())

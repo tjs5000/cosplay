@@ -2,7 +2,290 @@
   "mk50": {
     "name": "MK50 Sidekick",
     "subCat": "Sidearms",
-    "heroImage": "/images/products/MK50_Render.png",
+    "heroImage": "/images/products/thumbnails/MK50.png",
     "data": "/data/products/mk50.json"
+  },
+  "m90-rifle": {
+    "name": "M90 Assault Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/Assault_Rifle.png",
+    "data": "/data/products/assault-rifle.json"
+  },
+  "magnum": {
+    "name": "Magnum",
+    "subCat": "Sidearms",
+    "heroImage": "/images/products/thumbnails/magnum.png",
+    "data": "/data/products/magnum.json"
+  },
+  "shotgun-tactical": {
+    "name": "Shotgun (Tactical)",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/shotgun-tactical.png",
+    "data": "/data/products/shotgun-tactical.json"
+  },
+  "sniper-rifle": {
+    "name": "Sniper Rifle",
+    "subCat": "Sniper",
+    "heroImage": "/images/products/thumbnails/sniper-rifle.png",
+    "data": "/data/products/sniper-rifle.json"
+  },
+  "rocket-launcher-spnkr": {
+    "name": "Rocket Launcher (SPNKR)",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/rocket-launcher.png",
+    "data": "/data/products/rocket-launcher.json"
+  },
+  "flamethrower": {
+    "name": "Flamethrower",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/flamethrower.png",
+    "data": "/data/products/flamethrower.json"
+  },
+  "plasma-pistol": {
+    "name": "Plasma Pistol",
+    "subCat": "Sidearms",
+    "heroImage": "/images/products/thumbnails/plasma-pistol.png",
+    "data": "/data/products/plasma-pistol.json"
+  },
+  "plasma-rifle": {
+    "name": "Plasma Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/plasma-rifle.png",
+    "data": "/data/products/plasma-rifle.json"
+  },
+  "needler": {
+    "name": "Needler",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/needler.png",
+    "data": "/data/products/needler.json"
+  },
+  "energy-sword": {
+    "name": "Energy Sword",
+    "subCat": "Melee",
+    "heroImage": "/images/products/thumbnails/energy-sword.png",
+    "data": "/data/products/energy-sword.json"
+  },
+  "fuel-rod-gun": {
+    "name": "Fuel Rod Gun",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/fuel-rod-gun.png",
+    "data": "/data/products/fuel-rod-gun.json"
+  },
+  "hunter-assault-cannon": {
+    "name": "Hunter Assault Cannon",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/hunter-assault-cannon.png",
+    "data": "/data/products/hunter-assault-cannon.json"
+  },
+  "sentinel-beam": {
+    "name": "Sentinel Beam",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/sentinel-beam.png",
+    "data": "/data/products/sentinel-beam.json"
+  },
+  "smg": {
+    "name": "SMG",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/smg.png",
+    "data": "/data/products/smg.json"
+  },
+  "battle-rifle": {
+    "name": "Battle Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/battle-rifle.png",
+    "data": "/data/products/battle-rifle.json"
+  },
+  "brute-plasma-rifle": {
+    "name": "Brute Plasma Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/brute-plasma-rifle.png",
+    "data": "/data/products/brute-plasma-rifle.json"
+  },
+  "brute-shot": {
+    "name": "Brute Shot",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/brute-shot.png",
+    "data": "/data/products/brute-shot.json"
+  },
+  "beam-rifle": {
+    "name": "Beam Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/beam-rifle.png",
+    "data": "/data/products/beam-rifle.json"
+  },
+  "covenant-carbine": {
+    "name": "Covenant Carbine",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/covenant-carbine.png",
+    "data": "/data/products/covenant-carbine.json"
+  },
+  "gravity-hammer": {
+    "name": "Gravity Hammer",
+    "subCat": "Melee",
+    "heroImage": "/images/products/thumbnails/gravity-hammer.png",
+    "data": "/data/products/gravity-hammer.json"
+  },
+  "spartan-laser": {
+    "name": "Spartan Laser",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/spartan-laser.png",
+    "data": "/data/products/spartan-laser.json"
+  },
+  "brute-spiker": {
+    "name": "Brute Spiker",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/brute-spiker.png",
+    "data": "/data/products/brute-spiker.json"
+  },
+  "brute-mauler": {
+    "name": "Brute Mauler",
+    "subCat": "Melee",
+    "heroImage": "/images/products/thumbnails/brute-mauler.png",
+    "data": "/data/products/brute-mauler.json"
+  },
+  "dmr": {
+    "name": "DMR",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/dmr.png",
+    "data": "/data/products/dmr.json"
+  },
+  "grenade-launcher": {
+    "name": "Grenade Launcher",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/grenade-launcher.png",
+    "data": "/data/products/grenade-launcher.json"
+  },
+  "needle-rifle": {
+    "name": "Needle Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/needle-rifle.png",
+    "data": "/data/products/needle-rifle.json"
+  },
+  "focus-rifle": {
+    "name": "Focus Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/focus-rifle.png",
+    "data": "/data/products/focus-rifle.json"
+  },
+  "plasma-launcher": {
+    "name": "Plasma Launcher",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/plasma-launcher.png",
+    "data": "/data/products/plasma-launcher.json"
+  },
+  "plasma-repeater": {
+    "name": "Plasma Repeater",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/plasma-repeater.png",
+    "data": "/data/products/plasma-repeater.json"
+  },
+  "concussion-rifle": {
+    "name": "Concussion Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/concussion-rifle.png",
+    "data": "/data/products/concussion-rifle.json"
+  },
+  "saw": {
+    "name": "SAW",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/saw.png",
+    "data": "/data/products/saw.json"
+  },
+  "railgun": {
+    "name": "Railgun",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/railgun.png",
+    "data": "/data/products/railgun.json"
+  },
+  "storm-rifle": {
+    "name": "Storm Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/storm-rifle.png",
+    "data": "/data/products/storm-rifle.json"
+  },
+  "boltshot": {
+    "name": "Boltshot",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/boltshot.png",
+    "data": "/data/products/boltshot.json"
+  },
+  "suppressor": {
+    "name": "Suppressor",
+    "subCat": "Sidearms",
+    "heroImage": "/images/products/thumbnails/suppressor.png",
+    "data": "/data/products/suppressor.json"
+  },
+  "scattershot": {
+    "name": "Scattershot",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/scattershot.png",
+    "data": "/data/products/scattershot.json"
+  },
+  "lightrifle": {
+    "name": "Lightrifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/lightrifle.png",
+    "data": "/data/products/lightrifle.json"
+  },
+  "incineration-cannon": {
+    "name": "Incineration Cannon",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/incineration-cannon.png",
+    "data": "/data/products/incineration-cannon.json"
+  },
+  "binary-rifle": {
+    "name": "Binary Rifle",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/binary-rifle.png",
+    "data": "/data/products/binary-rifle.json"
+  },
+  "hydra-mlrs": {
+    "name": "Hydra MLRS",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/hydra-mlrs.png",
+    "data": "/data/products/hydra-mlrs.json"
+  },
+  "rocket-launcher-m57": {
+    "name": "Rocket Launcher (M57)",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/rocket-launcher.png",
+    "data": "/data/products/rocket-launcher-m57.json"
+  },
+  "plasma-caster": {
+    "name": "Plasma Caster",
+    "subCat": "Heavy Artillery",
+    "heroImage": "/images/products/thumbnails/plasma-caster.png",
+    "data": "/data/products/plasma-caster.json"
+  },
+
+  "shotgun-bulldog": {
+    "name": "Shotgun (Bulldog)",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/shotgun-bulldog.png",
+    "data": "/data/products/shotgun-bulldog.json"
+  },
+  "commando": {
+    "name": "Commando",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/commando.png",
+    "data": "/data/products/commando.json"
+  },
+  "pulse-carbine": {
+    "name": "Pulse Carbine",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/pulse-carbine.png",
+    "data": "/data/products/pulse-carbine.json"
+  },
+  "brute-mangler": {
+    "name": "Brute Mangler",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/brute-mangler.png",
+    "data": "/data/products/brute-mangler.json"
+  },
+  "brute-ravager": {
+    "name": "Brute Ravager",
+    "subCat": "Combat Weapons",
+    "heroImage": "/images/products/thumbnails/brute-ravager.png",
+    "data": "/data/products/brute-ravager.json"
   }
 }
